@@ -5,10 +5,7 @@ from .views import inicio
 urlpatterns = [
     
     path('admin/', admin.site.urls),
-    
     path('', inicio, name='inicio'),
-    
     path('accounts/', include('django.contrib.auth.urls')),
-    
     path('usuarios/', include('Usuarios.urls')),
 ]

@@ -4,9 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-tu-clave-aqui'
-
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
@@ -16,7 +14,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'Usuarios',
     'Finanzas',
     'Biblioteca',
@@ -38,7 +36,7 @@ ROOT_URLCONF = 'universidad_root.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], 
+        'DIRS': [BASE_DIR / 'templates'], # Carpeta global donde está inicio.html
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -53,19 +51,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'universidad_root.wsgi.application'
 
-
-# CONFIGURACIÓN DE BASE DE DATOS (MySQL)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Proyecto_Universitario', 
-        'USER': 'root',#TAMBIEN EL USUARIO
-        'PASSWORD': 'Juannita24', #DEBES CAMBIAR LA CONTRASENA POR LA DE TU MYSQL
+        'USER': 'root',
+        'PASSWORD': 'Juannita24', 
         'HOST': '127.0.0.1',
-        'PORT': '3306',# Y EL NUMERO DE PUERTO SI ES NECESARIO
+        'PORT': '3306',
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
@@ -74,25 +69,16 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
-
 LANGUAGE_CODE = 'es-mx'
 TIME_ZONE = 'America/Mexico_City'
 USE_I18N = True
 USE_TZ = True
 
-
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 LOGIN_REDIRECT_URL = 'Usuarios:redireccion_rol'
-
 
 LOGOUT_REDIRECT_URL = 'inicio'

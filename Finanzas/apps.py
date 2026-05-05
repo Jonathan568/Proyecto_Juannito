@@ -1,4 +1,3 @@
-# Archivo: Finanzas/apps.py
 from django.apps import AppConfig
 
 class FinanzasConfig(AppConfig):
