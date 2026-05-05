@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Registro Estudiantil | UAEM</title>
+</head>
+
+<body
+    class="bg-gradient-to-br from-green-900 via-green-800 to-green-900 flex items-center justify-center min-h-screen py-10 px-4">
+
+    <div class="bg-white p-8 md:p-10 rounded-2xl shadow-2xl w-full max-w-md border-t-8 border-yellow-600">
+        
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-extrabold text-green-800 tracking-tight">Crear Cuenta</h2>
+            <p class="text-sm font-semibold text-gray-500 uppercase tracking-widest mt-2">Portal de Registro
+                Universitario</p>
+            <div class="h-1 w-16 bg-yellow-500 mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        
+        <form method="POST" class="space-y-5">
+            {% csrf_token %}
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-4 text-xs text-blue-700">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <div class="space-y-4">
+                {% for field in form %}
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1 ml-1">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <p class="text-red-500 text-[10px] mt-1 font-semibold italic">
+                        {{ field.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit"
+                class="w-full bg-green-800 text-white py-3 rounded-xl font-bold text-lg hover:bg-green-700 hover:shadow-lg transform hover:-translate-y-0.5 transition duration-200 active:scale-95 mt-6">
+                Registrarse como Alumno
+            </button>
+        </form>
+
+        
+        <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+            <p class="text-sm text-gray-500">
+                ¿Ya tienes cuenta?
+                <a href="{% url 'login' %}"
+                    class="text-yellow-600 font-bold hover:text-yellow-700 transition duration-200">
+                    Inicia sesión aquí
+                </a>
+            </p>
+            <a href="{% url 'inicio' %}"
+                class="inline-block mt-4 text-xs font-medium text-gray-400 hover:text-green-800 transition duration-200">
+                ← Volver al Inicio
+            </a>
+        </div>
+    </div>
+
+    
+    <style>
+        
+        .helptext {
+            display: none;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            background-color: #f9fafb;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #166534;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.1);
+        }
+
+        
+        ul.errorlist {
+            display: none;
+            
+        }
+    </style>
+</body>
+
+</html>

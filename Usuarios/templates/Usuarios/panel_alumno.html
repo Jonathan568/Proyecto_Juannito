@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portal | UAEM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+
+    <nav class="bg-yellow-600 shadow-md p-4 text-white flex justify-between items-center">
+        <div class="text-xl font-bold">
+            Portal Estudiantil | <span class="text-sm font-normal">UAEM</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span>Estudiante: <strong>{{ request.user.username }}</strong></span>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit"
+                    class="bg-gray-800 hover:bg-gray-900 px-4 py-2 rounded text-sm font-bold transition">Salir</button>
+            </form>
+        </div>
+    </nav>
+
+    
+    <div class="max-w-5xl mx-auto mt-10 px-4">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Resumen Académico</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-user-graduate text-2xl text-green-800"></i>
+                </div>
+                <h2 class="text-lg font-bold mb-1">Mi Historial</h2>
+                <p class="text-gray-500 text-sm">Consulta de calificaciones y grupos.</p>
+                <button class="mt-4 w-full bg-green-50 text-green-800 font-bold py-2 rounded hover:bg-green-100">Ver
+                    Detalles</button>
+            </div>
+
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
+                <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-file-invoice-dollar text-2xl text-yellow-700"></i>
+                </div>
+                <h2 class="text-lg font-bold mb-1">Mis Pagos</h2>
+                <p class="text-gray-500 text-sm">Cargos pendientes y recibos.</p>
+                <button
+                    class="mt-4 w-full bg-yellow-50 text-yellow-700 font-bold py-2 rounded hover:bg-yellow-100">Estado
+                    de Cuenta</button>
+            </div>
+
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-book-reader text-2xl text-blue-700"></i>
+                </div>
+                <h2 class="text-lg font-bold mb-1">Préstamos</h2>
+                <p class="text-gray-500 text-sm">Libros físicos y renovaciones.</p>
+                <button class="mt-4 w-full bg-blue-50 text-blue-700 font-bold py-2 rounded hover:bg-blue-100">Ver
+                    Inventario</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
