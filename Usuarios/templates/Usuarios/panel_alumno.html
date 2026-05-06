@@ -1,71 +1,61 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'inicio.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Portal | UAEM</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
+{% block nav_left %}
 
-<body class="bg-gray-50 font-sans">
+<span class="text-green-800 font-bold">
+    Bienvenido, {{ request.user.username }}
+</span>
+{% endblock %}
 
+{% block content %}
+<div class="max-w-7xl mx-auto mt-16 px-4">
+    <div class="text-center mb-16">
 
-    <nav class="bg-yellow-600 shadow-md p-4 text-white flex justify-between items-center">
-        <div class="text-xl font-bold">
-            Portal Estudiantil | <span class="text-sm font-normal">UAEM</span>
+        <h1 class="text-4xl md:text-5xl font-black text-slate-800 mb-2">Resumen Académico</h1>
+        <p class="text-gray-500 italic text-lg">Bienvenido de nuevo, {{ request.user.username }}</p>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-8 p-6">
+
+        <div
+            class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center w-full max-w-sm hover:shadow-md transition-shadow">
+            <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-user-graduate text-3xl text-green-800"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2 text-slate-800">Mi Historial</h2>
+            <p class="text-gray-500 text-sm leading-relaxed px-4">Consulta de calificaciones y grupos activos.</p>
+            <button
+                class="mt-8 w-full bg-emerald-50 text-emerald-700 font-black py-3 rounded-xl hover:bg-emerald-600 hover:text-white transition-all">
+                Ver Detalles
+            </button>
         </div>
-        <div class="flex items-center gap-4">
-            <span>Estudiante: <strong>{{ request.user.username }}</strong></span>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit"
-                    class="bg-gray-800 hover:bg-gray-900 px-4 py-2 rounded text-sm font-bold transition">Salir</button>
-            </form>
+
+        <div
+            class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center w-full max-w-sm hover:shadow-md transition-shadow">
+            <div class="bg-amber-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-file-invoice-dollar text-3xl text-amber-600"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2 text-slate-800">Mis Pagos</h2>
+            <p class="text-gray-500 text-sm leading-relaxed px-4">Cargos pendientes, reinscripciones y recibos.</p>
+            <button
+                class="mt-8 w-full bg-amber-50 text-amber-700 font-black py-3 rounded-xl hover:bg-amber-500 hover:text-white transition-all">
+                Estado de Cuenta
+            </button>
         </div>
-    </nav>
 
-    
-    <div class="text-3xl font-bold text-gray-800 text-center my-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-8">Resumen Académico</h1>
-
-        <div class="flex flex-wrap justify-center gap-6 p-6">
-            
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
-                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-user-graduate text-2xl text-green-800"></i>
-                </div>
-                <h2 class="text-lg font-bold mb-1">Mi Historial</h2>
-                <p class="text-gray-500 text-sm">Consulta de calificaciones y grupos.</p>
-                <button class="mt-4 w-full bg-green-50 text-green-800 font-bold py-2 rounded hover:bg-green-100">Ver
-                    Detalles</button>
+        <div
+            class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center w-full max-w-sm hover:shadow-md transition-shadow">
+            <div class="bg-indigo-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-book text-3xl text-indigo-600"></i>
             </div>
+            <h2 class="text-2xl font-bold mb-2 text-slate-800">Biblioteca</h2>
+            <p class="text-gray-500 text-sm leading-relaxed px-4">Préstamos de libros físicos y renovaciones.</p>
 
-            
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
-                <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-file-invoice-dollar text-2xl text-yellow-700"></i>
-                </div>
-                <h2 class="text-lg font-bold mb-1">Mis Pagos</h2>
-                <p class="text-gray-500 text-sm">Cargos pendientes y recibos.</p>
-                <button
-                    class="mt-4 w-full bg-yellow-50 text-yellow-700 font-bold py-2 rounded hover:bg-yellow-100">Estado
-                    de Cuenta</button>
-            </div>
-
-            
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
-                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-book-reader text-2xl text-blue-700"></i>
-                </div>
-                <h2 class="text-lg font-bold mb-1">Préstamos</h2>
-                <p class="text-gray-500 text-sm">Libros físicos y renovaciones.</p>
-                <button class="mt-4 w-full bg-blue-50 text-blue-700 font-bold py-2 rounded hover:bg-blue-100">Ver
-                    Inventario</button>
-            </div>
+            <a href="{% url 'Biblioteca:dashboard_alumno' %}"
+                class="mt-8 block w-full bg-indigo-50 text-indigo-700 font-black py-3 rounded-xl hover:bg-indigo-600 hover:text-white transition-all text-center">
+                Ver Inventario
+            </a>
         </div>
     </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

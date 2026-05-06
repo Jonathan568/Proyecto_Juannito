@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from .models import Libro
+from django.contrib.auth.decorators import login_required
 
-def lista_libros(request):
-    libros = Libro.objects.all()
-    return render(request, 'biblioteca/lista.html', {'libros': libros})
+@login_required
+def dashboard_admin(request):
+    return render(request, 'biblioteca/admin/dashboard_admin_biblioteca.html')
+
+@login_required
+def dashboard_alumno(request):
+    return render(request, 'biblioteca/alumno/dashboard_alumno_biblioteca.html')
+
