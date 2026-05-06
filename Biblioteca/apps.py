@@ -1,4 +1,3 @@
-# Archivo: Biblioteca/apps.py
 from django.apps import AppConfig
 
 class BibliotecaConfig(AppConfig):

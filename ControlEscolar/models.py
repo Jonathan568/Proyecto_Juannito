@@ -47,9 +47,8 @@ class PeriodoEscolar(models.Model):
     def __str__(self):
         return self.nombre if self.nombre else f"Periodo {self.idperiodo}"
 
-# Tabla de relación Histórica
+
 class AlumnoGrupo(models.Model):
-    # Referencia a la nueva carpeta 'Usuarios'
     idalumno = models.OneToOneField('Usuarios.Alumno', models.DO_NOTHING, db_column='idAlumno', primary_key=True)
     idgrupo = models.ForeignKey('Grupo', models.DO_NOTHING, db_column='idGrupo')
     idperiodo = models.ForeignKey('PeriodoEscolar', models.DO_NOTHING, db_column='idPeriodo')

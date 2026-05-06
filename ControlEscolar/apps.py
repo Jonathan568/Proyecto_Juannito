@@ -1,4 +1,3 @@
-# Archivo: ControlEscolar/apps.py
 from django.apps import AppConfig
 
 class ControlEscolarConfig(AppConfig):

@@ -15,7 +15,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <!-- Logo Institucional -->
                     <span class="text-2xl font-bold text-green-800">
                         <span class="text-yellow-600">UAEM</span>
                     </span>
@@ -44,7 +43,7 @@
             <div class="flex flex-col md:flex-row justify-center gap-4 mb-8">
                 <a href="{% url 'login' %}"
                     class="bg-yellow-600 hover:bg-yellow-700 text-white px-8 py-3 rounded-full text-lg font-bold shadow-lg transition">
-                    Acceder al Sistema
+                    Iniciar Sesión
                 </a>
                 <a href="#servicios"
                     class="bg-transparent border-2 border-white hover:bg-white hover:text-green-800 text-white px-8 py-3 rounded-full text-lg font-bold transition">
@@ -62,7 +61,8 @@
 
     <section id="servicios" class="py-20 max-w-7xl mx-auto px-4">
         <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-gray-800 uppercase tracking-widest">¿Para qué sirve el sistema?</h2>
+            <h2 class="text-3xl font-bold text-gray-800 uppercase tracking-widest">¿Cual es la funcion de este sistema
+                universitario?</h2>
             <div class="h-1 w-20 bg-yellow-500 mx-auto mt-4"></div>
         </div>
 
@@ -93,50 +93,46 @@
     </section>
 
     <section id="audiencia" class="bg-gray-100 py-20 px-4">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6 uppercase">¿A quién va dirigido?</h2>
-                <div class="space-y-6">
-                    <!-- Alumnos -->
-                    <div class="flex gap-4">
-                        <div
-                            class="bg-green-800 text-white w-12 h-12 flex items-center justify-center rounded-full flex-shrink-0">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg">Alumnos</h4>
-                            <p class="text-gray-600">Consulta de estatus, historial de grupos y gestión de préstamos
-                                bibliotecarios de forma autónoma.</p>
-                        </div>
-                    </div>
+        <div class="max-w-7xl mx-auto text-center">
 
-                    <div class="flex gap-4">
-                        <div
-                            class="bg-yellow-600 text-white w-12 h-12 flex items-center justify-center rounded-full flex-shrink-0">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg">Administrativos</h4>
-                            <p class="text-gray-600">Herramientas avanzadas para el control de inventarios, finanzas y
-                                reportes académicos institucionales.</p>
-                        </div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-12 uppercase tracking-widest">¿A quién va dirigido?</h2>
+
+            <div class="flex flex-col md:flex-row justify-center items-stretch gap-8">
+
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 md:w-1/3 flex flex-col items-center text-center">
+                    <div
+                        class="bg-green-800 text-white w-14 h-14 flex items-center justify-center rounded-full mb-4 shadow-md">
+                        <i class="fas fa-user-graduate text-xl"></i>
                     </div>
+                    <h4 class="font-bold text-xl mb-2 text-gray-800">Alumnos</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Consulta de estatus, historial de grupos y gestión de préstamos bibliotecarios de forma
+                        autónoma.
+                    </p>
                 </div>
-            </div>
 
-            <div class="md:w-1/2">
-                <img src="https://images.unsplash.com/photo-1523050853064-80353c241566?auto=format&fit=crop&q=80&w=800"
-                    alt="Campus Universitario"
-                    class="rounded-2xl shadow-2xl transition-transform hover:scale-105 duration-300">
+                <div
+                    class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 md:w-1/3 flex flex-col items-center text-center">
+                    <div
+                        class="bg-yellow-600 text-white w-14 h-14 flex items-center justify-center rounded-full mb-4 shadow-md">
+                        <i class="fas fa-user-tie text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-xl mb-2 text-gray-800">Administrativos</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Herramientas avanzadas para el control de inventario de biblioteca, finanzas y reportes
+                        académicos institucionales.
+                    </p>
+                </div>
+
             </div>
         </div>
     </section>
 
     <footer class="bg-gray-900 text-white py-10 text-center">
         <div class="max-w-7xl mx-auto px-4">
-            <p class="text-gray-400 font-medium italic">© 2026 Sistema de Gestión Universitaria - UAEM</p>
             <div class="h-px w-16 bg-green-700 mx-auto my-4"></div>
-            <p class="text-xs text-gray-500 uppercase tracking-widest">Proyecto de Tesis Profesional</p>
+            <p class="text-gray-400 font-medium italic">2026 Sistema de Gestión Universitaria - UAEM</p>
         </div>
     </footer>
 
