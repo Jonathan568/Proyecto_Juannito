@@ -1,6 +1,10 @@
 from django.urls import path
 from . import views
 
+app_name = 'Finanzas'
+
 urlpatterns = [
-    path('lista/', views.lista_pagos, name='lista_pagos'),
+    path('admin/dashboard/', views.dashboard_admin, name='dashboard_admin'),
+    
+    path('alumno/dashboard/', views.dashboard_alumno, name='dashboard_alumno'),
 ]

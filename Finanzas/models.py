@@ -9,6 +9,9 @@ class Concepto(models.Model):
         managed = False
         db_table = 'Concepto'
 
+    def __str__(self):
+        return self.nombre
+
 class Pago(models.Model):
     idpago = models.AutoField(db_column='idPago', primary_key=True)
     fecha = models.DateTimeField(blank=True, null=True)
@@ -19,6 +22,9 @@ class Pago(models.Model):
     class Meta:
         managed = False
         db_table = 'Pago'
+
+    def __str__(self):
+        return f"Folio: {self.folio} - {self.estatus}"
 
 class CargoAlumno(models.Model):
     idcargo = models.AutoField(db_column='idCargo', primary_key=True)
@@ -32,3 +38,6 @@ class CargoAlumno(models.Model):
     class Meta:
         managed = False
         db_table = 'Cargo_Alumno'
+
+    def __str__(self):
+        return f"Cargo {self.idcargo} - ${self.monto}"
