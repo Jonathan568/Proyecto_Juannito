@@ -1,9 +1,10 @@
 {% extends 'inicio.html' %}
 
 {% block nav_left %}
-    <a href="{% url 'Usuarios:panel_admin' %}" class="text-green-800 hover:text-green-900 font-bold flex items-center transition-colors">
-        <i class="fas fa-arrow-left mr-2"></i> Regresar
-    </a>
+<a href="{% url 'Usuarios:panel_admin' %}"
+    class="text-green-800 hover:text-green-900 font-bold flex items-center transition-colors">
+    <i class="fas fa-arrow-left mr-2"></i> Regresar
+</a>
 {% endblock %}
 
 {% block content %}
@@ -13,9 +14,12 @@
             <h1 class="text-4xl font-black text-gray-800 tracking-tight">Gestión Financiera</h1>
             <p class="text-gray-500 mt-2 text-lg">Control de ingresos, adeudos y validación de pagos.</p>
         </div>
-        <button class="bg-green-800 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-700 transition shadow-lg">
+
+        <a href="{% url 'Finanzas:nuevo_cargo' %}"
+            class="bg-green-800 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-700 transition shadow-lg inline-flex items-center">
             <i class="fas fa-plus mr-2"></i> Nuevo Cargo
-        </button>
+        </a>
+
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
@@ -36,7 +40,8 @@
     <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="bg-gray-50 px-8 py-5 border-b border-gray-100 flex justify-between items-center">
             <h4 class="font-black text-gray-600 uppercase text-xs tracking-widest">Últimos Movimientos</h4>
-            <span class="text-xs text-blue-600 font-bold cursor-pointer hover:underline">Ver todo el historial</span>
+            <a href="{% url 'Finanzas:historial_cargos' %}" class="text-xs text-blue-600 font-bold hover:underline">Ver
+                todo el historial</a>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -52,7 +57,8 @@
                 <tbody class="text-gray-700 text-sm">
                     {% for cargo in pagos_recientes %}
                     <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition">
-                        <td class="px-8 py-4 font-bold">{{ cargo.idalumno.nombre }} {{ cargo.idalumno.apellido_paterno }}</td>
+                        <td class="px-8 py-4 font-bold">{{ cargo.idalumno.nombre }} {{ cargo.idalumno.apellido_paterno
+                            }}</td>
                         <td class="px-8 py-4">{{ cargo.idconcepto.nombre }}</td>
                         <td class="px-8 py-4 font-black text-gray-900">${{ cargo.monto }}</td>
                         <td class="px-8 py-4">
@@ -68,7 +74,8 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="px-8 py-12 text-center text-gray-400 italic">No hay registros financieros recientes en el sistema.</td>
+                        <td colspan="5" class="px-8 py-12 text-center text-gray-400 italic">No hay registros financieros
+                            recientes en el sistema.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
