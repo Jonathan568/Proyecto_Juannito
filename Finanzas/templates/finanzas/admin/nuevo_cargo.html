@@ -10,7 +10,7 @@
 {% block content %}
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-    /* Estilos para igualar el diseño a Tailwind */
+
     .select2-container .select2-selection--single {
         height: 48px !important;
         border-radius: 0.75rem !important;
@@ -115,7 +115,7 @@
                 <div>
                     <label class="block text-sm font-bold text-gray-700 uppercase tracking-wide mb-2">Monto ($
                         MXN)</label>
-                    <input type="number" step="0.01" name="monto" required
+                    <input type="number" step="0.01" min="0.01" name="monto" required
                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-xl focus:ring-green-500 focus:border-green-500 block p-3"
                         placeholder="Ej: 500.00">
                 </div>
@@ -145,7 +145,7 @@
 
 <script>
     $(document).ready(function () {
-        // Inicializamos los buscadores asegurando que tomen el 100% de ancho disponible
+
         $('.select2-search').select2({
             placeholder: "Escribe para buscar...",
             allowClear: true,
@@ -159,7 +159,6 @@
         });
     });
 
-    // Lógica gestionada completamente por jQuery para evitar problemas visuales
     function toggleForm() {
         var tipo = $('input[name="tipo_cargo"]:checked').val();
 

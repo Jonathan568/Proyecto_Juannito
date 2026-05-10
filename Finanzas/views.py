@@ -56,14 +56,18 @@ def nuevo_cargo(request):
         concepto_input = request.POST.get('concepto')
         monto = request.POST.get('monto')
         fecha = request.POST.get('fecha')
+
+        if float(monto) <= 0:
+            messages.error(request, 'El monto del cargo debe ser mayor a $0.00.')
+            return redirect('Finanzas:nuevo_cargo')
         
         try:
 
             try:
-                # 1. Intentamos tratar el input como un ID numérico existente
+  
                 concepto_obj = Concepto.objects.get(idconcepto=int(concepto_input))
             except (ValueError, TypeError, Concepto.DoesNotExist):
-                # 2. Si falla (porque el usuario escribió texto), lo creamos o lo buscamos por nombre
+
                 concepto_obj, created = Concepto.objects.get_or_create(
                     nombre=concepto_input.strip(),
                     defaults={'precio': monto}
