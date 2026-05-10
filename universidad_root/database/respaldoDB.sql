@@ -243,7 +243,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$1200000$idn1stQuvqUnxyKxGgZ1F7$0JZ37zX6+ZTdl+c5Uggu11YRKAcU5hbVtGthtKvCKsw=','2026-05-10 14:44:56.595690',1,'Jonathan','','','jon.gr2020@gmail.com',1,1,'2026-05-04 23:39:01.892109'),(2,'pbkdf2_sha256$1200000$t2Js3DSZS9NFg8dsxLgs7O$74wYbUxFUcqPaaMG9LydqKfBR5aP3110n6/kczvPOIM=','2026-05-09 04:22:31.821338',0,'Kinari_Admin','Kinari','','',1,1,'2026-05-04 23:44:25.000000'),(3,'pbkdf2_sha256$1200000$lreNI2F7kxbv9HE7DAAtFi$lLw/zzEMCl3kodbzM1XNkUQG0FP0V4JdtN+AAn73mXM=',NULL,0,'Emmanuel_Admin','','','',1,1,'2026-05-04 23:45:01.000000'),(4,'pbkdf2_sha256$1200000$fZAFv1Y8ov9xarfnW7GXj7$YB/rnLFd+nMv0tuOmn3BcpclBT4RRuZPyHyp8FWdB68=','2026-05-10 01:43:07.542894',0,'Julio','','','',0,1,'2026-05-04 23:45:33.535023'),(5,'pbkdf2_sha256$1200000$EendJt8r4dLqkyC74eLRUm$/gx7vrYpjalucu7kkopGJDTIl9oboRBv9qRn7Enk8jk=',NULL,0,'Josmar','','','',0,1,'2026-05-04 23:47:13.929541'),(6,'pbkdf2_sha256$1200000$DOYt0pFuthWFms9WKkGgcy$dUhYywurDLAGF3DRjsBngd9ZZvicnTdTmv0MHVp6P3A=','2026-05-05 05:26:05.040892',0,'Vanessa','','','',0,1,'2026-05-04 23:47:37.007580'),(7,'pbkdf2_sha256$1200000$D68J2qnmmdEU3Bum15YQ5U$Ga9K2O6M2f9SF7yEuH89MRFwoNHIqP9s+IM4cn2rmyU=',NULL,0,'Tania','','','',0,1,'2026-05-04 23:48:10.861600'),(8,'pbkdf2_sha256$1200000$IKpclq6tZaY7oe92zgWU31$XCYgiI88x6PpvGHmsan8yBDmbOIdFeEDIV8Pg26FhP0=',NULL,0,'Vladimir','','','',0,1,'2026-05-04 23:48:33.000000');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$1200000$idn1stQuvqUnxyKxGgZ1F7$0JZ37zX6+ZTdl+c5Uggu11YRKAcU5hbVtGthtKvCKsw=','2026-05-10 22:40:52.447958',1,'Jonathan','','','jon.gr2020@gmail.com',1,1,'2026-05-04 23:39:01.892109'),(2,'pbkdf2_sha256$1200000$t2Js3DSZS9NFg8dsxLgs7O$74wYbUxFUcqPaaMG9LydqKfBR5aP3110n6/kczvPOIM=','2026-05-10 18:27:58.653652',0,'Kinari_Admin','Kinari','','',1,1,'2026-05-04 23:44:25.000000'),(3,'pbkdf2_sha256$1200000$lreNI2F7kxbv9HE7DAAtFi$lLw/zzEMCl3kodbzM1XNkUQG0FP0V4JdtN+AAn73mXM=',NULL,0,'Emmanuel_Admin','','','',1,1,'2026-05-04 23:45:01.000000'),(4,'pbkdf2_sha256$1200000$fZAFv1Y8ov9xarfnW7GXj7$YB/rnLFd+nMv0tuOmn3BcpclBT4RRuZPyHyp8FWdB68=','2026-05-10 18:09:23.223773',0,'Julio','','','',0,1,'2026-05-04 23:45:33.535023'),(5,'pbkdf2_sha256$1200000$EendJt8r4dLqkyC74eLRUm$/gx7vrYpjalucu7kkopGJDTIl9oboRBv9qRn7Enk8jk=','2026-05-10 18:10:21.518921',0,'Josmar','','','',0,1,'2026-05-04 23:47:13.929541'),(6,'pbkdf2_sha256$1200000$DOYt0pFuthWFms9WKkGgcy$dUhYywurDLAGF3DRjsBngd9ZZvicnTdTmv0MHVp6P3A=','2026-05-10 18:15:16.271561',0,'Vanessa','','','',0,1,'2026-05-04 23:47:37.007580'),(7,'pbkdf2_sha256$1200000$D68J2qnmmdEU3Bum15YQ5U$Ga9K2O6M2f9SF7yEuH89MRFwoNHIqP9s+IM4cn2rmyU=','2026-05-10 18:26:32.257612',0,'Tania','','','',0,1,'2026-05-04 23:48:10.861600'),(8,'pbkdf2_sha256$1200000$IKpclq6tZaY7oe92zgWU31$XCYgiI88x6PpvGHmsan8yBDmbOIdFeEDIV8Pg26FhP0=',NULL,0,'Vladimir','','','',0,1,'2026-05-04 23:48:33.000000');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,7 +317,7 @@ CREATE TABLE `cargo_alumno` (
   `idPago` int DEFAULT NULL,
   `monto` decimal(10,2) DEFAULT NULL,
   `fecha` datetime DEFAULT NULL,
-  `estatus` enum('pendiente','pagado') DEFAULT NULL,
+  `estatus` enum('pendiente','pagado','cancelado') DEFAULT 'pendiente',
   PRIMARY KEY (`idCargo`),
   KEY `idAlumno` (`idAlumno`),
   KEY `idConcepto` (`idConcepto`),
@@ -472,7 +472,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('svor0sg27k8bb1yyzsu64iqd495au5y9','.eJxVjDkOwjAQAP-yNbJ8xFdKet5grb1rHECJFCcV4u8oUgpoZ0bzhoT71tLeeU0TwQgKLr8sY3nyfAh64HxfRFnmbZ2yOBJx2i5uC_HrerZ_g4a9wQhYqtKeTYjE1iCxj46U9N47Y71zOUc51EAyR8OEWYbKcdDojC52UBE-X-fpN7c:1wM5Oq:6FrORSjwNeElYRk8YAFFq-f3mGtKB8cVMjYBUs94Ifo','2026-05-24 14:44:56.599120');
+INSERT INTO `django_session` VALUES ('krxf25igtntxze986m2y1sjmtrir0h70','.eJxVjDkOwjAQAP-yNbJ8xFdKet5grb1rHECJFCcV4u8oUgpoZ0bzhoT71tLeeU0TwQgKLr8sY3nyfAh64HxfRFnmbZ2yOBJx2i5uC_HrerZ_g4a9wQhYqtKeTYjE1iCxj46U9N47Y71zOUc51EAyR8OEWYbKcdDojC52UBE-X-fpN7c:1wMCpQ:d_oqPg2VqlFHu6C1UWon8zUD70sDREYFsfK4hgwUO3k','2026-05-24 22:40:52.451039');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -719,4 +719,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-10  9:32:16
+-- Dump completed on 2026-05-10 17:07:43

@@ -3,10 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Q
 from django.contrib import messages
 from django.utils import timezone
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import CargoAlumno, Concepto
 
-# Modelos de tus otras aplicaciones (Asegúrate de que los nombres de las apps y modelos coincidan)
 from Usuarios.models import Alumno
 from ControlEscolar.models import Grupo, AlumnoGrupo
 
@@ -181,3 +181,53 @@ def generar_ficha(request):
         return render(request, 'finanzas/alumno/ficha_pago.html', context)
         
     return redirect('Finanzas:dashboard_alumno')
+
+@login_required
+def registrar_pago(request, idcargo):
+    """Marca un cargo pendiente como pagado de forma segura"""
+    if request.method == 'POST':
+
+        cargo = get_object_or_404(CargoAlumno, idcargo=idcargo)
+
+        if cargo.estatus == 'pendiente':
+            cargo.estatus = 'pagado'
+
+            cargo.save()
+            messages.success(request, f'Pago de ${cargo.monto} registrado exitosamente para {cargo.idalumno.nombre}.')
+        else:
+            messages.error(request, 'Acción denegada. Este cargo ya se encuentra pagado.')
+
+    return redirect(request.META.get('HTTP_REFERER', 'Finanzas:dashboard_admin'))
+
+@login_required
+def cancelar_cargo(request, idcargo):
+    """Cancela un cargo pendiente por error de asignación"""
+    if request.method == 'POST':
+        cargo = get_object_or_404(CargoAlumno, idcargo=idcargo)
+
+        if cargo.estatus == 'pendiente':
+            cargo.estatus = 'cancelado'
+            cargo.save()
+            messages.warning(request, f'El cargo de ${cargo.monto} para {cargo.idalumno.nombre} ha sido cancelado.')
+        else:
+            messages.error(request, 'No se puede cancelar un cargo que ya ha sido pagado.')
+            
+    return redirect(request.META.get('HTTP_REFERER', 'Finanzas:dashboard_admin'))
+
+@login_required
+def descargar_recibo(request, idcargo):
+    """Muestra el recibo en una nueva pestaña listo para imprimir o guardar como PDF"""
+    cargo = get_object_or_404(CargoAlumno, idcargo=idcargo)
+    
+    if cargo.estatus != 'pagado':
+        messages.error(request, 'No se puede generar un recibo de un cargo pendiente o cancelado.')
+        return redirect(request.META.get('HTTP_REFERER', 'Finanzas:dashboard_admin'))
+
+    context = {
+        'cargo': cargo,
+        'fecha_emision': timezone.now(),
+        'folio': f"REC-{cargo.idcargo:06d}",
+    }
+    
+    # Simplemente renderizamos el template especial
+    return render(request, 'finanzas/admin/recibo_pago_pdf.html', context)
