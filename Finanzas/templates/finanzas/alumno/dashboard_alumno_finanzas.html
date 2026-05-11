@@ -14,7 +14,7 @@
         <p class="text-gray-500 italic text-lg">Selecciona los cargos que deseas pagar o descarga tu hoja de pago.</p>
     </div>
 
-    <form method="POST" action="{% url 'Finanzas:generar_ficha' %}" target="_blank">
+    <form method="POST">
         {% csrf_token %}
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -31,10 +31,17 @@
                         <p id="total-dinamico" class="text-4xl font-black text-white">$ 0.00</p>
                     </div>
 
-                    <button type="submit" id="btn-generar"
-                        class="w-full bg-amber-500 text-slate-900 font-black py-4 rounded-xl hover:bg-amber-400 transition-all shadow-lg uppercase tracking-wide text-sm disabled:opacity-50 disabled:cursor-not-allowed">
-                        Generar Ficha
-                    </button>
+                    <div class="space-y-3">
+                        <button type="submit" id="btn-linea" formaction="{% url 'Finanzas:pasarela_pago' %}" formtarget="_self"
+                            class="w-full bg-blue-600 text-white font-black py-4 rounded-xl hover:bg-blue-700 transition-all shadow-lg uppercase tracking-wide text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                            <i class="fas fa-credit-card"></i> Pagar en Línea
+                        </button>
+                        
+                        <button type="submit" id="btn-generar" formaction="{% url 'Finanzas:generar_ficha' %}" formtarget="_blank"
+                            class="w-full bg-amber-500 text-slate-900 font-black py-4 rounded-xl hover:bg-amber-400 transition-all shadow-lg uppercase tracking-wide text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                            <i class="fas fa-print"></i> Ficha para Banco
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -86,7 +93,7 @@
                                         </a>
                                     </div>
                                     {% endif %}
-                                    </div>
+                                </div>
                             </div>
 
                             <div class="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-2">
@@ -121,6 +128,7 @@
         const checkboxes = document.querySelectorAll('.cargo-checkbox');
         const totalElement = document.getElementById('total-dinamico');
         const btnGenerar = document.getElementById('btn-generar');
+        const btnLinea = document.getElementById('btn-linea'); // Registramos el nuevo botón
 
         function calcularTotal() {
             let total = 0;
@@ -137,8 +145,10 @@
 
             if (seleccionados === 0) {
                 btnGenerar.disabled = true;
+                btnLinea.disabled = true;
             } else {
                 btnGenerar.disabled = false;
+                btnLinea.disabled = false;
             }
         }
 

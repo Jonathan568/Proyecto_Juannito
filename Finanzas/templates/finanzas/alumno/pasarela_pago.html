@@ -1,0 +1,83 @@
+{% extends 'inicio.html' %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
+    <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-3xl shadow-xl border border-gray-100 relative overflow-hidden">
+        
+        <div id="loading-screen" class="absolute inset-0 bg-white/90 z-10 hidden flex-col items-center justify-center">
+            <i class="fas fa-circle-notch fa-spin text-blue-600 text-5xl mb-4"></i>
+            <p class="text-gray-800 font-bold tracking-widest uppercase">Conectando con el banco...</p>
+            <p class="text-gray-400 text-sm mt-1">Por favor no cierres esta ventana</p>
+        </div>
+
+        <div>
+            <h2 class="text-center text-3xl font-black text-gray-900">Pasarela Segura</h2>
+            <p class="mt-2 text-center text-sm text-gray-600 uppercase font-bold tracking-widest">
+                Total a procesar: <span class="text-blue-600 font-black text-lg">${{ total }} MXN</span>
+            </p>
+        </div>
+        
+        <form id="payment-form" class="mt-8 space-y-6" action="{% url 'Finanzas:procesar_pago_linea' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="cargos_ids" value="{{ cargos_ids }}">
+            
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div class="mb-4">
+                    <label class="text-xs font-bold text-gray-500 uppercase tracking-wide">Nombre en la Tarjeta</label>
+                    <input type="text" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm mt-1" placeholder="Ej. Juan Pérez">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="text-xs font-bold text-gray-500 uppercase tracking-wide">Número de Tarjeta</label>
+                    <div class="relative mt-1">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fab fa-cc-visa text-gray-400 text-xl"></i>
+                        </div>
+                        <input type="text" required maxlength="19" class="appearance-none rounded-xl relative block w-full pl-10 pr-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 font-mono tracking-widest" placeholder="0000 0000 0000 0000">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="text-xs font-bold text-gray-500 uppercase tracking-wide">Vencimiento</label>
+                        <input type="text" required maxlength="5" class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 font-mono text-center mt-1" placeholder="MM/YY">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-500 uppercase tracking-wide">CVC / CVV</label>
+                        <input type="password" required maxlength="3" class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 font-mono text-center mt-1" placeholder="***">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center mt-4">
+                <i class="fas fa-lock text-green-500 mr-2"></i>
+                <span class="text-xs text-gray-500 font-bold uppercase">Transacción cifrada y segura</span>
+            </div>
+
+            <div>
+                <button type="submit" class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-black uppercase tracking-widest rounded-xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors shadow-lg">
+                    Pagar ${{ total }}
+                </button>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="{% url 'Finanzas:dashboard_alumno' %}" class="text-sm font-bold text-gray-400 hover:text-gray-600">Cancelar y volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    document.getElementById('payment-form').addEventListener('submit', function(e) {
+        e.preventDefault(); 
+
+        document.getElementById('loading-screen').classList.remove('hidden');
+        document.getElementById('loading-screen').classList.add('flex');
+
+        setTimeout(function() {
+            e.target.submit();
+        }, 2500);
+    });
+</script>
+{% endblock %}

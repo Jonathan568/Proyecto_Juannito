@@ -256,3 +256,43 @@ def descargar_hoja_pago(request, idcargo):
         'fecha_limite': fecha_limite,
     }
     return render(request, 'finanzas/alumno/hoja_pago_pdf.html', context)
+
+@login_required
+def pasarela_pago(request):
+    """Muestra la interfaz simulada de pago con tarjeta"""
+    if request.method == 'POST':
+        cargos_ids = request.POST.getlist('cargos_seleccionados')
+        
+        if not cargos_ids:
+            messages.error(request, 'Debes seleccionar al menos un cargo para pagar en línea.')
+            return redirect('Finanzas:dashboard_alumno')
+            
+        cargos_a_pagar = CargoAlumno.objects.filter(idcargo__in=cargos_ids)
+        total = cargos_a_pagar.aggregate(Sum('monto'))['monto__sum'] or 0.00
+
+        cargos_ids_str = ",".join(cargos_ids)
+        
+        context = {
+            'total': total,
+            'cargos_ids': cargos_ids_str
+        }
+        return render(request, 'finanzas/alumno/pasarela_pago.html', context)
+        
+    return redirect('Finanzas:dashboard_alumno')
+
+@login_required
+def procesar_pago_linea(request):
+    """Recibe la simulación de pago, aprueba y cambia el estatus a Pagado"""
+    if request.method == 'POST':
+        cargos_ids_str = request.POST.get('cargos_ids')
+        
+        if cargos_ids_str:
+            cargos_ids = cargos_ids_str.split(',')
+            alumno_actual = Alumno.objects.filter(idusuario=request.user.id).first()
+
+            cargos_pagados = CargoAlumno.objects.filter(idcargo__in=cargos_ids, idalumno=alumno_actual)
+            cargos_pagados.update(estatus='pagado')
+            
+            messages.success(request, '¡Pago aprobado exitosamente! Tus recibos ya están disponibles.')
+            
+    return redirect('Finanzas:dashboard_alumno')
