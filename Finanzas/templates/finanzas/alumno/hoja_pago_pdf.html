@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ficha Global de Pago</title>
+    <title>Orden de Pago - {{ folio_referencia }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -39,8 +39,8 @@
                 </div>
                 <div class="text-right">
                     <div class="bg-gray-100 px-4 py-2 rounded-lg inline-block text-center border border-gray-200">
-                        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Referencia Global</p>
-                        <p class="text-xl font-black text-gray-800 font-bancaria">REF-{{ alumno.matricula }}</p>
+                        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Referencia de Pago</p>
+                        <p class="text-xl font-black text-gray-800 font-bancaria">{{ folio_referencia }}</p>
                     </div>
                 </div>
             </div>
@@ -57,43 +57,34 @@
 
             <div class="grid grid-cols-2 gap-8 mb-8">
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
-                    <p class="text-xs font-bold text-gray-400 uppercase mb-3">Datos del Estudiante</p>
-                    <p class="font-bold text-gray-900 uppercase text-lg mb-2">{{ alumno.nombre }} {{ alumno.apellido_paterno }}</p>
-                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-id-card mr-2 text-gray-400 w-4"></i> Matrícula: {{ alumno.matricula }}</p>
-                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-users mr-2 text-gray-400 w-4"></i> Grupo: {{ alumno.idgrupo.nombre }}</p>
+                    <p class="text-xs font-bold text-gray-400 uppercase mb-1">Datos del Estudiante</p>
+                    <p class="font-bold text-gray-900 uppercase">{{ cargo.idalumno.nombre }} {{ cargo.idalumno.apellido_paterno }}</p>
+                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-id-card mr-2 text-gray-400"></i> Matrícula: {{ cargo.idalumno.matricula }}</p>
+                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-users mr-2 text-gray-400"></i> Grupo: {{ cargo.idalumno.idgrupo.nombre }}</p>
                 </div>
                 
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
-                    <p class="text-xs font-bold text-gray-400 uppercase mb-3">Desglose de Cargos</p>
-                    <div class="space-y-2 mb-4">
-                        {% for cargo in cargos %}
-                        <div class="flex justify-between text-sm text-gray-700 font-medium border-b border-gray-200 border-dashed pb-1">
-                            <span class="truncate pr-2">{{ forloop.counter }}. {{ cargo.idconcepto.nombre }}</span>
-                            <span>${{ cargo.monto }}</span>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div class="flex justify-between font-black text-gray-900 pt-2 border-t-2 border-gray-300">
-                        <span>TOTAL:</span>
-                        <span>${{ total_ficha }}</span>
-                    </div>
+                    <p class="text-xs font-bold text-gray-400 uppercase mb-1">Detalles del Cargo</p>
+                    <p class="font-bold text-gray-900 uppercase">{{ cargo.idconcepto.nombre }}</p>
+                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-calendar-alt mr-2 text-gray-400"></i> Fecha de emisión: {{ fecha_emision|date:"d/m/Y" }}</p>
+                    <p class="text-sm text-rose-600 font-bold mt-1"><i class="fas fa-clock mr-2"></i> Límite de pago: {{ fecha_limite|date:"d/m/Y" }}</p>
                 </div>
             </div>
 
             <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-center mb-10 bg-gray-50/50">
-                <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Total Global a Pagar en Caja</p>
-                <p class="text-5xl font-black text-gray-900 mb-6">${{ total_ficha }} <span class="text-xl text-gray-400 font-normal">MXN</span></p>
+                <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Total a Pagar en Caja</p>
+                <p class="text-5xl font-black text-gray-900 mb-6">${{ cargo.monto }} <span class="text-xl text-gray-400 font-normal">MXN</span></p>
                 
-                <div class="barcode">*REF-{{ alumno.matricula }}*</div>
-                <p class="text-sm text-gray-600 mt-2 font-bancaria">REF-{{ alumno.matricula }}</p>
+                <div class="barcode">*{{ folio_referencia }}*</div>
+                <p class="text-sm text-gray-600 mt-2 font-bancaria">{{ folio_referencia }}</p>
             </div>
         </div>
 
         <div class="bg-gray-800 text-gray-300 p-8 text-sm">
             <h4 class="font-bold text-white uppercase tracking-widest mb-4">Instrucciones para el cajero:</h4>
             <ol class="list-decimal pl-5 space-y-2 text-gray-400">
-                <li>Verifique que el importe recibido coincida con el "Total Global a Pagar".</li>
-                <li>Capture la <strong class="text-white">Referencia Global</strong> en el sistema institucional.</li>
+                <li>Verifique que el importe recibido coincida con el "Total a Pagar".</li>
+                <li>Capture la <strong class="text-white">Referencia de Pago</strong> en el sistema institucional.</li>
                 <li>Conserve esta ficha y entregue al alumno el <strong class="text-white">Recibo Oficial</strong> sellado.</li>
             </ol>
         </div>

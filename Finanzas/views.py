@@ -1,12 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Q
 from django.contrib import messages
 from django.utils import timezone
-from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import CargoAlumno, Concepto
-
 from Usuarios.models import Alumno
 from ControlEscolar.models import Grupo, AlumnoGrupo
 
@@ -31,7 +29,6 @@ def dashboard_admin(request):
 @login_required
 def dashboard_alumno(request):
     """Vista principal del estado de cuenta del alumno"""
-
     alumno = Alumno.objects.filter(idusuario=request.user.id).first()
 
     if alumno:
@@ -62,12 +59,9 @@ def nuevo_cargo(request):
             return redirect('Finanzas:nuevo_cargo')
         
         try:
-
             try:
-  
                 concepto_obj = Concepto.objects.get(idconcepto=int(concepto_input))
             except (ValueError, TypeError, Concepto.DoesNotExist):
-
                 concepto_obj, created = Concepto.objects.get_or_create(
                     nombre=concepto_input.strip(),
                     defaults={'precio': monto}
@@ -191,7 +185,6 @@ def registrar_pago(request, idcargo):
 
         if cargo.estatus == 'pendiente':
             cargo.estatus = 'pagado'
-
             cargo.save()
             messages.success(request, f'Pago de ${cargo.monto} registrado exitosamente para {cargo.idalumno.nombre}.')
         else:
@@ -216,7 +209,14 @@ def cancelar_cargo(request, idcargo):
 
 @login_required
 def descargar_recibo(request, idcargo):
-    """Muestra el recibo en una nueva pestaña listo para imprimir o guardar como PDF"""
+    """Muestra el recibo (SOLO ADMINISTRADORES)"""
+
+    cargo = get_object_or_404(CargoAlumno, idcargo=idcargo)
+
+    if not request.user.is_staff and not request.user.is_superuser:
+        messages.error(request, 'Brecha de seguridad detectada: No tienes permisos para emitir recibos oficiales.')
+        return redirect('Usuarios:panel_alumno') # Cambia esta ruta si tienes otra vista de inicio para el alumno
+
     cargo = get_object_or_404(CargoAlumno, idcargo=idcargo)
     
     if cargo.estatus != 'pagado':
@@ -228,6 +228,31 @@ def descargar_recibo(request, idcargo):
         'fecha_emision': timezone.now(),
         'folio': f"REC-{cargo.idcargo:06d}",
     }
-    
-    # Simplemente renderizamos el template especial
+
     return render(request, 'finanzas/admin/recibo_pago_pdf.html', context)
+
+@login_required
+def descargar_hoja_pago(request, idcargo):
+    """Muestra la orden de pago para que el alumno vaya a caja o al banco"""
+
+    cargo = get_object_or_404(CargoAlumno, idcargo=idcargo)
+
+    if not request.user.is_staff:
+        alumno_actual = Alumno.objects.filter(idusuario=request.user.id).first()
+        if cargo.idalumno != alumno_actual:
+            messages.error(request, 'Acceso denegado: Este cargo pertenece a otro estudiante.')
+            return redirect('Finanzas:dashboard_alumno')
+    
+    if cargo.estatus != 'pendiente':
+        messages.error(request, 'Este cargo ya fue procesado o cancelado.')
+        return redirect('Finanzas:dashboard_alumno')
+
+    fecha_limite = timezone.now() + timezone.timedelta(days=5)
+
+    context = {
+        'cargo': cargo,
+        'folio_referencia': f"REF-{cargo.idcargo:08d}",
+        'fecha_emision': timezone.now(),
+        'fecha_limite': fecha_limite,
+    }
+    return render(request, 'finanzas/alumno/hoja_pago_pdf.html', context)
