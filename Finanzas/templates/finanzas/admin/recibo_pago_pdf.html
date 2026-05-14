@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Recibo Oficial de Pago - {{ folio }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
 
     <style>
         @media print {
-            @page { margin: 10mm; size: letter portrait; }
-            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .no-print { display: none !important; }
+            @page {
+                margin: 10mm;
+                size: letter portrait;
+            }
+
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .no-print {
+                display: none !important;
+            }
         }
 
-        .font-bancaria { font-family: 'Roboto Mono', monospace; letter-spacing: 1px; }
+        .font-bancaria {
+            font-family: 'Roboto Mono', monospace;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
+
 <body class="bg-gray-200 flex items-center justify-center min-h-screen py-10 font-sans">
-    
+
     <div class="fixed top-6 right-6 no-print">
-        <button onclick="window.print()" class="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-emerald-700 flex items-center gap-2">
+        <button onclick="window.print()"
+            class="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-emerald-700 flex items-center gap-2">
             <i class="fas fa-print"></i> Imprimir Recibo
         </button>
     </div>
 
     <div class="bg-white w-[800px] shadow-2xl print:shadow-none print:w-full print:p-0 border-t-8 border-emerald-800">
-        
+
         <div class="p-12 pb-6">
             <div class="flex justify-between items-end border-b-2 border-gray-200 pb-6 mb-8">
                 <div>
@@ -38,7 +54,8 @@
                 </div>
                 <div class="text-right">
                     <div class="bg-emerald-50 px-4 py-2 rounded-lg inline-block text-center border border-emerald-100">
-                        <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-1">Recibo Oficial</p>
+                        <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-1">Recibo Oficial
+                        </p>
                         <p class="text-xl font-black text-emerald-800 font-bancaria">{{ folio }}</p>
                     </div>
                 </div>
@@ -52,25 +69,34 @@
             <div class="grid grid-cols-2 gap-8 mb-8">
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
                     <p class="text-xs font-bold text-gray-400 uppercase mb-3">Datos del Estudiante</p>
-                    <p class="font-bold text-gray-900 uppercase text-lg mb-2">{{ cargo.idalumno.nombre }} {{ cargo.idalumno.apellido_paterno }}</p>
-                    <p class="text-sm text-gray-600 mb-1"><i class="fas fa-id-card mr-2 text-gray-400 w-4"></i> Matrícula: {{ cargo.idalumno.matricula }}</p>
-                    <p class="text-sm text-gray-600"><i class="fas fa-users mr-2 text-gray-400 w-4"></i> Grupo: {{ cargo.idalumno.idgrupo.nombre }}</p>
+                    <p class="font-bold text-gray-900 uppercase text-lg mb-2">{{ cargo.idalumno.nombre }} {{
+                        cargo.idalumno.apellido_paterno }}</p>
+                    <p class="text-sm text-gray-600 mb-1"><i class="fas fa-id-card mr-2 text-gray-400 w-4"></i>
+                        Matrícula: {{ cargo.idalumno.matricula }}</p>
+                    <p class="text-sm text-gray-600"><i class="fas fa-users mr-2 text-gray-400 w-4"></i> Grupo: {{
+                        cargo.idalumno.idgrupo.nombre }}</p>
                 </div>
-                
+
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
                     <p class="text-xs font-bold text-gray-400 uppercase mb-3">Detalle Operativo</p>
                     <p class="font-bold text-gray-900 uppercase text-lg mb-2">{{ cargo.idconcepto.nombre }}</p>
-                    <p class="text-sm text-gray-600 mb-1"><i class="fas fa-calendar-check mr-2 text-emerald-500 w-4"></i> Pagado el: {{ cargo.fecha|date:"d/m/Y" }}</p>
-                    <p class="text-sm text-gray-600"><i class="fas fa-check-circle mr-2 text-emerald-500 w-4"></i> Estatus: CUBIERTO</p>
+                    <p class="text-sm text-gray-600 mb-1"><i
+                            class="fas fa-calendar-check mr-2 text-emerald-500 w-4"></i> Pagado el: {{
+                        cargo.fecha|date:"d/m/Y" }}</p>
+                    <p class="text-sm text-gray-600"><i class="fas fa-check-circle mr-2 text-emerald-500 w-4"></i>
+                        Estatus: CUBIERTO</p>
                 </div>
             </div>
 
-            <div class="border-2 border-emerald-800 rounded-xl p-8 flex flex-col items-center justify-center text-center mb-10 bg-emerald-50/30 relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-emerald-800 text-white text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-widest">
+            <div
+                class="border-2 border-emerald-800 rounded-xl p-8 flex flex-col items-center justify-center text-center mb-10 bg-emerald-50/30 relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 bg-emerald-800 text-white text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-widest">
                     Caja Central
                 </div>
                 <p class="text-sm font-bold text-emerald-800 uppercase tracking-widest mb-2">Monto Total Recibido</p>
-                <p class="text-5xl font-black text-emerald-900">${{ cargo.monto }} <span class="text-xl text-emerald-600 font-normal">MXN</span></p>
+                <p class="text-5xl font-black text-emerald-900">${{ cargo.monto }} <span
+                        class="text-xl text-emerald-600 font-normal">MXN</span></p>
             </div>
 
             <div class="flex justify-between items-end mb-8 pt-4">
@@ -78,7 +104,8 @@
                     <div class="border-b border-gray-400 w-full mb-2 h-16"></div>
                     <p class="text-xs text-gray-500 font-bold uppercase tracking-widest">Firma del Cajero</p>
                 </div>
-                <div class="w-1/3 h-32 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-sm font-bold uppercase tracking-widest bg-gray-50">
+                <div
+                    class="w-1/3 h-32 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-sm font-bold uppercase tracking-widest bg-gray-50">
                     Sello de Caja
                 </div>
             </div>
@@ -87,19 +114,21 @@
         <div class="bg-emerald-900 text-emerald-100 p-8 text-xs text-center border-t border-emerald-800">
             Este documento constituye un recibo oficial de pago emitido por el Sistema Integral de Finanzas.<br>
             <strong>Universidad Autónoma del Estado de México.</strong><br>
-            <span class="opacity-70 mt-2 block font-bancaria">Fecha de Impresión: {{ fecha_emision|date:"d/m/Y H:i:s" }}</span>
+            <span class="opacity-70 mt-2 block font-bancaria">Fecha de Impresión: {{ fecha_emision|date:"d/m/Y H:i:s"
+                }}</span>
         </div>
     </div>
 
     <script>
 
-        window.onload = function() {
-            document.fonts.ready.then(function() {
-                setTimeout(function() {
+        window.onload = function () {
+            document.fonts.ready.then(function () {
+                setTimeout(function () {
                     window.print();
-                }, 500); 
+                }, 500);
             });
         };
     </script>
 </body>
+
 </html>

@@ -364,6 +364,224 @@ INSERT INTO `concepto` VALUES (1,'Reinscripción Semestral',2500.00),(2,'Reposic
 UNLOCK TABLES;
 
 --
+-- Table structure for table `controlescolar_alumnogrupo`
+--
+
+DROP TABLE IF EXISTS `controlescolar_alumnogrupo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `controlescolar_alumnogrupo` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `fecha_asignacion` datetime(6) DEFAULT NULL,
+  `idalumno_id` int NOT NULL,
+  `idgrupo_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ControlEscolar_alumnogrupo_idalumno_id_idgrupo_id_eb036784_uniq` (`idalumno_id`,`idgrupo_id`),
+  KEY `ControlEscolar_alumn_idgrupo_id_d9bc6cea_fk_ControlEs` (`idgrupo_id`),
+  CONSTRAINT `ControlEscolar_alumn_idalumno_id_ec9e1653_fk_Alumno_id` FOREIGN KEY (`idalumno_id`) REFERENCES `alumno` (`idAlumno`),
+  CONSTRAINT `ControlEscolar_alumn_idgrupo_id_d9bc6cea_fk_ControlEs` FOREIGN KEY (`idgrupo_id`) REFERENCES `controlescolar_grupo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `controlescolar_alumnogrupo`
+--
+
+LOCK TABLES `controlescolar_alumnogrupo` WRITE;
+/*!40000 ALTER TABLE `controlescolar_alumnogrupo` DISABLE KEYS */;
+INSERT INTO `controlescolar_alumnogrupo` VALUES (1,'2026-05-13 18:04:27.906559',1,1),(2,'2026-05-14 01:46:09.887539',2,1),(3,'2026-05-14 01:46:17.270828',3,2);
+/*!40000 ALTER TABLE `controlescolar_alumnogrupo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `controlescolar_asignatura`
+--
+
+DROP TABLE IF EXISTS `controlescolar_asignatura`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `controlescolar_asignatura` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `clave` varchar(20) NOT NULL,
+  `nombre` varchar(150) NOT NULL,
+  `creditos` int NOT NULL,
+  `semestre_ideal` int NOT NULL,
+  `prerrequisito_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `clave` (`clave`),
+  KEY `ControlEscolar_asign_prerrequisito_id_05d05570_fk_ControlEs` (`prerrequisito_id`),
+  CONSTRAINT `ControlEscolar_asign_prerrequisito_id_05d05570_fk_ControlEs` FOREIGN KEY (`prerrequisito_id`) REFERENCES `controlescolar_asignatura` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `controlescolar_asignatura`
+--
+
+LOCK TABLES `controlescolar_asignatura` WRITE;
+/*!40000 ALTER TABLE `controlescolar_asignatura` DISABLE KEYS */;
+INSERT INTO `controlescolar_asignatura` VALUES (1,'PROG401','Programación Avanzada',10,1,NULL),(2,'BD401','Bases de Datos',8,1,NULL),(3,'RED401','Redes de Computadoras',8,1,NULL);
+/*!40000 ALTER TABLE `controlescolar_asignatura` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `controlescolar_aviso`
+--
+
+DROP TABLE IF EXISTS `controlescolar_aviso`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `controlescolar_aviso` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(200) NOT NULL,
+  `mensaje` longtext NOT NULL,
+  `fecha_publicacion` datetime(6) NOT NULL,
+  `tipo` varchar(20) NOT NULL,
+  `idalumno_id` int DEFAULT NULL,
+  `idgrupo_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ControlEscolar_aviso_idalumno_id_c4ae6a40_fk_Alumno_idAlumno` (`idalumno_id`),
+  KEY `ControlEscolar_aviso_idgrupo_id_c2241330_fk_ControlEs` (`idgrupo_id`),
+  CONSTRAINT `ControlEscolar_aviso_idalumno_id_c4ae6a40_fk_Alumno_idAlumno` FOREIGN KEY (`idalumno_id`) REFERENCES `alumno` (`idAlumno`),
+  CONSTRAINT `ControlEscolar_aviso_idgrupo_id_c2241330_fk_ControlEs` FOREIGN KEY (`idgrupo_id`) REFERENCES `controlescolar_grupo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `controlescolar_aviso`
+--
+
+LOCK TABLES `controlescolar_aviso` WRITE;
+/*!40000 ALTER TABLE `controlescolar_aviso` DISABLE KEYS */;
+INSERT INTO `controlescolar_aviso` VALUES (1,'? ¡Bienvenidos al Ciclo Escolar!','La UAEM les desea un excelente inicio de clases a toda la comunidad estudiantil.','2026-05-13 17:25:54.363201','global',NULL,NULL);
+/*!40000 ALTER TABLE `controlescolar_aviso` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `controlescolar_cicloescolar`
+--
+
+DROP TABLE IF EXISTS `controlescolar_cicloescolar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `controlescolar_cicloescolar` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `estatus` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nombre` (`nombre`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `controlescolar_cicloescolar`
+--
+
+LOCK TABLES `controlescolar_cicloescolar` WRITE;
+/*!40000 ALTER TABLE `controlescolar_cicloescolar` DISABLE KEYS */;
+INSERT INTO `controlescolar_cicloescolar` VALUES (1,'2026-A','2026-01-15','2026-06-15','activo');
+/*!40000 ALTER TABLE `controlescolar_cicloescolar` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `controlescolar_grupo`
+--
+
+DROP TABLE IF EXISTS `controlescolar_grupo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `controlescolar_grupo` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `semestre` int NOT NULL,
+  `idciclo_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ControlEscolar_grupo_idciclo_id_577d51db_fk_ControlEs` (`idciclo_id`),
+  CONSTRAINT `ControlEscolar_grupo_idciclo_id_577d51db_fk_ControlEs` FOREIGN KEY (`idciclo_id`) REFERENCES `controlescolar_cicloescolar` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `controlescolar_grupo`
+--
+
+LOCK TABLES `controlescolar_grupo` WRITE;
+/*!40000 ALTER TABLE `controlescolar_grupo` DISABLE KEYS */;
+INSERT INTO `controlescolar_grupo` VALUES (1,'I4',4,1),(2,'4I',4,1);
+/*!40000 ALTER TABLE `controlescolar_grupo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `controlescolar_horario`
+--
+
+DROP TABLE IF EXISTS `controlescolar_horario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `controlescolar_horario` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `profesor_asignado` varchar(150) NOT NULL,
+  `aula` varchar(50) NOT NULL,
+  `dia` varchar(20) NOT NULL,
+  `hora_inicio` time(6) NOT NULL,
+  `hora_fin` time(6) NOT NULL,
+  `idasignatura_id` bigint NOT NULL,
+  `idgrupo_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ControlEscolar_horar_idasignatura_id_02c76510_fk_ControlEs` (`idasignatura_id`),
+  KEY `ControlEscolar_horar_idgrupo_id_1daaad2a_fk_ControlEs` (`idgrupo_id`),
+  CONSTRAINT `ControlEscolar_horar_idasignatura_id_02c76510_fk_ControlEs` FOREIGN KEY (`idasignatura_id`) REFERENCES `controlescolar_asignatura` (`id`),
+  CONSTRAINT `ControlEscolar_horar_idgrupo_id_1daaad2a_fk_ControlEs` FOREIGN KEY (`idgrupo_id`) REFERENCES `controlescolar_grupo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `controlescolar_horario`
+--
+
+LOCK TABLES `controlescolar_horario` WRITE;
+/*!40000 ALTER TABLE `controlescolar_horario` DISABLE KEYS */;
+INSERT INTO `controlescolar_horario` VALUES (1,'Ing. Roberto','Lab 1','lunes','09:00:00.000000','11:00:00.000000',1,1),(2,'Dra. Elena','Edificio A','martes','11:00:00.000000','13:00:00.000000',2,1);
+/*!40000 ALTER TABLE `controlescolar_horario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `controlescolar_inscripcion`
+--
+
+DROP TABLE IF EXISTS `controlescolar_inscripcion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `controlescolar_inscripcion` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `estatus` varchar(20) NOT NULL,
+  `calificacion_final` decimal(4,2) DEFAULT NULL,
+  `idalumno_id` int NOT NULL,
+  `idasignatura_id` bigint NOT NULL,
+  `idciclo_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ControlEscolar_inscripci_idalumno_id_idasignatura_8af4d28e_uniq` (`idalumno_id`,`idasignatura_id`,`idciclo_id`),
+  KEY `ControlEscolar_inscr_idasignatura_id_e1974af0_fk_ControlEs` (`idasignatura_id`),
+  KEY `ControlEscolar_inscr_idciclo_id_2e10b123_fk_ControlEs` (`idciclo_id`),
+  CONSTRAINT `ControlEscolar_inscr_idalumno_id_ede34770_fk_Alumno_id` FOREIGN KEY (`idalumno_id`) REFERENCES `alumno` (`idAlumno`),
+  CONSTRAINT `ControlEscolar_inscr_idasignatura_id_e1974af0_fk_ControlEs` FOREIGN KEY (`idasignatura_id`) REFERENCES `controlescolar_asignatura` (`id`),
+  CONSTRAINT `ControlEscolar_inscr_idciclo_id_2e10b123_fk_ControlEs` FOREIGN KEY (`idciclo_id`) REFERENCES `controlescolar_cicloescolar` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `controlescolar_inscripcion`
+--
+
+LOCK TABLES `controlescolar_inscripcion` WRITE;
+/*!40000 ALTER TABLE `controlescolar_inscripcion` DISABLE KEYS */;
+INSERT INTO `controlescolar_inscripcion` VALUES (1,'aprobada',9.00,1,1,1),(2,'aprobada',9.00,2,1,1),(3,'aprobada',9.00,3,1,1);
+/*!40000 ALTER TABLE `controlescolar_inscripcion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `django_admin_log`
 --
 
@@ -719,4 +937,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-10 17:07:43
+-- Dump completed on 2026-05-14 16:49:29

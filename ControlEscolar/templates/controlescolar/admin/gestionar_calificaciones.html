@@ -1,0 +1,138 @@
+{% extends 'inicio.html' %}
+
+{% block content %}
+<nav class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center w-full fixed top-0 z-50">
+    <div class="text-2xl font-black text-amber-500 tracking-tight">
+        UAEM
+    </div>
+    <div class="flex items-center gap-6">
+        <a href="{% url 'ControlEscolar:dashboard_admin' %}"
+            class="text-emerald-700 font-bold flex items-center hover:text-emerald-800 transition-colors text-sm">
+            <i class="fas fa-arrow-left mr-2"></i> Regresar
+        </a>
+        <form method="post" action="{% url 'logout' %}" class="m-0">
+            {% csrf_token %}
+            <button type="submit"
+                class="border border-red-200 text-red-600 bg-red-50 hover:bg-red-100 px-5 py-2 rounded-lg text-sm font-bold transition-colors">
+                Cerrar Sesión
+            </button>
+        </form>
+    </div>
+</nav>
+
+<div class="max-w-7xl mx-auto mt-12 mb-20 px-6 pt-24">
+
+    <div class="mb-10 border-b border-gray-200 pb-6">
+        <h1 class="text-3xl font-black text-slate-800 tracking-tight">Captura de Calificaciones</h1>
+        <p class="text-slate-500 font-medium text-sm mt-1">Asienta notas finales por grupo y materia. Ciclo: {{
+            ciclo_actual.nombre }}</p>
+    </div>
+
+    <div
+        class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-200 mb-8 flex flex-col md:flex-row gap-4 items-end">
+
+        <form method="GET" action="." class="w-full md:w-1/3">
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 block">1. Grupo</label>
+            <select name="grupo_id"
+                class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 font-medium text-slate-700"
+                onchange="this.form.submit()">
+                <option value="">Seleccione grupo...</option>
+                {% for g in grupos %}
+                <option value="{{ g.id }}" {% if grupo_seleccionado.id==g.id %}selected{% endif %}>{{ g.nombre }}
+                </option>
+                {% endfor %}
+            </select>
+        </form>
+
+        {% if grupo_seleccionado %}
+        <form method="GET" action="." class="w-full md:w-1/3 flex gap-4">
+            <input type="hidden" name="grupo_id" value="{{ grupo_seleccionado.id }}">
+            <div class="w-full">
+                <label class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 block">2. Materia</label>
+                <select name="asignatura_id"
+                    class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 font-medium text-slate-700"
+                    onchange="this.form.submit()">
+                    <option value="">Seleccione materia...</option>
+                    {% for a in asignaturas_grupo %}
+                    <option value="{{ a.id }}" {% if asignatura_seleccionada.id==a.id %}selected{% endif %}>{{ a.nombre
+                        }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+
+    {% if asignatura_seleccionada %}
+    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-200 overflow-hidden">
+        <form method="POST" action=".">
+            {% csrf_token %}
+            <div class="bg-slate-800 px-8 py-5 flex justify-between items-center text-white">
+                <div>
+                    <h4 class="font-black uppercase text-xs tracking-widest">Acta de Calificaciones</h4>
+                    <p class="text-slate-400 text-sm font-medium">{{ asignatura_seleccionada.nombre }} - {{
+                        grupo_seleccionado.nombre }}</p>
+                </div>
+                <button type="submit"
+                    class="bg-emerald-500 text-white font-black px-6 py-2 rounded-xl hover:bg-emerald-600 transition shadow-md text-sm tracking-wide">
+                    <i class="fas fa-save mr-2"></i> Guardar Acta
+                </button>
+            </div>
+
+            <div class="p-8 overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr>
+                            <th
+                                class="py-3 px-4 text-xs font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
+                                Matrícula</th>
+                            <th
+                                class="py-3 px-4 text-xs font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
+                                Alumno</th>
+                            <th
+                                class="py-3 px-4 text-xs font-black text-gray-400 uppercase tracking-widest border-b border-gray-100 w-32">
+                                Calificación</th>
+                            <th
+                                class="py-3 px-4 text-xs font-black text-gray-400 uppercase tracking-widest border-b border-gray-100 w-48">
+                                Estatus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for insc in inscripciones %}
+                        <tr class="hover:bg-slate-50/50 transition border-b border-gray-50 last:border-0">
+                            <td class="py-4 px-4 text-slate-500 font-bold text-sm">{{ insc.idalumno.matricula }}</td>
+                            <td class="py-4 px-4 font-bold text-slate-800">{{ insc.idalumno.nombre }} {{
+                                insc.idalumno.apellido_paterno }}</td>
+                            <td class="py-4 px-4">
+                                <input type="number" step="0.1" min="0" max="10" name="calif_{{ insc.id }}"
+                                    value="{{ insc.calificacion_final|default_if_none:'' }}"
+                                    class="w-full bg-slate-50 border border-gray-200 rounded-lg px-3 py-2 text-center font-black text-emerald-700 focus:ring-2 focus:ring-emerald-500">
+                            </td>
+                            <td class="py-4 px-4">
+                                <select name="estatus_{{ insc.id }}"
+                                    class="w-full bg-slate-50 border border-gray-200 rounded-lg px-3 py-2 text-sm font-bold text-slate-600 focus:ring-2 focus:ring-emerald-500">
+                                    <option value="cursando" {% if insc.estatus=='cursando' %}selected{% endif %}>⏳
+                                        Cursando</option>
+                                    <option value="aprobada" {% if insc.estatus=='aprobada' %}selected{% endif %}>✅
+                                        Aprobada</option>
+                                    <option value="reprobada" {% if insc.estatus=='reprobada' %}selected{% endif %}>❌
+                                        Reprobada</option>
+                                    <option value="baja" {% if insc.estatus=='baja' %}selected{% endif %}>⛔ Baja
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-10 text-gray-400 font-bold">Este grupo no tiene
+                                alumnos registrados.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -23,7 +23,6 @@
                 <div class="hidden md:flex space-x-8 items-center">
 
                     {% block nav_left %}
-                    <a href="{% url 'inicio' %}" class="text-gray-600 hover:text-green-800 font-medium">Inicio</a>
                     {% endblock %}
 
                     {% if user.is_authenticated %}

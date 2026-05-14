@@ -1,0 +1,93 @@
+{% extends 'inicio.html' %}
+
+{% block content %}
+<nav class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center w-full fixed top-0 z-50">
+    <div class="text-2xl font-black text-amber-500 tracking-tight">
+        UAEM
+    </div>
+    <div class="flex items-center gap-6">
+        <a href="{% url 'ControlEscolar:dashboard_alumno' %}"
+            class="text-emerald-700 font-bold flex items-center hover:text-emerald-800 transition-colors text-sm">
+            <i class="fas fa-arrow-left mr-2"></i> Regresar
+        </a>
+        <form method="post" action="{% url 'logout' %}" class="m-0">
+            {% csrf_token %}
+            <button type="submit"
+                class="border border-red-200 text-red-600 bg-red-50 hover:bg-red-100 px-5 py-2 rounded-lg text-sm font-bold transition-colors">
+                Cerrar Sesión
+            </button>
+        </form>
+    </div>
+</nav>
+
+<div class="max-w-4xl mx-auto mt-12 mb-20 px-6 pt-24">
+
+    <div class="mb-8">
+        <h1 class="text-3xl font-black text-slate-800 tracking-tight">Historial de Calificaciones</h1>
+    </div>
+
+    <div
+        class="bg-slate-800 rounded-t-[2rem] p-8 text-white flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+            <p class="text-slate-400 font-bold text-xs uppercase tracking-widest mb-1">Expediente del Estudiante</p>
+            <h2 class="text-2xl font-black">{{ alumno.nombre }} {{ alumno.apellido_paterno }}</h2>
+            <p class="text-slate-300 font-medium text-sm mt-1">Matrícula: <span class="text-white font-bold">{{
+                    alumno.matricula }}</span></p>
+        </div>
+        <div class="bg-slate-700/50 p-4 rounded-2xl text-center min-w-[120px] border border-slate-600">
+            <p class="text-slate-300 text-[10px] font-black uppercase tracking-widest mb-1">Promedio Global</p>
+            <p class="text-4xl font-black text-emerald-400">{{ promedio }}</p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-b-[2rem] shadow-md border border-gray-200 overflow-hidden">
+        <table class="w-full text-left">
+            <thead>
+                <tr class="bg-slate-50">
+                    <th class="py-4 px-8 text-xs font-black text-gray-400 uppercase tracking-widest">Ciclo / Materia
+                    </th>
+                    <th class="py-4 px-8 text-xs font-black text-gray-400 uppercase tracking-widest">Créditos</th>
+                    <th class="py-4 px-8 text-xs font-black text-gray-400 uppercase tracking-widest">Estatus</th>
+                    <th class="py-4 px-8 text-xs font-black text-gray-400 uppercase tracking-widest text-right">
+                        Calificación</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                {% for insc in inscripciones %}
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="py-5 px-8">
+                        <span class="block text-xs font-bold text-blue-600 mb-1">{{ insc.idciclo.nombre }}</span>
+                        <span class="block font-black text-slate-800 text-lg">{{ insc.idasignatura.nombre }}</span>
+                    </td>
+                    <td class="py-5 px-8 font-bold text-slate-500">{{ insc.idasignatura.creditos }}</td>
+                    <td class="py-5 px-8">
+                        {% if insc.estatus == 'aprobada' %}
+                        <span
+                            class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">Aprobada</span>
+                        {% elif insc.estatus == 'cursando' %}
+                        <span
+                            class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">Cursando</span>
+                        {% elif insc.estatus == 'reprobada' %}
+                        <span
+                            class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">Reprobada</span>
+                        {% else %}
+                        <span
+                            class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">Baja</span>
+                        {% endif %}
+                    </td>
+                    <td
+                        class="py-5 px-8 text-right font-black text-2xl {% if insc.calificacion_final < 6 %}text-red-500{% else %}text-slate-800{% endif %}">
+                        {{ insc.calificacion_final|default:"--" }}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-16 text-gray-400 font-bold">Aún no tienes registro de
+                        calificaciones.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Acceso | UAEM</title>
 </head>
-<body class="bg-gradient-to-br from-green-900 via-green-800 to-green-900 flex items-center justify-center h-screen px-4">
+
+<body
+    class="bg-gradient-to-br from-green-900 via-green-800 to-green-900 flex items-center justify-center h-screen px-4">
 
     <div class="bg-white p-8 md:p-10 rounded-2xl shadow-2xl w-full max-w-md border-b-8 border-yellow-600">
 
@@ -20,10 +23,10 @@
             <div class="h-1 w-16 bg-yellow-500 mx-auto mt-4 rounded-full"></div>
         </div>
 
-  
+
         <form method="POST" class="space-y-5">
             {% csrf_token %}
-            
+
             {% if form.errors %}
             <div class="bg-red-50 border-l-4 border-red-500 p-3 mb-4">
                 <p class="text-xs text-red-700">Usuario o contraseña incorrectos. Por favor, intente de nuevo.</p>
@@ -32,27 +35,31 @@
 
             <div class="space-y-4">
                 {% for field in form %}
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1 ml-1">
-                            {{ field.label }}
-                        </label>
-                        <div class="relative">
-                            {{ field }}
-                        </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1 ml-1">
+                        {{ field.label }}
+                    </label>
+                    <div class="relative">
+                        {{ field }}
                     </div>
+                </div>
                 {% endfor %}
             </div>
 
-            <button type="submit" class="w-full bg-green-800 text-white py-3 rounded-xl font-bold text-lg hover:bg-green-700 hover:shadow-lg transform hover:-translate-y-0.5 transition duration-200 active:scale-95 mt-4">
+            <button type="submit"
+                class="w-full bg-green-800 text-white py-3 rounded-xl font-bold text-lg hover:bg-green-700 hover:shadow-lg transform hover:-translate-y-0.5 transition duration-200 active:scale-95 mt-4">
                 Iniciar Sesión
             </button>
         </form>
-        
+
 
         <div class="mt-8 pt-6 border-t border-gray-100 text-center">
-            <a href="{% url 'inicio' %}" class="text-sm font-medium text-gray-400 hover:text-green-800 transition duration-200 flex items-center justify-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            <a href="{% url 'inicio' %}"
+                class="text-sm font-medium text-gray-400 hover:text-green-800 transition duration-200 flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 Volver a la pagina principal
             </a>
@@ -69,6 +76,7 @@
             background-color: #f9fafb;
             transition: all 0.2s;
         }
+
         input:focus {
             outline: none;
             border-color: #166534;
@@ -77,4 +85,5 @@
         }
     </style>
 </body>
+
 </html>

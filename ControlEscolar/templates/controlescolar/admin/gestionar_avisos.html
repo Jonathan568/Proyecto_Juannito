@@ -1,0 +1,195 @@
+{% extends 'inicio.html' %}
+
+{% block content %}
+<nav class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center w-full fixed top-0 z-50">
+    <div class="text-2xl font-black text-amber-500 tracking-tight">
+        UAEM
+    </div>
+    <div class="flex items-center gap-6">
+        <a href="{% url 'ControlEscolar:dashboard_admin' %}"
+            class="text-emerald-700 font-bold flex items-center hover:text-emerald-800 transition-colors text-sm">
+            <i class="fas fa-arrow-left mr-2"></i> Regresar
+        </a>
+        <form method="post" action="{% url 'logout' %}" class="m-0">
+            {% csrf_token %}
+            <button type="submit"
+                class="border border-red-200 text-red-600 bg-red-50 hover:bg-red-100 px-5 py-2 rounded-lg text-sm font-bold transition-colors">
+                Cerrar Sesión
+            </button>
+        </form>
+    </div>
+</nav>
+
+<div class="max-w-7xl mx-auto mt-12 mb-20 px-6 pt-24">
+
+    <div class="mb-10 border-b border-gray-200 pb-6">
+        <h1 class="text-3xl font-black text-slate-800 tracking-tight">Centro de Avisos</h1>
+        <p class="text-slate-500 font-medium text-sm mt-1">Envía comunicados globales, a grupos o a estudiantes
+            específicos.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <div class="lg:col-span-1">
+            <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-200 sticky top-24">
+                <h3
+                    class="font-black text-slate-800 text-sm mb-6 uppercase tracking-widest border-b border-gray-100 pb-2">
+                    <i class="fas fa-pen-alt text-amber-500 mr-2"></i> Redactar Nuevo
+                </h3>
+
+                <form method="POST" action="." class="space-y-5">
+                    {% csrf_token %}
+
+                    <div>
+                        <label class="text-xs font-bold text-gray-500 uppercase tracking-widest">Título del
+                            Aviso</label>
+                        <input type="text" name="titulo" required placeholder="Ej. Suspensión de labores..."
+                            class="w-full mt-1 bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-500 text-sm font-medium transition-shadow">
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-bold text-gray-500 uppercase tracking-widest">¿Para quién es?</label>
+                        <select name="tipo" id="tipo_aviso" onchange="toggleDestinatario()"
+                            class="w-full mt-1 bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-500 text-sm font-bold text-slate-700 transition-shadow">
+                            <option value="global">🔊 Todos los Alumnos (Global)</option>
+                            <option value="grupal">👥 Un Grupo en Específico</option>
+                            <option value="individual">👤 Un Alumno en Específico</option>
+                        </select>
+                    </div>
+
+                    <div id="div_grupo" class="hidden bg-amber-50 p-4 rounded-xl border border-amber-100">
+                        <label
+                            class="text-xs font-black text-amber-800 uppercase tracking-widest mb-2 block">Seleccionar
+                            Grupo</label>
+                        <select name="idgrupo"
+                            class="w-full bg-white border border-amber-200 rounded-lg px-3 py-2 text-sm font-medium">
+                            <option value="">Elegir grupo...</option>
+                            {% for g in grupos %}
+                            <option value="{{ g.id }}">{{ g.nombre }} - Semestre {{ g.semestre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div id="div_alumno" class="hidden bg-blue-50 p-4 rounded-xl border border-blue-100">
+                        <label class="text-xs font-black text-blue-800 uppercase tracking-widest mb-2 block">Buscar
+                            Alumno</label>
+                        <select name="idalumno"
+                            class="w-full bg-white border border-blue-200 rounded-lg px-3 py-2 text-sm font-medium">
+                            <option value="">Elegir alumno...</option>
+                            {% for a in alumnos %}
+                            <option value="{{ a.id }}">{{ a.matricula }} - {{ a.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-bold text-gray-500 uppercase tracking-widest">Mensaje</label>
+                        <textarea name="mensaje" rows="4" required
+                            placeholder="Escribe el contenido detallado del comunicado aquí..."
+                            class="w-full mt-1 bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-500 text-sm font-medium transition-shadow resize-none"></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-slate-800 text-white font-black py-3 rounded-xl hover:bg-slate-900 transition shadow-md uppercase text-xs tracking-widest mt-4">
+                        <i class="fas fa-paper-plane mr-2"></i> Publicar Aviso
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2">
+            <h3 class="font-black text-slate-800 text-sm mb-6 uppercase tracking-widest border-b border-gray-200 pb-2">
+                Muro de Publicaciones</h3>
+
+            {% if avisos %}
+            <div class="space-y-6">
+                {% for aviso in avisos %}
+                <div
+                    class="bg-white rounded-[2rem] shadow-sm border border-gray-200 p-8 relative overflow-hidden group">
+
+                    <div class="absolute left-0 top-0 bottom-0 w-2 
+                            {% if aviso.tipo == 'global' %}bg-purple-500
+                            {% elif aviso.tipo == 'grupal' %}bg-amber-500
+                            {% else %}bg-blue-500{% endif %}">
+                    </div>
+
+                    <div class="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <a href="{% url 'ControlEscolar:eliminar_aviso' aviso.id %}"
+                            onclick="return confirm('¿Seguro que deseas eliminar este aviso?')"
+                            class="text-red-400 hover:text-red-600 bg-red-50 hover:bg-red-100 p-3 rounded-xl transition-colors">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-black
+                                {% if aviso.tipo == 'global' %}bg-purple-50 text-purple-600
+                                {% elif aviso.tipo == 'grupal' %}bg-amber-50 text-amber-600
+                                {% else %}bg-blue-50 text-blue-600{% endif %}">
+                            {% if aviso.tipo == 'global' %}<i class="fas fa-globe"></i>
+                            {% elif aviso.tipo == 'grupal' %}<i class="fas fa-users"></i>
+                            {% else %}<i class="fas fa-user"></i>{% endif %}
+                        </div>
+
+                        <div>
+                            <h4 class="text-xl font-black text-slate-800">{{ aviso.titulo }}</h4>
+                            <div class="flex items-center gap-3 mt-1 text-xs font-bold tracking-widest uppercase">
+                                <span class="text-slate-400"><i class="far fa-clock mr-1"></i> {{
+                                    aviso.fecha_publicacion|date:"d M Y, H:i" }}</span>
+                                <span class="text-gray-300">|</span>
+                                <span class="
+                                        {% if aviso.tipo == 'global' %}text-purple-600
+                                        {% elif aviso.tipo == 'grupal' %}text-amber-600
+                                        {% else %}text-blue-600{% endif %}">
+                                    Para:
+                                    {% if aviso.tipo == 'global' %}Toda la comunidad
+                                    {% elif aviso.tipo == 'grupal' %}{{ aviso.idgrupo.nombre }}
+                                    {% else %}{{ aviso.idalumno.nombre|truncatechars:20 }}{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p
+                        class="text-slate-600 leading-relaxed text-sm ml-16 bg-slate-50 p-4 rounded-xl border border-gray-100">
+                        {{ aviso.mensaje }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div
+                class="bg-white rounded-[2rem] shadow-sm border border-gray-200 p-20 text-center flex flex-col items-center justify-center">
+                <div
+                    class="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center text-slate-300 text-4xl mb-6">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <h3 class="text-xl font-black text-slate-800 mb-2">Muro Limpio</h3>
+                <p class="text-slate-500">No hay avisos publicados en este momento.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleDestinatario() {
+        const tipo = document.getElementById('tipo_aviso').value;
+        const divGrupo = document.getElementById('div_grupo');
+        const divAlumno = document.getElementById('div_alumno');
+
+        if (tipo !== 'grupal') divGrupo.querySelector('select').value = '';
+        if (tipo !== 'individual') divAlumno.querySelector('select').value = '';
+
+        if (tipo === 'grupal') {
+            divGrupo.classList.remove('hidden');
+            divAlumno.classList.add('hidden');
+        } else if (tipo === 'individual') {
+            divAlumno.classList.remove('hidden');
+            divGrupo.classList.add('hidden');
+        } else { // global
+            divGrupo.classList.add('hidden');
+            divAlumno.classList.add('hidden');
+        }
+    }
+</script>
+{% endblock %}

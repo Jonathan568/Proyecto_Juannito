@@ -9,26 +9,26 @@ class Libro(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Libro'
+        db_table = 'libro' 
 
 class LibroFisico(models.Model):
     idlibrofisico = models.AutoField(db_column='idLibroFisico', primary_key=True)
     codigo_barras = models.CharField(max_length=50, blank=True, null=True)
-    estado = models.CharField(max_length=10, blank=True, null=True)
-    idlibro = models.ForeignKey(Libro, models.DO_NOTHING, db_column='idLibro')
+    estado = models.CharField(max_length=10, blank=True, null=True) # ENUM
+    idlibro = models.ForeignKey(Libro, models.PROTECT, db_column='idLibro') # PROTECT es más seguro
 
     class Meta:
         managed = False
-        db_table = 'Libro_Fisico'
+        db_table = 'libro_fisico' 
 
 class Prestamo(models.Model):
     idprestamo = models.AutoField(db_column='idPrestamo', primary_key=True)
-    idalumno = models.ForeignKey('Usuarios.Alumno', models.DO_NOTHING, db_column='idAlumno')
-    idlibrofisico = models.ForeignKey(LibroFisico, models.DO_NOTHING, db_column='idLibroFisico')
+    idalumno = models.ForeignKey('Usuarios.Alumno', models.PROTECT, db_column='idAlumno')
+    idlibrofisico = models.ForeignKey(LibroFisico, models.PROTECT, db_column='idLibroFisico')
     fecha_salida = models.DateTimeField(blank=True, null=True)
     fecha_devolucion = models.DateTimeField(blank=True, null=True)
-    estatus = models.CharField(max_length=10, blank=True, null=True)
+    estatus = models.CharField(max_length=10, blank=True, null=True) # ENUM
 
     class Meta:
         managed = False
-        db_table = 'Prestamo'
+        db_table = 'prestamo' 

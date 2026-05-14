@@ -1,36 +1,59 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Ficha Global de Pago</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&family=Roboto+Mono:wght@700&display=swap"
+        rel="stylesheet">
 
     <style>
         @media print {
-            @page { margin: 10mm; size: letter portrait; }
-            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .no-print { display: none !important; }
+            @page {
+                margin: 10mm;
+                size: letter portrait;
+            }
+
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .no-print {
+                display: none !important;
+            }
         }
 
-        .barcode { font-family: 'Libre Barcode 39 Text', cursive; font-size: 5rem; line-height: 1; color: #1f2937; }
-        .font-bancaria { font-family: 'Roboto Mono', monospace; letter-spacing: 1px; }
+        .barcode {
+            font-family: 'Libre Barcode 39 Text', cursive;
+            font-size: 5rem;
+            line-height: 1;
+            color: #1f2937;
+        }
+
+        .font-bancaria {
+            font-family: 'Roboto Mono', monospace;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
+
 <body class="bg-gray-200 flex items-center justify-center min-h-screen py-10 font-sans">
-    
+
     <div class="fixed top-6 right-6 no-print">
-        <button onclick="window.print()" class="bg-amber-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-amber-700 flex items-center gap-2">
+        <button onclick="window.print()"
+            class="bg-amber-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-amber-700 flex items-center gap-2">
             <i class="fas fa-print"></i> Imprimir Orden
         </button>
     </div>
 
     <div class="bg-white w-[800px] shadow-2xl print:shadow-none print:w-full print:p-0 border-t-8 border-gray-800">
-        
+
         <div class="p-12 pb-6">
             <div class="flex justify-between items-end border-b-2 border-gray-200 pb-6 mb-8">
                 <div>
@@ -39,7 +62,8 @@
                 </div>
                 <div class="text-right">
                     <div class="bg-gray-100 px-4 py-2 rounded-lg inline-block text-center border border-gray-200">
-                        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Referencia Global</p>
+                        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Referencia Global
+                        </p>
                         <p class="text-xl font-black text-gray-800 font-bancaria">REF-{{ alumno.matricula }}</p>
                     </div>
                 </div>
@@ -50,7 +74,9 @@
                     <i class="fas fa-exclamation-triangle text-amber-500 text-xl mr-4 mt-0.5"></i>
                     <div>
                         <h3 class="font-bold text-amber-800 text-sm uppercase">Importante</h3>
-                        <p class="text-amber-700 text-sm mt-1">Este documento es únicamente una referencia para realizar el pago en caja. <strong>Carece de validez oficial como comprobante de ingresos</strong> hasta que sea procesado y sellado por el departamento de finanzas.</p>
+                        <p class="text-amber-700 text-sm mt-1">Este documento es únicamente una referencia para realizar
+                            el pago en caja. <strong>Carece de validez oficial como comprobante de ingresos</strong>
+                            hasta que sea procesado y sellado por el departamento de finanzas.</p>
                     </div>
                 </div>
             </div>
@@ -58,16 +84,20 @@
             <div class="grid grid-cols-2 gap-8 mb-8">
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
                     <p class="text-xs font-bold text-gray-400 uppercase mb-3">Datos del Estudiante</p>
-                    <p class="font-bold text-gray-900 uppercase text-lg mb-2">{{ alumno.nombre }} {{ alumno.apellido_paterno }}</p>
-                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-id-card mr-2 text-gray-400 w-4"></i> Matrícula: {{ alumno.matricula }}</p>
-                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-users mr-2 text-gray-400 w-4"></i> Grupo: {{ alumno.idgrupo.nombre }}</p>
+                    <p class="font-bold text-gray-900 uppercase text-lg mb-2">{{ alumno.nombre }} {{
+                        alumno.apellido_paterno }}</p>
+                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-id-card mr-2 text-gray-400 w-4"></i>
+                        Matrícula: {{ alumno.matricula }}</p>
+                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-users mr-2 text-gray-400 w-4"></i> Grupo: {{
+                        alumno.idgrupo.nombre }}</p>
                 </div>
-                
+
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
                     <p class="text-xs font-bold text-gray-400 uppercase mb-3">Desglose de Cargos</p>
                     <div class="space-y-2 mb-4">
                         {% for cargo in cargos %}
-                        <div class="flex justify-between text-sm text-gray-700 font-medium border-b border-gray-200 border-dashed pb-1">
+                        <div
+                            class="flex justify-between text-sm text-gray-700 font-medium border-b border-gray-200 border-dashed pb-1">
                             <span class="truncate pr-2">{{ forloop.counter }}. {{ cargo.idconcepto.nombre }}</span>
                             <span>${{ cargo.monto }}</span>
                         </div>
@@ -80,10 +110,13 @@
                 </div>
             </div>
 
-            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-center mb-10 bg-gray-50/50">
-                <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Total Global a Pagar en Caja</p>
-                <p class="text-5xl font-black text-gray-900 mb-6">${{ total_ficha }} <span class="text-xl text-gray-400 font-normal">MXN</span></p>
-                
+            <div
+                class="border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-center mb-10 bg-gray-50/50">
+                <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Total Global a Pagar en Caja
+                </p>
+                <p class="text-5xl font-black text-gray-900 mb-6">${{ total_ficha }} <span
+                        class="text-xl text-gray-400 font-normal">MXN</span></p>
+
                 <div class="barcode">*REF-{{ alumno.matricula }}*</div>
                 <p class="text-sm text-gray-600 mt-2 font-bancaria">REF-{{ alumno.matricula }}</p>
             </div>
@@ -94,20 +127,22 @@
             <ol class="list-decimal pl-5 space-y-2 text-gray-400">
                 <li>Verifique que el importe recibido coincida con el "Total Global a Pagar".</li>
                 <li>Capture la <strong class="text-white">Referencia Global</strong> en el sistema institucional.</li>
-                <li>Conserve esta ficha y entregue al alumno el <strong class="text-white">Recibo Oficial</strong> sellado.</li>
+                <li>Conserve esta ficha y entregue al alumno el <strong class="text-white">Recibo Oficial</strong>
+                    sellado.</li>
             </ol>
         </div>
     </div>
 
     <script>
 
-        window.onload = function() {
-            document.fonts.ready.then(function() {
-                setTimeout(function() {
+        window.onload = function () {
+            document.fonts.ready.then(function () {
+                setTimeout(function () {
                     window.print();
-                }, 500); 
+                }, 500);
             });
         };
     </script>
 </body>
+
 </html>

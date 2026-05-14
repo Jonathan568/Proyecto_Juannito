@@ -11,7 +11,8 @@
 <div class="max-w-7xl mx-auto mt-16 mb-20 px-6">
     <div class="mb-10">
         <h1 class="text-4xl font-black text-gray-800 tracking-tight">Historial de Movimientos</h1>
-        <p class="text-gray-500 mt-2 text-lg">Consulta, filtra y gestiona todos los registros financieros del sistema.</p>
+        <p class="text-gray-500 mt-2 text-lg">Consulta, filtra y gestiona todos los registros financieros del sistema.
+        </p>
     </div>
 
     <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-8">
@@ -30,7 +31,8 @@
                     class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-green-500 focus:border-green-500 p-3">
                     <option value="">Todos los conceptos</option>
                     {% for c in conceptos %}
-                    <option value="{{ c.idconcepto }}" {% if c.idconcepto|stringformat:"s" == q_concepto %}selected{% endif %}>
+                    <option value="{{ c.idconcepto }}" {% if c.idconcepto|stringformat:"s"==q_concepto %}selected{%
+                        endif %}>
                         {{ c.nombre }}
                     </option>
                     {% endfor %}
@@ -42,8 +44,8 @@
                 <select name="estado"
                     class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-green-500 focus:border-green-500 p-3">
                     <option value="">Cualquier estado</option>
-                    <option value="pendiente" {% if q_estado == 'pendiente' %}selected{% endif %}>Pendiente</option>
-                    <option value="pagado" {% if q_estado == 'pagado' %}selected{% endif %}>Pagado</option>
+                    <option value="pendiente" {% if q_estado=='pendiente' %}selected{% endif %}>Pendiente</option>
+                    <option value="pagado" {% if q_estado=='pagado' %}selected{% endif %}>Pagado</option>
                 </select>
             </div>
 
@@ -83,40 +85,51 @@
                     <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition">
                         <td class="px-8 py-4 text-gray-500">{{ cargo.fecha|date:"d/m/Y" }}</td>
                         <td class="px-8 py-4 font-bold">
-                            {{ cargo.idalumno.matricula }} - {{ cargo.idalumno.nombre }} {{ cargo.idalumno.apellido_paterno }}
+                            {{ cargo.idalumno.matricula }} - {{ cargo.idalumno.nombre }} {{
+                            cargo.idalumno.apellido_paterno }}
                         </td>
                         <td class="px-8 py-4">{{ cargo.idconcepto.nombre }}</td>
                         <td class="px-8 py-4 font-black text-gray-900">${{ cargo.monto }}</td>
                         <td class="px-8 py-4">
-                            <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider {% if cargo.estatus == 'pagado' %}bg-green-100 text-green-700{% else %}bg-amber-100 text-amber-700{% endif %}">
+                            <span
+                                class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider {% if cargo.estatus == 'pagado' %}bg-green-100 text-green-700{% else %}bg-amber-100 text-amber-700{% endif %}">
                                 {{ cargo.estatus|title }}
                             </span>
                         </td>
                         <td class="px-8 py-4 text-center">
                             {% if cargo.estatus == 'pendiente' %}
                             <div class="flex items-center justify-center gap-2">
-                                <form method="POST" action="{% url 'Finanzas:registrar_pago' cargo.idcargo %}" onsubmit="return confirm('¿Confirmar la recepción del pago por ${{ cargo.monto }}?');">
+                                <form method="POST" action="{% url 'Finanzas:registrar_pago' cargo.idcargo %}"
+                                    onsubmit="return confirm('¿Confirmar la recepción del pago por ${{ cargo.monto }}?');">
                                     {% csrf_token %}
-                                    <button type="submit" class="text-green-600 hover:text-green-800 bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg font-bold text-xs transition shadow-sm" title="Marcar como Pagado">
+                                    <button type="submit"
+                                        class="text-green-600 hover:text-green-800 bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg font-bold text-xs transition shadow-sm"
+                                        title="Marcar como Pagado">
                                         <i class="fas fa-check-circle"></i>
                                     </button>
                                 </form>
 
-                                <form method="POST" action="{% url 'Finanzas:cancelar_cargo' cargo.idcargo %}" onsubmit="return confirm('¿Estás seguro de que deseas CANCELAR este cargo? Esta acción dejará un registro de anulación.');">
+                                <form method="POST" action="{% url 'Finanzas:cancelar_cargo' cargo.idcargo %}"
+                                    onsubmit="return confirm('¿Estás seguro de que deseas CANCELAR este cargo? Esta acción dejará un registro de anulación.');">
                                     {% csrf_token %}
-                                    <button type="submit" class="text-red-600 hover:text-red-800 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg font-bold text-xs transition shadow-sm" title="Cancelar Cargo por Error">
+                                    <button type="submit"
+                                        class="text-red-600 hover:text-red-800 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg font-bold text-xs transition shadow-sm"
+                                        title="Cancelar Cargo por Error">
                                         <i class="fas fa-ban"></i>
                                     </button>
                                 </form>
                             </div>
 
                             {% elif cargo.estatus == 'pagado' %}
-                            <a href="{% url 'Finanzas:descargar_recibo' cargo.idcargo %}" target="_blank" class="text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg font-bold text-xs transition shadow-sm inline-flex items-center" title="Descargar Recibo PDF">
+                            <a href="{% url 'Finanzas:descargar_recibo' cargo.idcargo %}" target="_blank"
+                                class="text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg font-bold text-xs transition shadow-sm inline-flex items-center"
+                                title="Descargar Recibo PDF">
                                 <i class="fas fa-file-pdf mr-1"></i> Recibo
                             </a>
 
                             {% elif cargo.estatus == 'cancelado' %}
-                            <span class="text-rose-500 font-bold text-xs tracking-wider uppercase bg-rose-50 px-2 py-1 rounded-md shadow-sm">
+                            <span
+                                class="text-rose-500 font-bold text-xs tracking-wider uppercase bg-rose-50 px-2 py-1 rounded-md shadow-sm">
                                 Anulado
                             </span>
                             {% endif %}

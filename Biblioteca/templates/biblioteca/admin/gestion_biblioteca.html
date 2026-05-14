@@ -1,0 +1,172 @@
+{% extends 'inicio.html' %}
+
+{% block content %}
+<nav
+    class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center w-full fixed top-0 z-50 shadow-sm">
+    <div class="text-2xl font-black text-amber-500 tracking-tight">
+        UAEM <span class="text-slate-800 text-lg font-bold ml-2">| Biblioteca Admin</span>
+    </div>
+    <div class="flex items-center gap-6">
+        <a href="{% url 'Usuarios:panel_admin' %}"
+            class="text-emerald-700 font-bold flex items-center hover:text-emerald-800 transition-colors text-sm">
+            <i class="fas fa-arrow-left mr-2"></i> Regresar al Panel
+        </a>
+    </div>
+</nav>
+
+<div class="max-w-7xl mx-auto mt-24 mb-20 px-6">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="mb-6 p-4 rounded-xl font-bold text-sm bg-emerald-100 text-emerald-700 border border-emerald-200">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div
+        class="bg-emerald-600 rounded-[2rem] p-10 mb-10 shadow-lg text-white relative overflow-hidden flex justify-between items-center">
+        <div class="absolute -right-10 -top-10 opacity-20">
+            <i class="fas fa-book-open text-[12rem]"></i>
+        </div>
+        <div class="relative z-10">
+            <p class="text-emerald-200 font-bold tracking-widest uppercase text-xs mb-2">Módulo de Administración</p>
+            <h1 class="text-4xl font-black tracking-tight">Inventario de Biblioteca</h1>
+        </div>
+        <div class="relative z-10">
+            <button onclick="document.getElementById('modal-nuevo-libro').classList.remove('hidden')"
+                class="bg-white text-emerald-600 font-bold py-3 px-6 rounded-xl shadow hover:bg-gray-50 transition transform hover:scale-105">
+                <i class="fas fa-plus mr-2"></i> Registrar Nuevo Libro
+            </button>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-200 overflow-hidden">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+            <h2 class="text-xl font-black text-slate-800"><i class="fas fa-list text-emerald-500 mr-2"></i>Catálogo
+                Físico</h2>
+        </div>
+        <div class="p-0 overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-white">
+                        <th
+                            class="py-4 px-6 text-xs font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
+                            Libro</th>
+                        <th
+                            class="py-4 px-6 text-xs font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
+                            Código de Barras</th>
+                        <th
+                            class="py-4 px-6 text-xs font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
+                            Estado</th>
+                        <th
+                            class="py-4 px-6 text-xs font-black text-gray-400 uppercase tracking-widest border-b border-gray-100 text-right">
+                            Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50">
+                    {% for item in inventario %}
+                    <tr class="hover:bg-slate-50/50 transition">
+                        <td class="py-4 px-6">
+                            <span class="block font-bold text-slate-800">{{ item.idlibro.titulo }}</span>
+                            <span class="text-xs text-slate-500 font-medium">{{ item.idlibro.autor }} | ISBN: {{
+                                item.idlibro.isbn }}</span>
+                        </td>
+                        <td class="py-4 px-6">
+                            <span
+                                class="font-mono text-sm font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-lg">{{
+                                item.codigo_barras }}</span>
+                        </td>
+                        <td class="py-4 px-6">
+                            {% if item.estado == 'disponible' %}
+                            <span
+                                class="bg-emerald-100 text-emerald-700 font-bold text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-md"><i
+                                    class="fas fa-check-circle mr-1"></i> Disponible</span>
+                            {% else %}
+                            <span
+                                class="bg-red-100 text-red-700 font-bold text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-md"><i
+                                    class="fas fa-clock mr-1"></i> Prestado</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 px-6 text-right flex justify-end gap-2">
+                            {% if item.estado == 'prestado' %}
+                            <a href="{% url 'Biblioteca:devolver_libro' item.idlibrofisico %}"
+                                class="text-emerald-600 hover:text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3 py-2 rounded-lg transition text-xs font-bold flex items-center gap-1">
+                                <i class="fas fa-undo-alt"></i> Devolver
+                            </a>
+                            {% endif %}
+
+                            <a href="{% url 'Biblioteca:eliminar_libro' item.idlibrofisico %}"
+                                onclick="return confirm('¿Estás seguro de eliminar este ejemplar? Esta acción no se puede deshacer.');"
+                                class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="py-12 text-center text-gray-400 font-medium">No hay libros registrados en
+                            el inventario.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="modal-nuevo-libro"
+    class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity">
+    <div class="bg-white rounded-[2rem] p-8 max-w-lg w-full shadow-2xl relative">
+        <button onclick="document.getElementById('modal-nuevo-libro').classList.add('hidden')"
+            class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+
+        <h3 class="text-2xl font-black text-slate-800 mb-6"><i
+                class="fas fa-plus-circle text-emerald-500 mr-2"></i>Registrar Libro</h3>
+
+        <form action="{% url 'Biblioteca:registrar_libro' %}" method="POST" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Título del
+                    Libro</label>
+                <input type="text" name="titulo" required
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Autor</label>
+                    <input type="text" name="autor" required
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">ISBN</label>
+                    <input type="text" name="isbn" required
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Editorial</label>
+                    <input type="text" name="editorial"
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Código de
+                        Barras</label>
+                    <input type="text" name="codigo_barras" required placeholder="Ej. BC-001"
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition font-mono">
+                </div>
+            </div>
+
+            <div class="pt-4 flex justify-end gap-3 mt-4">
+                <button type="button" onclick="document.getElementById('modal-nuevo-libro').classList.add('hidden')"
+                    class="px-6 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition">Cancelar</button>
+                <button type="submit"
+                    class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold shadow-md transition transform hover:-translate-y-0.5">Guardar
+                    Libro</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

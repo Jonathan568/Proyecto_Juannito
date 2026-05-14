@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Escolar | UAEM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-slate-50 font-sans min-h-screen">
+
+    <nav class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center">
+        <div class="text-2xl font-black text-amber-500 tracking-tight">
+            UAEM
+        </div>
+        <div class="flex items-center gap-6">
+
+            <a href="{% url 'Usuarios:panel_admin' %}"
+                class="text-emerald-700 font-bold flex items-center hover:text-emerald-800 transition-colors">
+                <i class="fas fa-arrow-left mr-2"></i> Regresar
+            </a>
+
+            <form method="post" action="{% url 'logout' %}" class="m-0">
+                {% csrf_token %}
+                <button type="submit"
+                    class="border border-red-200 text-red-600 bg-red-50 hover:bg-red-100 px-5 py-2 rounded-lg text-sm font-bold transition-colors">
+                    Cerrar Sesión
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto mt-12 px-6">
+
+        <div class="mb-10">
+            <h1 class="text-3xl font-black text-slate-800 mb-2">Panel de Control: Control Escolar</h1>
+            <p class="text-slate-500 text-sm">Gestión de alumnos, grupos y carga académica. <span
+                    class="font-bold text-emerald-600 ml-2"><i class="fas fa-calendar-check mr-1"></i> Ciclo: {{
+                    ciclo_actual.nombre }}</span></p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-emerald-500">
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">ALUMNOS ACTIVOS</p>
+                <p class="text-2xl font-black text-slate-800">{{ total_alumnos }}</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-amber-500">
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">GRUPOS DEL CICLO</p>
+                <p class="text-2xl font-black text-slate-800">{{ total_grupos }}</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-500">
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">PLAN DE ESTUDIOS</p>
+                <p class="text-2xl font-black text-slate-800">{{ total_materias }}</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-red-500">
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">AVISOS PUBLICADOS</p>
+                <p class="text-2xl font-black text-slate-800">{{ avisos_recientes|length }}</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+
+            <div class="bg-white rounded-[2rem] p-10 text-center shadow-sm flex flex-col items-center">
+                <div
+                    class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 text-2xl mb-6">
+                    <i class="fas fa-users-cog"></i>
+                </div>
+                <h2 class="text-xl font-black text-slate-800 mb-3">Módulo de Grupos</h2>
+                <p class="text-sm text-slate-500 mb-8 px-2">Asignación de alumnos y movimientos de matrícula.</p>
+                <a href="{% url 'ControlEscolar:gestionar_grupos' %}"
+                    class="bg-amber-50 text-amber-700 font-bold px-6 py-2.5 rounded-full text-xs tracking-widest uppercase hover:bg-amber-100 transition-colors border border-amber-200">
+                    Gestionar Grupos
+                </a>
+            </div>
+
+            <div class="bg-white rounded-[2rem] p-10 text-center shadow-sm flex flex-col items-center">
+                <div
+                    class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 text-2xl mb-6">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h2 class="text-xl font-black text-slate-800 mb-3">Carga Académica</h2>
+                <p class="text-sm text-slate-500 mb-8 px-2">Asignación de horarios, profesores y aulas por grupo.</p>
+                <a href="{% url 'ControlEscolar:gestionar_horarios' %}"
+                    class="bg-amber-50 text-amber-700 font-bold px-6 py-2.5 rounded-full text-xs tracking-widest uppercase hover:bg-amber-100 transition-colors border border-amber-200">
+                    Asignar Horarios
+                </a>
+            </div>
+
+            <div class="bg-white rounded-[2rem] p-10 text-center shadow-sm flex flex-col items-center">
+                <div
+                    class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 text-2xl mb-6">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h2 class="text-xl font-black text-slate-800 mb-3">Calificaciones</h2>
+                <p class="text-sm text-slate-500 mb-8 px-2">Captura de actas finales y consulta de rendimiento.</p>
+                <a href="{% url 'ControlEscolar:gestionar_calificaciones' %}"
+                    class="bg-amber-50 text-amber-700 font-bold px-6 py-2.5 rounded-full text-xs tracking-widest uppercase hover:bg-amber-100 transition-colors border border-amber-200">
+                    Captura de Notas
+                </a>
+            </div>
+
+            <div class="bg-white rounded-[2rem] p-10 text-center shadow-sm flex flex-col items-center">
+                <div
+                    class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 text-2xl mb-6">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <h2 class="text-xl font-black text-slate-800 mb-3">Centro de Avisos</h2>
+                <p class="text-sm text-slate-500 mb-8 px-2">Comunicados globales, por grupos o individuales.</p>
+                <a href="{% url 'ControlEscolar:gestionar_avisos' %}"
+                    class="bg-amber-50 text-amber-700 font-bold px-6 py-2.5 rounded-full text-xs tracking-widest uppercase hover:bg-amber-100 transition-colors border border-amber-200">
+                    Publicar Avisos
+                </a>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

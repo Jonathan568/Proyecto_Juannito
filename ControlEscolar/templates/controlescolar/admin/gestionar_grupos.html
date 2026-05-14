@@ -1,0 +1,109 @@
+{% extends 'inicio.html' %}
+
+{% block content %}
+<nav class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center w-full fixed top-0 z-50">
+    <div class="text-2xl font-black text-amber-500 tracking-tight">
+        UAEM
+    </div>
+    <div class="flex items-center gap-6">
+        <a href="{% url 'ControlEscolar:dashboard_admin' %}"
+            class="text-emerald-700 font-bold flex items-center hover:text-emerald-800 transition-colors text-sm">
+            <i class="fas fa-arrow-left mr-2"></i> Regresar
+        </a>
+        <form method="post" action="{% url 'logout' %}" class="m-0">
+            {% csrf_token %}
+            <button type="submit"
+                class="border border-red-200 text-red-600 bg-red-50 hover:bg-red-100 px-5 py-2 rounded-lg text-sm font-bold transition-colors">
+                Cerrar Sesión
+            </button>
+        </form>
+    </div>
+</nav>
+
+<div class="max-w-7xl mx-auto mt-16 mb-20 px-6 pt-24">
+    <div class="mb-12">
+        <h1 class="text-4xl font-black text-slate-800">Movimientos de Grupos</h1>
+        <p class="text-slate-500 italic mt-1">Ciclo Escolar: {{ ciclo_actual.nombre }}</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+        <div class="lg:col-span-1">
+            <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-200 sticky top-24">
+                <h3 class="font-black text-slate-800 text-lg mb-6 uppercase tracking-widest">Búsqueda</h3>
+                <form method="GET" action="." class="space-y-4">
+                    <input type="text" name="q" value="{{ q }}" placeholder="Matrícula o nombre..."
+                        class="w-full bg-slate-50 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 font-medium">
+                    <button type="submit"
+                        class="w-full bg-indigo-600 text-white font-black py-3 rounded-xl hover:bg-indigo-700 transition shadow-lg uppercase text-xs tracking-widest">
+                        Buscar Alumno
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3">
+            <div class="bg-white rounded-[2rem] shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-slate-50 px-8 py-6 border-b border-gray-100">
+                    <h4 class="font-black text-slate-800 uppercase text-xs tracking-widest">Lista de Estudiantes
+                        Asignados</h4>
+                </div>
+
+                <div class="divide-y divide-gray-100">
+                    {% for asignacion in alumnos_asignados %}
+                    <div
+                        class="p-8 flex flex-col sm:flex-row justify-between items-center hover:bg-slate-50/50 transition-colors">
+                        <div class="flex items-center gap-6">
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-black">
+                                {{ asignacion.idalumno.nombre|slice:":1" }}
+                            </div>
+                            <div>
+                                <h5 class="text-xl font-bold text-slate-800">{{ asignacion.idalumno.nombre }} {{
+                                    asignacion.idalumno.apellido_paterno }}</h5>
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{
+                                    asignacion.idalumno.matricula }}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 mt-4 sm:mt-0">
+                            <div class="text-right">
+                                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Grupo Actual</p>
+                                <span
+                                    class="bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-lg font-black text-sm uppercase">
+                                    {{ asignacion.idgrupo.nombre }}
+                                </span>
+                            </div>
+
+                            <form action="{% url 'ControlEscolar:mover_alumno_grupo' %}" method="POST"
+                                class="flex gap-2 items-center">
+                                {% csrf_token %}
+                                <input type="hidden" name="alumno_id" value="{{ asignacion.idalumno.id }}">
+                                <select name="nuevo_grupo_id"
+                                    class="bg-slate-50 border-none rounded-lg text-xs font-bold py-2 focus:ring-2 focus:ring-emerald-500">
+                                    <option value="">Cambiar a...</option>
+                                    {% for g in grupos %}
+                                    {% if g != asignacion.idgrupo %}
+                                    <option value="{{ g.id }}">{{ g.nombre }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <button type="submit"
+                                    class="bg-emerald-500 text-white p-2 rounded-lg hover:bg-emerald-600 transition">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="p-20 text-center">
+                        <i class="fas fa-search text-gray-200 text-6xl mb-4"></i>
+                        <p class="text-gray-400 font-bold">No se encontraron alumnos en este ciclo.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
