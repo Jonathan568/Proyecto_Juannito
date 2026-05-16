@@ -41,7 +41,7 @@
                         onchange="this.form.submit()">
                         <option value="">Elegir un grupo...</option>
                         {% for g in grupos %}
-                        <option value="{{ g.id }}" {% if grupo_seleccionado.id==g.id %}selected{% endif %}>
+                        <option value="{{ g.id }}" {% if grupo_seleccionado.id == g.id %}selected{% endif %}>
                             {{ g.nombre }}
                         </option>
                         {% endfor %}
@@ -74,7 +74,8 @@
             <div class="bg-white rounded-[2rem] shadow-sm border border-gray-200 p-8 mb-8">
                 <h3
                     class="font-black text-slate-800 text-sm mb-6 uppercase tracking-widest border-b border-gray-100 pb-2">
-                    <i class="fas fa-plus-circle text-emerald-500 mr-2"></i> Asignar Nueva Clase</h3>
+                    <i class="fas fa-plus-circle text-emerald-500 mr-2"></i> Asignar Nueva Clase
+                </h3>
 
                 <form method="POST" action="." class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {% csrf_token %}

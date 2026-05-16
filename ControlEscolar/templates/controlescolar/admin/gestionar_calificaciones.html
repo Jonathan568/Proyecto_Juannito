@@ -38,7 +38,7 @@
                 onchange="this.form.submit()">
                 <option value="">Seleccione grupo...</option>
                 {% for g in grupos %}
-                <option value="{{ g.id }}" {% if grupo_seleccionado.id==g.id %}selected{% endif %}>{{ g.nombre }}
+                <option value="{{ g.id }}" {% if grupo_seleccionado.id == g.id %}selected{% endif %}>{{ g.nombre }}
                 </option>
                 {% endfor %}
             </select>
@@ -54,7 +54,7 @@
                     onchange="this.form.submit()">
                     <option value="">Seleccione materia...</option>
                     {% for a in asignaturas_grupo %}
-                    <option value="{{ a.id }}" {% if asignatura_seleccionada.id==a.id %}selected{% endif %}>{{ a.nombre
+                    <option value="{{ a.id }}" {% if asignatura_seleccionada.id == a.id %}selected{% endif %}>{{ a.nombre
                         }}</option>
                     {% endfor %}
                 </select>
@@ -111,13 +111,13 @@
                             <td class="py-4 px-4">
                                 <select name="estatus_{{ insc.id }}"
                                     class="w-full bg-slate-50 border border-gray-200 rounded-lg px-3 py-2 text-sm font-bold text-slate-600 focus:ring-2 focus:ring-emerald-500">
-                                    <option value="cursando" {% if insc.estatus=='cursando' %}selected{% endif %}>⏳
+                                    <option value="cursando" {% if insc.estatus == 'cursando' %}selected{% endif %}>⏳
                                         Cursando</option>
-                                    <option value="aprobada" {% if insc.estatus=='aprobada' %}selected{% endif %}>✅
+                                    <option value="aprobada" {% if insc.estatus == 'aprobada' %}selected{% endif %}>✅
                                         Aprobada</option>
-                                    <option value="reprobada" {% if insc.estatus=='reprobada' %}selected{% endif %}>❌
+                                    <option value="reprobada" {% if insc.estatus == 'reprobada' %}selected{% endif %}>❌
                                         Reprobada</option>
-                                    <option value="baja" {% if insc.estatus=='baja' %}selected{% endif %}>⛔ Baja
+                                    <option value="baja" {% if insc.estatus == 'baja' %}selected{% endif %}>⛔ Baja
                                     </option>
                                 </select>
                             </td>

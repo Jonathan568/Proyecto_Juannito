@@ -78,8 +78,10 @@
                             <form action="{% url 'ControlEscolar:mover_alumno_grupo' %}" method="POST"
                                 class="flex gap-2 items-center">
                                 {% csrf_token %}
-                                <input type="hidden" name="alumno_id" value="{{ asignacion.idalumno.id }}">
-                                <select name="nuevo_grupo_id"
+
+                                <input type="hidden" name="idalumno" value="{{ asignacion.idalumno.idalumno }}">
+
+                                <select name="idgrupo" required
                                     class="bg-slate-50 border-none rounded-lg text-xs font-bold py-2 focus:ring-2 focus:ring-emerald-500">
                                     <option value="">Cambiar a...</option>
                                     {% for g in grupos %}
@@ -88,6 +90,7 @@
                                     {% endif %}
                                     {% endfor %}
                                 </select>
+
                                 <button type="submit"
                                     class="bg-emerald-500 text-white p-2 rounded-lg hover:bg-emerald-600 transition">
                                     <i class="fas fa-exchange-alt"></i>
