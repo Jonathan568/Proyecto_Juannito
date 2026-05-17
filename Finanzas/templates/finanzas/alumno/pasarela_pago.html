@@ -22,7 +22,20 @@
             {% csrf_token %}
             <input type="hidden" name="cargos_ids" value="{{ cargos_ids }}">
 
-            <div class="rounded-md shadow-sm -space-y-px">
+            <div class="rounded-md shadow-sm">
+
+                <div class="mb-4">
+                    <label class="text-xs font-bold text-gray-500 uppercase tracking-wide">Concepto de Pago</label>
+                    <select name="concepto" required
+                        class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-gray-300 text-gray-900 bg-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm mt-1">
+                        <option value="" disabled selected>Selecciona el concepto...</option>
+                        <option value="Inscripciones">Inscripciones</option>
+                        <option value="Colegiaturas">Colegiaturas</option>
+                        <option value="Titulación">Titulación</option>
+                        <option value="Biblioteca">Biblioteca</option>
+                    </select>
+                </div>
+
                 <div class="mb-4">
                     <label class="text-xs font-bold text-gray-500 uppercase tracking-wide">Nombre en la Tarjeta</label>
                     <input type="text" required
@@ -79,7 +92,6 @@
 </div>
 
 <script>
-
     document.getElementById('payment-form').addEventListener('submit', function (e) {
         e.preventDefault();
 

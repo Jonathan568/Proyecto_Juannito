@@ -45,102 +45,145 @@
 
 <body class="bg-gray-200 flex items-center justify-center min-h-screen py-10 font-sans">
 
-    <div class="fixed top-6 right-6 no-print">
-        <button onclick="window.print()"
-            class="bg-amber-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-amber-700 flex items-center gap-2">
-            <i class="fas fa-print"></i> Imprimir Orden
-        </button>
-    </div>
+    <div id="main-content" class="flex flex-col items-center justify-center w-full">
+        <div class="fixed top-6 right-6 no-print">
+            <button onclick="window.print()"
+                class="bg-amber-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-amber-700 flex items-center gap-2">
+                <i class="fas fa-print"></i> Imprimir Orden
+            </button>
+        </div>
 
-    <div class="bg-white w-[800px] shadow-2xl print:shadow-none print:w-full print:p-0 border-t-8 border-gray-800">
+        <div class="bg-white w-[800px] shadow-2xl print:shadow-none print:w-full print:p-0 border-t-8 border-gray-800">
 
-        <div class="p-12 pb-6">
-            <div class="flex justify-between items-end border-b-2 border-gray-200 pb-6 mb-8">
-                <div>
-                    <h1 class="text-4xl font-black text-gray-800 tracking-tighter">UAEM</h1>
-                    <p class="text-gray-500 font-bold tracking-widest text-xs mt-1">SISTEMA INTEGRAL DE FINANZAS</p>
-                </div>
-                <div class="text-right">
-                    <div class="bg-gray-100 px-4 py-2 rounded-lg inline-block text-center border border-gray-200">
-                        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Referencia Global
-                        </p>
-                        <p class="text-xl font-black text-gray-800 font-bancaria">REF-{{ alumno.matricula }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-amber-50 border-l-4 border-amber-500 p-5 mb-8 rounded-r-lg">
-                <div class="flex items-start">
-                    <i class="fas fa-exclamation-triangle text-amber-500 text-xl mr-4 mt-0.5"></i>
+            <div class="p-12 pb-6">
+                <div class="flex justify-between items-end border-b-2 border-gray-200 pb-6 mb-8">
                     <div>
-                        <h3 class="font-bold text-amber-800 text-sm uppercase">Importante</h3>
-                        <p class="text-amber-700 text-sm mt-1">Este documento es únicamente una referencia para realizar
-                            el pago en caja. <strong>Carece de validez oficial como comprobante de ingresos</strong>
-                            hasta que sea procesado y sellado por el departamento de finanzas.</p>
+                        <h1 class="text-4xl font-black text-gray-800 tracking-tighter">UAEM</h1>
+                        <p class="text-gray-500 font-bold tracking-widest text-xs mt-1">SISTEMA INTEGRAL DE FINANZAS</p>
                     </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-8 mb-8">
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
-                    <p class="text-xs font-bold text-gray-400 uppercase mb-3">Datos del Estudiante</p>
-                    <p class="font-bold text-gray-900 uppercase text-lg mb-2">{{ alumno.nombre }} {{
-                        alumno.apellido_paterno }}</p>
-                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-id-card mr-2 text-gray-400 w-4"></i>
-                        Matrícula: {{ alumno.matricula }}</p>
-                    <p class="text-sm text-gray-600 mt-1"><i class="fas fa-users mr-2 text-gray-400 w-4"></i> Grupo: {{
-                        alumno.idgrupo.nombre }}</p>
-                </div>
-
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
-                    <p class="text-xs font-bold text-gray-400 uppercase mb-3">Desglose de Cargos</p>
-                    <div class="space-y-2 mb-4">
-                        {% for cargo in cargos %}
-                        <div
-                            class="flex justify-between text-sm text-gray-700 font-medium border-b border-gray-200 border-dashed pb-1">
-                            <span class="truncate pr-2">{{ forloop.counter }}. {{ cargo.idconcepto.nombre }}</span>
-                            <span>${{ cargo.monto }}</span>
+                    <div class="text-right">
+                        <div class="bg-gray-100 px-4 py-2 rounded-lg inline-block text-center border border-gray-200">
+                            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Referencia
+                                Global
+                            </p>
+                            <p class="text-xl font-black text-gray-800 font-bancaria">REF-{{ alumno.matricula }}</p>
                         </div>
-                        {% endfor %}
                     </div>
-                    <div class="flex justify-between font-black text-gray-900 pt-2 border-t-2 border-gray-300">
-                        <span>TOTAL:</span>
-                        <span>${{ total_ficha }}</span>
+                </div>
+
+                <div class="bg-amber-50 border-l-4 border-amber-500 p-5 mb-8 rounded-r-lg">
+                    <div class="flex items-start">
+                        <i class="fas fa-exclamation-triangle text-amber-500 text-xl mr-4 mt-0.5"></i>
+                        <div>
+                            <h3 class="font-bold text-amber-800 text-sm uppercase">Importante</h3>
+                            <p class="text-amber-700 text-sm mt-1">Este documento es únicamente una referencia para
+                                realizar
+                                el pago en caja. <strong>Carece de validez oficial como comprobante de ingresos</strong>
+                                hasta que sea procesado y sellado por el departamento de finanzas.</p>
+                        </div>
                     </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-8 mb-8">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                        <p class="text-xs font-bold text-gray-400 uppercase mb-3">Datos del Estudiante</p>
+                        <p class="font-bold text-gray-900 uppercase text-lg mb-2">{{ alumno.nombre }} {{
+                            alumno.apellido_paterno }}</p>
+                        <p class="text-sm text-gray-600 mt-1"><i class="fas fa-id-card mr-2 text-gray-400 w-4"></i>
+                            Matrícula: {{ alumno.matricula }}</p>
+                        <p class="text-sm text-gray-600 mt-1"><i class="fas fa-users mr-2 text-gray-400 w-4"></i> Grupo:
+                            {{ alumno.idgrupo.nombre|default:"Asignado" }}</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                        <p class="text-xs font-bold text-gray-400 uppercase mb-3">Desglose de Cargos</p>
+                        <div class="space-y-2 mb-4">
+                            {% for cargo in cargos %}
+                            <div
+                                class="flex justify-between text-sm text-gray-700 font-medium border-b border-gray-200 border-dashed pb-1">
+                                <span class="truncate pr-2">{{ forloop.counter }}. {{ cargo.idconcepto.nombre }}</span>
+                                <span>${{ cargo.monto }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="flex justify-between font-black text-gray-900 pt-2 border-t-2 border-gray-300">
+                            <span>TOTAL:</span>
+                            <span>${{ total_ficha }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-center mb-10 bg-gray-50/50">
+                    <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Total Global a Pagar en
+                        Caja</p>
+                    <p class="text-5xl font-black text-gray-900 mb-6">${{ total_ficha }} <span
+                            class="text-xl text-gray-400 font-normal">MXN</span></p>
+
+                    <div class="barcode">*REF-{{ alumno.matricula }}*</div>
+                    <p class="text-sm text-gray-600 mt-2 font-bancaria">REF-{{ alumno.matricula }}</p>
                 </div>
             </div>
 
-            <div
-                class="border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-center mb-10 bg-gray-50/50">
-                <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Total Global a Pagar en Caja
-                </p>
-                <p class="text-5xl font-black text-gray-900 mb-6">${{ total_ficha }} <span
-                        class="text-xl text-gray-400 font-normal">MXN</span></p>
-
-                <div class="barcode">*REF-{{ alumno.matricula }}*</div>
-                <p class="text-sm text-gray-600 mt-2 font-bancaria">REF-{{ alumno.matricula }}</p>
+            <div class="bg-gray-800 text-gray-300 p-8 text-sm">
+                <h4 class="font-bold text-white uppercase tracking-widest mb-4">Instrucciones para el cajero:</h4>
+                <ol class="list-decimal pl-5 space-y-2 text-gray-400">
+                    <li>Verifique que el importe recibido coincida con el "Total Global a Pagar".</li>
+                    <li>Capture la <strong class="text-white">Referencia Global</strong> en el sistema institucional.
+                    </li>
+                    <li>Conserve esta ficha y entregue al alumno el <strong class="text-white">Recibo Oficial</strong>
+                        sellado.</li>
+                </ol>
             </div>
-        </div>
-
-        <div class="bg-gray-800 text-gray-300 p-8 text-sm">
-            <h4 class="font-bold text-white uppercase tracking-widest mb-4">Instrucciones para el cajero:</h4>
-            <ol class="list-decimal pl-5 space-y-2 text-gray-400">
-                <li>Verifique que el importe recibido coincida con el "Total Global a Pagar".</li>
-                <li>Capture la <strong class="text-white">Referencia Global</strong> en el sistema institucional.</li>
-                <li>Conserve esta ficha y entregue al alumno el <strong class="text-white">Recibo Oficial</strong>
-                    sellado.</li>
-            </ol>
         </div>
     </div>
+
+    {% for cargo in cargos %}
+    {% if cargo.idconcepto.nombre == 'Inscripciones' or cargo.idconcepto.nombre == 'Colegiaturas' or
+    cargo.idconcepto.nombre == 'Titulación' or cargo.idconcepto.nombre == 'Biblioteca' %}
+    {% else %}
+    <style>
+        #main-content {
+            display: none !important;
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+
+    <div class="fixed inset-0 bg-gray-200 z-[100] flex items-center justify-center min-h-screen w-full">
+        <div class="bg-white p-10 rounded-3xl shadow-2xl text-center max-w-lg border-t-8 border-red-600 m-6">
+            <div class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-shield-alt text-5xl text-red-600"></i>
+            </div>
+            <h1 class="text-3xl font-black text-gray-800 mb-3 tracking-tight">Bloqueo de Seguridad</h1>
+            <p class="text-gray-600 mb-6 text-lg">Se detectó un concepto no autorizado en la ficha: <strong
+                    class="text-gray-900">"{{ cargo.idconcepto.nombre }}"</strong>.</p>
+
+            <div class="bg-red-50 p-4 rounded-xl mb-8 border border-red-100 text-sm text-red-800 font-medium">
+                La ficha global no puede ser generada. Los únicos conceptos autorizados son: Inscripciones,
+                Colegiaturas, Titulación y Biblioteca.
+            </div>
+
+            <button onclick="window.close()"
+                class="w-full bg-red-600 text-white px-6 py-4 rounded-xl font-bold shadow-lg hover:bg-red-700 transition">
+                Cerrar Pestaña Segura
+            </button>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
 
     <script>
-
         window.onload = function () {
-            document.fonts.ready.then(function () {
-                setTimeout(function () {
-                    window.print();
-                }, 500);
-            });
+            if (document.getElementById('main-content').style.display !== 'none') {
+                document.fonts.ready.then(function () {
+                    setTimeout(function () {
+                        window.print();
+                    }, 500);
+                });
+            }
         };
     </script>
 </body>

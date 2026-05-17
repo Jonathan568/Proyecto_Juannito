@@ -80,8 +80,7 @@
                     <select name="alumno" class="select2-search w-full">
                         <option value=""></option>
                         {% for alumno in alumnos %}
-                        <option value="{{ alumno.idalumno }}">{{ alumno.matricula }} - {{ alumno.nombre }} {{
-                            alumno.apellido_paterno }}</option>
+                        <option value="{{ alumno.idalumno }}">{{ alumno.matricula }} - {{ alumno.nombre }} {{ alumno.apellido_paterno }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -96,16 +95,17 @@
                         {% endfor %}
                     </select>
                 </div>
+
                 <div class="w-full">
                     <label class="block text-sm font-bold text-gray-700 uppercase tracking-wide mb-2">Concepto del
                         Cargo</label>
-                    <select name="concepto" required class="select2-tags w-full">
+                    <select name="concepto" required class="select2-concepto w-full">
                         <option value=""></option>
-                        {% for concepto in conceptos %}
-                        <option value="{{ concepto.idconcepto }}">{{ concepto.nombre }}</option>
-                        {% endfor %}
+                        <option value="Inscripciones">Inscripciones</option>
+                        <option value="Colegiaturas">Colegiaturas</option>
+                        <option value="Titulación">Titulación</option>
+                        <option value="Biblioteca">Biblioteca</option>
                     </select>
-                    <p class="text-xs text-gray-400 mt-1">* Selecciona uno o escribe un concepto nuevo.</p>
                 </div>
             </div>
 
@@ -113,9 +113,9 @@
                 <div>
                     <label class="block text-sm font-bold text-gray-700 uppercase tracking-wide mb-2">Monto ($
                         MXN)</label>
-                    <input type="number" step="0.01" min="0.01" name="monto" required
+                    <input type="number" step="0.01" min="0.01" name="monto" required id="input_monto"
                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-xl focus:ring-green-500 focus:border-green-500 block p-3"
-                        placeholder="Ej: 500.00">
+                        placeholder="Selecciona un concepto primero...">
                 </div>
 
                 <div>
@@ -142,24 +142,66 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-    $(document).ready(function () {
+    const reglasFinanzas = {
+        'Inscripciones': { min: 200, max: 1200, label: 'Inscripciones' },
+        'Colegiaturas': { min: 900, max: 3300, label: 'Colegiaturas' },
+        'Titulación': { min: 3000, max: 23000, label: 'Titulación' },
+        'Biblioteca': { min: 50, max: 200, label: 'Biblioteca' }
+    };
 
+    $(document).ready(function () {
         $('.select2-search').select2({
             placeholder: "Escribe para buscar...",
             allowClear: true,
             width: '100%'
         });
 
-        $('.select2-tags').select2({
-            placeholder: "Busca o escribe un concepto...",
-            tags: true,
-            width: '100%'
+        $('.select2-concepto').select2({
+            placeholder: "Selecciona el concepto...",
+            allowClear: true,
+            width: '100%',
+            tags: true
         });
+
+        const inputMonto = document.getElementById('input_monto');
+
+        $('.select2-concepto').on('change', function () {
+            const conceptoSeleccionado = $(this).val();
+
+            if (conceptoSeleccionado && reglasFinanzas[conceptoSeleccionado]) {
+                const rango = reglasFinanzas[conceptoSeleccionado];
+                inputMonto.min = rango.min;
+                inputMonto.max = rango.max;
+                inputMonto.placeholder = `$${rango.min} - $${rango.max}`;
+                validarMontoActual(rango);
+            } else {
+                inputMonto.min = 0.01;
+                inputMonto.removeAttribute('max');
+                inputMonto.placeholder = "Ej: 500.00";
+                inputMonto.setCustomValidity('');
+            }
+        });
+
+        inputMonto.addEventListener('input', function () {
+            const conceptoSeleccionado = $('.select2-concepto').val();
+            
+            if (conceptoSeleccionado && reglasFinanzas[conceptoSeleccionado]) {
+                validarMontoActual(reglasFinanzas[conceptoSeleccionado]);
+            }
+        });
+
+        function validarMontoActual(rango) {
+            const valor = parseFloat(inputMonto.value);
+            if (inputMonto.value && (valor < rango.min || valor > rango.max)) {
+                inputMonto.setCustomValidity(`El monto de ${rango.label} debe ser entre $${rango.min} y $${rango.max}`);
+            } else {
+                inputMonto.setCustomValidity('');
+            }
+        }
     });
 
     function toggleForm() {
         var tipo = $('input[name="tipo_cargo"]:checked').val();
-
         if (tipo === 'individual') {
             $('#div_alumno').show();
             $('#div_grupo').hide();

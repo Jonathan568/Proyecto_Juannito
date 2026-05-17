@@ -79,7 +79,7 @@
                                 class="flex gap-2 items-center">
                                 {% csrf_token %}
 
-                                <input type="hidden" name="idalumno" value="{{ asignacion.idalumno.idalumno }}">
+                                <input type="hidden" name="idalumno" value="{{ asignacion.idalumno.id }}">
 
                                 <select name="idgrupo" required
                                     class="bg-slate-50 border-none rounded-lg text-xs font-bold py-2 focus:ring-2 focus:ring-emerald-500">

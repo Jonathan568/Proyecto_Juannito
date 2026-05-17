@@ -57,8 +57,9 @@
 
                     <div class="divide-y divide-gray-100">
                         {% for cargo in cargos_alumno %}
+                        {% if cargo.idconcepto.nombre in 'Inscripciones, Colegiaturas, Titulación, Biblioteca' %}
                         <div
-                            class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-8 hover:bg-slate-50/80 transition-colors group">
+                            class="cargo-card flex flex-col sm:flex-row justify-between items-start sm:items-center p-8 hover:bg-slate-50/80 transition-colors group">
 
                             <div class="flex items-center gap-5 mb-4 sm:mb-0">
                                 {% if cargo.estatus == 'pendiente' %}
@@ -71,8 +72,8 @@
                                 {% endif %}
 
                                 <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-sm border 
-                                    {% if cargo.estatus == 'pagado' %}bg-emerald-50 text-emerald-600 border-emerald-100
-                                    {% else %}bg-amber-50 text-amber-600 border-amber-100{% endif %}">
+                                            {% if cargo.estatus == 'pagado' %}bg-emerald-50 text-emerald-600 border-emerald-100
+                                            {% else %}bg-amber-50 text-amber-600 border-amber-100{% endif %}">
                                     {% if cargo.estatus == 'pagado' %}
                                     <i class="fas fa-check-circle text-2xl"></i>
                                     {% else %}
@@ -111,14 +112,15 @@
                                     ${{ cargo.monto }}
                                 </span>
                                 <span class="text-[10px] font-black px-3 py-1.5 rounded-md tracking-widest uppercase shadow-sm
-                                    {% if cargo.estatus == 'pagado' %}bg-emerald-100 text-emerald-800
-                                    {% else %}bg-rose-100 text-rose-800{% endif %}">
+                                            {% if cargo.estatus == 'pagado' %}bg-emerald-100 text-emerald-800
+                                            {% else %}bg-rose-100 text-rose-800{% endif %}">
                                     {{ cargo.estatus|title }}
                                 </span>
                             </div>
                         </div>
+                        {% endif %}
                         {% empty %}
-                        <div class="p-20 text-center flex flex-col items-center justify-center">
+                        <div class="empty-original p-20 text-center flex flex-col items-center justify-center">
                             <div class="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mb-6">
                                 <i class="fas fa-check text-5xl text-emerald-400"></i>
                             </div>
@@ -127,6 +129,15 @@
                                 Sigue así.</p>
                         </div>
                         {% endfor %}
+
+                        <div id="fallback-empty" class="hidden p-20 text-center flex-col items-center justify-center">
+                            <div class="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-check text-5xl text-emerald-400"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-800 mb-2">¡Todo al corriente!</h4>
+                            <p class="text-slate-500 max-w-sm">No tienes cargos oficiales registrados en este momento.
+                                Sigue así.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -136,10 +147,19 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+
+        const validCards = document.querySelectorAll('.cargo-card');
+        const emptyOriginal = document.querySelector('.empty-original');
+
+        if (validCards.length === 0 && !emptyOriginal) {
+            document.getElementById('fallback-empty').classList.remove('hidden');
+            document.getElementById('fallback-empty').classList.add('flex');
+        }
+
         const checkboxes = document.querySelectorAll('.cargo-checkbox');
         const totalElement = document.getElementById('total-dinamico');
         const btnGenerar = document.getElementById('btn-generar');
-        const btnLinea = document.getElementById('btn-linea'); // Registramos el nuevo botón
+        const btnLinea = document.getElementById('btn-linea');
 
         function calcularTotal() {
             let total = 0;
