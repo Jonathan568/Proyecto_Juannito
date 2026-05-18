@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, Count
 
 from .models import CicloEscolar, Asignatura, Grupo, AlumnoGrupo, Horario, Inscripcion, Aviso
 from Usuarios.models import Alumno
@@ -21,12 +21,69 @@ def dashboard_admin(request):
 
     avisos_recientes = Aviso.objects.order_by('-fecha_publicacion')[:5]
 
+    # --- PROCESAMIENTO OPERACIONAL DE LICENCIATURAS REALES (Cupos Dinámicos) ---
+    licenciaturas_vivas = []
+    
+    if ciclo_actual:
+        # Consultamos las licenciaturas (Grupos) del ciclo activo y contamos sus alumnos inscritos en tiempo real
+        grupos_db = Grupo.objects.filter(idciclo=ciclo_actual).annotate(
+            total_inscritos=Count('alumnogrupo')
+        ).order_by('-total_inscritos')
+        
+        for g in grupos_db:
+            # Establecemos un límite óptimo de diseño de 50 alumnos por aula
+            capacidad_maxima = 50
+            porcentaje = int((g.total_inscritos / capacidad_maxima) * 100) if g.total_inscritos else 0
+            if porcentaje > 100: 
+                porcentaje = 100
+            
+            # Clasificación analítica automática según volumen poblacional en base de datos
+            if g.total_inscritos >= 40:
+                estatus_cupo = 'Límite'
+                color_badge = 'bg-red-100 text-red-700'
+                color_bar = 'bg-red-500'
+            elif g.total_inscritos >= 15:
+                estatus_cupo = 'Óptimo'
+                color_badge = 'bg-emerald-100 text-emerald-700'
+                color_bar = 'bg-blue-500'
+            else:
+                estatus_cupo = 'Baja'
+                color_badge = 'bg-amber-100 text-amber-700'
+                color_bar = 'bg-amber-500'
+                
+            # Asignación heurística de iconos según el nombre de la Licenciatura
+            nombre_lower = g.nombre.lower()
+            if 'computaci' in nombre_lower or 'sistemas' in nombre_lower or 'ing' in nombre_lower:
+                icono = 'fas fa-laptop-code'
+                color_icon = 'bg-blue-50 text-blue-600'
+            elif 'derecho' in nombre_lower or 'ley' in nombre_lower or 'gavel' in nombre_lower:
+                icono = 'fas fa-balance-scale'
+                color_icon = 'bg-amber-50 text-amber-600'
+            elif 'lengua' in nombre_lower or 'idioma' in nombre_lower or 'modernas' in nombre_lower:
+                icono = 'fas fa-language'
+                color_icon = 'bg-emerald-50 text-emerald-600'
+            else:
+                icono = 'fas fa-graduation-cap'
+                color_icon = 'bg-indigo-50 text-indigo-600'
+
+            licenciaturas_vivas.append({
+                'nombre': g.nombre,
+                'total_inscritos': g.total_inscritos,
+                'porcentaje': porcentaje,
+                'estatus_cupo': estatus_cupo,
+                'color_badge': color_badge,
+                'color_bar': color_bar,
+                'icono': icono,
+                'color_icon': color_icon
+            })
+
     context = {
         'ciclo_actual': ciclo_actual,
         'total_alumnos': total_alumnos,
         'total_grupos': total_grupos,
         'total_materias': total_materias,
         'avisos_recientes': avisos_recientes,
+        'licenciaturas_vivas': licenciaturas_vivas, # Pasamos la lista procesada al HTML
     }
     
     return render(request, 'controlescolar/admin/dashboard_admin.html', context)
@@ -61,10 +118,11 @@ def gestionar_grupos(request):
 
 @login_required
 def mover_alumno_grupo(request):
-    """Procesa el cambio de grupo de un alumno"""
+    """Procesa el cambio de grupo de un alumno de forma blindada"""
     if request.method == 'POST' and request.user.is_staff:
-        alumno_id = request.POST.get('alumno_id')
-        nuevo_grupo_id = request.POST.get('nuevo_grupo_id')
+        # Soportamos ambas nomenclaturas por seguridad total contra cambios en el HTML
+        alumno_id = request.POST.get('idalumno') or request.POST.get('alumno_id')
+        nuevo_grupo_id = request.POST.get('idgrupo') or request.POST.get('nuevo_grupo_id')
         
         asignacion = get_object_or_404(AlumnoGrupo, idalumno_id=alumno_id)
         nuevo_grupo = get_object_or_404(Grupo, id=nuevo_grupo_id)
@@ -72,7 +130,7 @@ def mover_alumno_grupo(request):
         asignacion.idgrupo = nuevo_grupo
         asignacion.save()
         
-        messages.success(request, f'Alumno movido al {nuevo_grupo.nombre} exitosamente.')
+        messages.success(request, f'Alumno movido a la licenciatura {nuevo_grupo.nombre} exitosamente.')
     
     return redirect('ControlEscolar:gestionar_grupos')
 
@@ -133,7 +191,7 @@ def eliminar_horario(request, horario_id):
 
 @login_required
 def gestionar_avisos(request):
-    """Vista para redactar y enviar avisos globales, grupales o individuales"""
+    """Vista para redactar y enviar avisos globales, grupales o individuales Bimorfos"""
     if not request.user.is_staff:
         return redirect('Usuarios:panel_alumno')
 

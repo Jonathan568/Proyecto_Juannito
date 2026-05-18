@@ -36,7 +36,7 @@
 
         <div class="mb-10">
             <h1 class="text-3xl font-black text-slate-800 mb-2">Panel de Control: Control Escolar</h1>
-            <p class="text-slate-500 text-sm">Gestión de alumnos, grupos y carga académica. <span
+            <p class="text-slate-500 text-sm">Gestión de alumnos, licenciaturas y carga académica. <span
                     class="font-bold text-emerald-600 ml-2"><i class="fas fa-calendar-check mr-1"></i> Ciclo: {{
                     ciclo_actual.nombre }}</span></p>
         </div>
@@ -48,7 +48,7 @@
             </div>
 
             <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-amber-500">
-                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">GRUPOS DEL CICLO</p>
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">LICENCIATURAS DEL CICLO</p>
                 <p class="text-2xl font-black text-slate-800">{{ total_grupos }}</p>
             </div>
 
@@ -70,11 +70,11 @@
                     class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 text-2xl mb-6">
                     <i class="fas fa-users-cog"></i>
                 </div>
-                <h2 class="text-xl font-black text-slate-800 mb-3">Módulo de Grupos</h2>
+                <h2 class="text-xl font-black text-slate-800 mb-3">Módulo de Licenciaturas</h2>
                 <p class="text-sm text-slate-500 mb-8 px-2">Asignación de alumnos y movimientos de matrícula.</p>
                 <a href="{% url 'ControlEscolar:gestionar_grupos' %}"
                     class="bg-amber-50 text-amber-700 font-bold px-6 py-2.5 rounded-full text-xs tracking-widest uppercase hover:bg-amber-100 transition-colors border border-amber-200">
-                    Gestionar Grupos
+                    Gestionar Licenciaturas
                 </a>
             </div>
 
@@ -84,7 +84,7 @@
                     <i class="fas fa-calendar-alt"></i>
                 </div>
                 <h2 class="text-xl font-black text-slate-800 mb-3">Carga Académica</h2>
-                <p class="text-sm text-slate-500 mb-8 px-2">Asignación de horarios, profesores y aulas por grupo.</p>
+                <p class="text-sm text-slate-500 mb-8 px-2">Asignación de horarios, profesores y aulas por licenciatura.</p>
                 <a href="{% url 'ControlEscolar:gestionar_horarios' %}"
                     class="bg-amber-50 text-amber-700 font-bold px-6 py-2.5 rounded-full text-xs tracking-widest uppercase hover:bg-amber-100 transition-colors border border-amber-200">
                     Asignar Horarios
@@ -110,7 +110,7 @@
                     <i class="fas fa-bullhorn"></i>
                 </div>
                 <h2 class="text-xl font-black text-slate-800 mb-3">Centro de Avisos</h2>
-                <p class="text-sm text-slate-500 mb-8 px-2">Comunicados globales, por grupos o individuales.</p>
+                <p class="text-sm text-slate-500 mb-8 px-2">Comunicados globales, por licenciatura o individuales.</p>
                 <a href="{% url 'ControlEscolar:gestionar_avisos' %}"
                     class="bg-amber-50 text-amber-700 font-bold px-6 py-2.5 rounded-full text-xs tracking-widest uppercase hover:bg-amber-100 transition-colors border border-amber-200">
                     Publicar Avisos
@@ -118,24 +118,15 @@
             </div>
         </div>
 
-        <div class="bg-amber-50 border-l-4 border-amber-500 p-5 mb-8 rounded-r-2xl shadow-sm">
-            <div class="flex items-center">
-                <i class="fas fa-flask text-amber-600 text-xl mr-4"></i>
-                <div>
-                    <h4 class="font-black text-amber-900 text-sm uppercase tracking-wide">Módulo Analítico Proyectado (Simulación)</h4>
-                </div>
-            </div>
-        </div>
-
         <div class="bg-white rounded-[2rem] shadow-sm border border-gray-200 mb-20 overflow-hidden">
             <div class="bg-slate-50 px-8 py-6 border-b border-gray-200 flex justify-between items-center">
                 <div>
-                    <h3 class="font-black text-slate-800 text-lg text-left">Distribución de Matrícula <span class="text-[10px] font-black text-amber-700 bg-amber-100 px-2.5 py-1 rounded-md ml-2 border border-amber-200 uppercase tracking-widest">Sandbox Mode</span></h3>
-                    <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Alumnos activos por Programa Académico</p>
+                    <h3 class="font-black text-slate-800 text-lg text-left">Distribución de Matrícula Real</h3>
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Alumnos activos por Programa Académico en este ciclo</p>
                 </div>
                 <div class="bg-indigo-50 text-indigo-700 px-5 py-2.5 rounded-xl font-black text-sm flex items-center gap-2 shadow-sm border border-indigo-100">
                     <i class="fas fa-chart-pie"></i>
-                    Análisis de Capacidad
+                    Matrícula Activa
                 </div>
             </div>
 
@@ -143,112 +134,37 @@
                 <table class="w-full text-left">
                     <thead class="bg-white border-b border-gray-100">
                         <tr>
-                            <th class="px-8 py-4 text-xs text-gray-400 uppercase font-bold tracking-wider">Programa Académico</th>
-                            <th class="px-8 py-4 text-xs text-gray-400 uppercase font-bold tracking-wider text-center">Inscritos</th>
-                            <th class="px-8 py-4 text-xs text-gray-400 uppercase font-bold tracking-wider">Ocupación Relativa</th>
-                            <th class="px-8 py-4 text-xs text-gray-400 uppercase font-bold tracking-wider text-center">Estatus del Cupo</th>
+                            <th class="px-8 py-4 text-xs text-gray-400 uppercase font-bold tracking-wider w-2/3">Programa Académico</th>
+                            <th class="px-8 py-4 text-xs text-gray-400 uppercase font-bold tracking-wider text-center w-1/3">Número de Inscritos</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">
+                        
+                        {% for lic in licenciaturas_vivas %}
                         <tr class="hover:bg-slate-50/50 transition">
                             <td class="px-8 py-5">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-                                        <i class="fas fa-laptop-code"></i>
+                                    <div class="w-10 h-10 rounded-lg {{ lic.color_icon }} flex items-center justify-center font-bold">
+                                        <i class="{{ lic.icono }}"></i>
                                     </div>
-                                    <span class="font-bold text-slate-700 text-base">Ingeniería en Computación</span>
+                                    <span class="font-bold text-slate-700 text-base">{{ lic.nombre }}</span>
                                 </div>
                             </td>
                             <td class="px-8 py-5 text-center">
-                                <span class="font-black text-slate-800 text-xl">42</span>
-                            </td>
-                            <td class="px-8 py-5 w-1/3">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-full bg-gray-100 rounded-full h-2.5">
-                                        <div class="bg-blue-500 h-2.5 rounded-full" style="width: 84%"></div>
-                                    </div>
-                                    <span class="text-xs font-black text-blue-600 w-10 text-right">84%</span>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5 text-center">
-                                <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest">Óptimo</span>
+                                <span class="font-black text-indigo-600 text-xl bg-indigo-50 px-4 py-1.5 rounded-xl border border-indigo-100 inline-block min-w-[60px]">
+                                    {{ lic.total_inscritos }}
+                                </span>
                             </td>
                         </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2" class="px-8 py-12 text-center text-gray-400 font-bold">
+                                <i class="fas fa-folder-open text-4xl mb-3 block text-gray-300"></i>
+                                No hay licenciaturas registradas en el ciclo escolar activo.
+                            </td>
+                        </tr>
+                        {% endfor %}
 
-                        <tr class="hover:bg-slate-50/50 transition">
-                            <td class="px-8 py-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
-                                        <i class="fas fa-balance-scale"></i>
-                                    </div>
-                                    <span class="font-bold text-slate-700 text-base">Licenciatura en Derecho</span>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5 text-center">
-                                <span class="font-black text-slate-800 text-xl">49</span>
-                            </td>
-                            <td class="px-8 py-5 w-1/3">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-full bg-gray-100 rounded-full h-2.5">
-                                        <div class="bg-red-500 h-2.5 rounded-full" style="width: 98%"></div>
-                                    </div>
-                                    <span class="text-xs font-black text-red-600 w-10 text-right">98%</span>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5 text-center">
-                                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest">Límite</span>
-                            </td>
-                        </tr>
-
-                        <tr class="hover:bg-slate-50/50 transition">
-                            <td class="px-8 py-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                                        <i class="fas fa-language"></i>
-                                    </div>
-                                    <span class="font-bold text-slate-700 text-base">Licenciatura en Lenguas Modernas</span>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5 text-center">
-                                <span class="font-black text-slate-800 text-xl">16</span>
-                            </td>
-                            <td class="px-8 py-5 w-1/3">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-full bg-gray-100 rounded-full h-2.5">
-                                        <div class="bg-emerald-500 h-2.5 rounded-full" style="width: 32%"></div>
-                                    </div>
-                                    <span class="text-xs font-black text-emerald-600 w-10 text-right">32%</span>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5 text-center">
-                                <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest">Baja</span>
-                            </td>
-                        </tr>
-
-                        <tr class="hover:bg-slate-50/50 transition">
-                            <td class="px-8 py-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
-                                        <i class="fas fa-gavel"></i>
-                                    </div>
-                                    <span class="font-bold text-slate-700 text-base">Licenciatura en Derecho (Sección B)</span>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5 text-center">
-                                <span class="font-black text-slate-800 text-xl">28</span>
-                            </td>
-                            <td class="px-8 py-5 w-1/3">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-full bg-gray-100 rounded-full h-2.5">
-                                        <div class="bg-indigo-500 h-2.5 rounded-full" style="width: 56%"></div>
-                                    </div>
-                                    <span class="text-xs font-black text-indigo-600 w-10 text-right">56%</span>
-                                </div>
-                            </td>
-                            <td class="px-8 py-5 text-center">
-                                <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest">Óptimo</span>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -256,4 +172,5 @@
 
     </div>
 </body>
+
 </html>

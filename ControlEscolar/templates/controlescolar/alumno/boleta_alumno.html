@@ -6,7 +6,7 @@
         UAEM
     </div>
     <div class="flex items-center gap-6">
-        <a href="{% url 'ControlEscolar:dashboard_alumno' %}"
+        <a href="{% url 'Usuarios:panel_alumno' %}"
             class="text-emerald-700 font-bold flex items-center hover:text-emerald-800 transition-colors text-sm">
             <i class="fas fa-arrow-left mr-2"></i> Regresar
         </a>
@@ -24,29 +24,29 @@
 
     <div class="mb-8">
         <h1 class="text-3xl font-black text-slate-800 tracking-tight">Historial de Calificaciones</h1>
+        <p class="text-slate-500 font-medium text-sm mt-1">Consulta tu avance y estatus en el programa de licenciatura.</p>
     </div>
 
-    <div
-        class="bg-slate-800 rounded-t-[2rem] p-8 text-white flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="bg-slate-800 rounded-t-[2rem] p-8 text-white flex flex-col md:flex-row justify-between items-center gap-6 shadow-lg">
         <div>
-            <p class="text-slate-400 font-bold text-xs uppercase tracking-widest mb-1">Expediente del Estudiante</p>
+            <p class="text-slate-400 font-bold text-xs uppercase tracking-widest mb-1"><i class="fas fa-folder-open mr-1"></i> Expediente de Licenciatura</p>
             <h2 class="text-2xl font-black">{{ alumno.nombre }} {{ alumno.apellido_paterno }}</h2>
             <p class="text-slate-300 font-medium text-sm mt-1">Matrícula: <span class="text-white font-bold">{{
                     alumno.matricula }}</span></p>
         </div>
-        <div class="bg-slate-700/50 p-4 rounded-2xl text-center min-w-[120px] border border-slate-600">
+        <div class="bg-slate-700/50 p-4 rounded-2xl text-center min-w-[120px] border border-slate-600 shadow-inner">
             <p class="text-slate-300 text-[10px] font-black uppercase tracking-widest mb-1">Promedio Global</p>
             <p class="text-4xl font-black text-emerald-400">{{ promedio }}</p>
         </div>
     </div>
 
-    <div class="bg-white rounded-b-[2rem] shadow-md border border-gray-200 overflow-hidden">
+    <div class="bg-white rounded-b-[2rem] shadow-sm border border-gray-200 border-t-0 overflow-hidden">
         <table class="w-full text-left">
             <thead>
                 <tr class="bg-slate-50">
                     <th class="py-4 px-8 text-xs font-black text-gray-400 uppercase tracking-widest">Ciclo / Materia
                     </th>
-                    <th class="py-4 px-8 text-xs font-black text-gray-400 uppercase tracking-widest">Créditos</th>
+                    <th class="py-4 px-8 text-xs font-black text-gray-400 uppercase tracking-widest text-center">Créditos</th>
                     <th class="py-4 px-8 text-xs font-black text-gray-400 uppercase tracking-widest">Estatus</th>
                     <th class="py-4 px-8 text-xs font-black text-gray-400 uppercase tracking-widest text-right">
                         Calificación</th>
@@ -59,7 +59,7 @@
                         <span class="block text-xs font-bold text-blue-600 mb-1">{{ insc.idciclo.nombre }}</span>
                         <span class="block font-black text-slate-800 text-lg">{{ insc.idasignatura.nombre }}</span>
                     </td>
-                    <td class="py-5 px-8 font-bold text-slate-500">{{ insc.idasignatura.creditos }}</td>
+                    <td class="py-5 px-8 font-bold text-slate-500 text-center">{{ insc.idasignatura.creditos }}</td>
                     <td class="py-5 px-8">
                         {% if insc.estatus == 'aprobada' %}
                         <span
@@ -82,8 +82,10 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="text-center py-16 text-gray-400 font-bold">Aún no tienes registro de
-                        calificaciones.</td>
+                    <td colspan="4" class="text-center py-16">
+                        <i class="fas fa-folder-minus text-4xl text-gray-200 mb-3 block"></i>
+                        <p class="text-gray-400 font-bold">Aún no tienes registro de calificaciones en tu licenciatura.</p>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

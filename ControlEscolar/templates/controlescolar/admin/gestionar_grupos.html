@@ -22,7 +22,7 @@
 
 <div class="max-w-7xl mx-auto mt-16 mb-20 px-6 pt-24">
     <div class="mb-12">
-        <h1 class="text-4xl font-black text-slate-800">Movimientos de Grupos</h1>
+        <h1 class="text-4xl font-black text-slate-800">Movimientos de Licenciaturas</h1>
         <p class="text-slate-500 italic mt-1">Ciclo Escolar: {{ ciclo_actual.nombre }}</p>
     </div>
 
@@ -45,38 +45,31 @@
         <div class="lg:col-span-3">
             <div class="bg-white rounded-[2rem] shadow-sm border border-gray-200 overflow-hidden">
                 <div class="bg-slate-50 px-8 py-6 border-b border-gray-100">
-                    <h4 class="font-black text-slate-800 uppercase text-xs tracking-widest">Lista de Estudiantes
-                        Asignados</h4>
+                    <h4 class="font-black text-slate-800 uppercase text-xs tracking-widest">Lista de Estudiantes Asignados</h4>
                 </div>
 
                 <div class="divide-y divide-gray-100">
                     {% for asignacion in alumnos_asignados %}
-                    <div
-                        class="p-8 flex flex-col sm:flex-row justify-between items-center hover:bg-slate-50/50 transition-colors">
+                    <div class="p-8 flex flex-col sm:flex-row justify-between items-center hover:bg-slate-50/50 transition-colors">
                         <div class="flex items-center gap-6">
-                            <div
-                                class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-black">
+                            <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-black">
                                 {{ asignacion.idalumno.nombre|slice:":1" }}
                             </div>
                             <div>
-                                <h5 class="text-xl font-bold text-slate-800">{{ asignacion.idalumno.nombre }} {{
-                                    asignacion.idalumno.apellido_paterno }}</h5>
-                                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{
-                                    asignacion.idalumno.matricula }}</p>
+                                <h5 class="text-xl font-bold text-slate-800">{{ asignacion.idalumno.nombre }} {{ asignacion.idalumno.apellido_paterno }}</h5>
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ asignacion.idalumno.matricula }}</p>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-4 mt-4 sm:mt-0">
                             <div class="text-right">
-                                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Grupo Actual</p>
-                                <span
-                                    class="bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-lg font-black text-sm uppercase">
+                                <p class="text-[10px] font-black text-gray-400 uppercase mb-1">Licenciatura Actual</p>
+                                <span class="bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-lg font-black text-sm uppercase">
                                     {{ asignacion.idgrupo.nombre }}
                                 </span>
                             </div>
 
-                            <form action="{% url 'ControlEscolar:mover_alumno_grupo' %}" method="POST"
-                                class="flex gap-2 items-center">
+                            <form action="{% url 'ControlEscolar:mover_alumno_grupo' %}" method="POST" class="flex gap-2 items-center">
                                 {% csrf_token %}
 
                                 <input type="hidden" name="idalumno" value="{{ asignacion.idalumno.id }}">
@@ -85,9 +78,9 @@
                                     class="bg-slate-50 border-none rounded-lg text-xs font-bold py-2 focus:ring-2 focus:ring-emerald-500">
                                     <option value="">Cambiar a...</option>
                                     {% for g in grupos %}
-                                    {% if g != asignacion.idgrupo %}
-                                    <option value="{{ g.id }}">{{ g.nombre }}</option>
-                                    {% endif %}
+                                        {% if g != asignacion.idgrupo %}
+                                            <option value="{{ g.id }}">{{ g.nombre }}</option>
+                                        {% endif %}
                                     {% endfor %}
                                 </select>
 

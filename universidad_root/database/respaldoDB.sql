@@ -234,7 +234,7 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +243,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$1200000$idn1stQuvqUnxyKxGgZ1F7$0JZ37zX6+ZTdl+c5Uggu11YRKAcU5hbVtGthtKvCKsw=','2026-05-10 22:40:52.447958',1,'Jonathan','','','jon.gr2020@gmail.com',1,1,'2026-05-04 23:39:01.892109'),(2,'pbkdf2_sha256$1200000$t2Js3DSZS9NFg8dsxLgs7O$74wYbUxFUcqPaaMG9LydqKfBR5aP3110n6/kczvPOIM=','2026-05-10 18:27:58.653652',0,'Kinari_Admin','Kinari','','',1,1,'2026-05-04 23:44:25.000000'),(3,'pbkdf2_sha256$1200000$lreNI2F7kxbv9HE7DAAtFi$lLw/zzEMCl3kodbzM1XNkUQG0FP0V4JdtN+AAn73mXM=',NULL,0,'Emmanuel_Admin','','','',1,1,'2026-05-04 23:45:01.000000'),(4,'pbkdf2_sha256$1200000$fZAFv1Y8ov9xarfnW7GXj7$YB/rnLFd+nMv0tuOmn3BcpclBT4RRuZPyHyp8FWdB68=','2026-05-10 18:09:23.223773',0,'Julio','','','',0,1,'2026-05-04 23:45:33.535023'),(5,'pbkdf2_sha256$1200000$EendJt8r4dLqkyC74eLRUm$/gx7vrYpjalucu7kkopGJDTIl9oboRBv9qRn7Enk8jk=','2026-05-10 18:10:21.518921',0,'Josmar','','','',0,1,'2026-05-04 23:47:13.929541'),(6,'pbkdf2_sha256$1200000$DOYt0pFuthWFms9WKkGgcy$dUhYywurDLAGF3DRjsBngd9ZZvicnTdTmv0MHVp6P3A=','2026-05-10 18:15:16.271561',0,'Vanessa','','','',0,1,'2026-05-04 23:47:37.007580'),(7,'pbkdf2_sha256$1200000$D68J2qnmmdEU3Bum15YQ5U$Ga9K2O6M2f9SF7yEuH89MRFwoNHIqP9s+IM4cn2rmyU=','2026-05-10 18:26:32.257612',0,'Tania','','','',0,1,'2026-05-04 23:48:10.861600'),(8,'pbkdf2_sha256$1200000$IKpclq6tZaY7oe92zgWU31$XCYgiI88x6PpvGHmsan8yBDmbOIdFeEDIV8Pg26FhP0=',NULL,0,'Vladimir','','','',0,1,'2026-05-04 23:48:33.000000');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$1200000$idn1stQuvqUnxyKxGgZ1F7$0JZ37zX6+ZTdl+c5Uggu11YRKAcU5hbVtGthtKvCKsw=','2026-05-18 20:37:38.347721',1,'Jonathan','','','jon.gr2020@gmail.com',1,1,'2026-05-04 23:39:01.892109'),(2,'pbkdf2_sha256$1200000$t2Js3DSZS9NFg8dsxLgs7O$74wYbUxFUcqPaaMG9LydqKfBR5aP3110n6/kczvPOIM=','2026-05-10 18:27:58.653652',0,'Kinari_Admin','Kinari','','',1,1,'2026-05-04 23:44:25.000000'),(3,'pbkdf2_sha256$1200000$lreNI2F7kxbv9HE7DAAtFi$lLw/zzEMCl3kodbzM1XNkUQG0FP0V4JdtN+AAn73mXM=',NULL,0,'Emmanuel_Admin','','','',1,1,'2026-05-04 23:45:01.000000'),(4,'pbkdf2_sha256$1200000$yooHMRtwCUFsPkNv14ytMZ$mqXeBRFMgIfimmh/QZ06DAAp7fkLdCboBzdlnue7Yjg=','2026-05-18 20:36:23.348084',0,'Julio','','','',0,1,'2026-05-04 23:45:33.000000'),(5,'pbkdf2_sha256$1200000$QL230KBx3q4QPV2sldiaEZ$Ik+0rSrsxB6HPK6oT15AI+RgTYlOl2M+OXJqSPuzN+Y=','2026-05-17 03:01:06.146554',0,'Josmar','','','',0,1,'2026-05-04 23:47:13.000000'),(6,'pbkdf2_sha256$1200000$HyL63ZwKN9Hz2hudabUMKq$bJSg6j1lwUX+8gdSMoTJQiEIq+UjnsLgQJqLIYVZkHk=','2026-05-17 03:01:39.369482',0,'Vanessa','','','',0,1,'2026-05-04 23:47:37.007580'),(7,'pbkdf2_sha256$1200000$D68J2qnmmdEU3Bum15YQ5U$Ga9K2O6M2f9SF7yEuH89MRFwoNHIqP9s+IM4cn2rmyU=','2026-05-10 18:26:32.257612',0,'Tania','','','',0,1,'2026-05-04 23:48:10.861600'),(8,'pbkdf2_sha256$1200000$IKpclq6tZaY7oe92zgWU31$XCYgiI88x6PpvGHmsan8yBDmbOIdFeEDIV8Pg26FhP0=',NULL,0,'Vladimir','','','',0,1,'2026-05-04 23:48:33.000000'),(9,'pbkdf2_sha256$1200000$XktEBLCXUc1ojZivlnP1pC$cNmXE32PENCTwbz+8ZpXVg2o+pXBYzysDtOyRj0Id4Q=',NULL,0,'2026001','Ana Paola','Jiménez Reyes','2026001@uaem.edu.mx',0,1,'2026-05-17 01:41:38.756390');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +325,7 @@ CREATE TABLE `cargo_alumno` (
   CONSTRAINT `cargo_alumno_ibfk_1` FOREIGN KEY (`idAlumno`) REFERENCES `alumno` (`idAlumno`),
   CONSTRAINT `cargo_alumno_ibfk_2` FOREIGN KEY (`idConcepto`) REFERENCES `concepto` (`idConcepto`),
   CONSTRAINT `cargo_alumno_ibfk_3` FOREIGN KEY (`idPago`) REFERENCES `pago` (`idPago`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,7 +334,7 @@ CREATE TABLE `cargo_alumno` (
 
 LOCK TABLES `cargo_alumno` WRITE;
 /*!40000 ALTER TABLE `cargo_alumno` DISABLE KEYS */;
-INSERT INTO `cargo_alumno` VALUES (1,1,1,NULL,2500.00,'2026-05-05 08:00:00','pendiente'),(2,1,2,NULL,150.00,'2026-05-08 11:00:00','pendiente'),(3,2,1,NULL,2500.00,'2026-05-01 10:30:00','pagado'),(4,2,3,NULL,350.00,'2026-05-09 09:15:00','pendiente'),(5,3,4,NULL,50.00,'2026-05-07 14:20:00','pendiente');
+INSERT INTO `cargo_alumno` VALUES (1,1,1,NULL,2500.00,'2026-05-05 08:00:00','cancelado'),(2,1,2,NULL,150.00,'2026-05-08 11:00:00','cancelado'),(3,2,1,NULL,2500.00,'2026-05-01 10:30:00','pagado'),(4,2,3,NULL,350.00,'2026-05-09 09:15:00','cancelado'),(5,3,4,NULL,50.00,'2026-05-07 14:20:00','cancelado'),(6,1,6,NULL,3000.00,'2026-05-30 06:00:00','pendiente');
 /*!40000 ALTER TABLE `cargo_alumno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -350,7 +350,7 @@ CREATE TABLE `concepto` (
   `nombre` varchar(50) NOT NULL,
   `precio` decimal(10,2) NOT NULL,
   PRIMARY KEY (`idConcepto`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -359,7 +359,7 @@ CREATE TABLE `concepto` (
 
 LOCK TABLES `concepto` WRITE;
 /*!40000 ALTER TABLE `concepto` DISABLE KEYS */;
-INSERT INTO `concepto` VALUES (1,'Reinscripción Semestral',2500.00),(2,'Reposición de Credencial',150.00),(3,'Excursión Práctica',350.00),(4,'Constancia de Estudios',50.00),(5,'Seguro Estudiantil',200.00);
+INSERT INTO `concepto` VALUES (1,'Reinscripción Semestral',2500.00),(2,'Reposición de Credencial',150.00),(3,'Excursión Práctica',350.00),(4,'Constancia de Estudios',50.00),(5,'Seguro Estudiantil',200.00),(6,'Titulación',3000.00);
 /*!40000 ALTER TABLE `concepto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -389,7 +389,7 @@ CREATE TABLE `controlescolar_alumnogrupo` (
 
 LOCK TABLES `controlescolar_alumnogrupo` WRITE;
 /*!40000 ALTER TABLE `controlescolar_alumnogrupo` DISABLE KEYS */;
-INSERT INTO `controlescolar_alumnogrupo` VALUES (1,'2026-05-13 18:04:27.906559',1,1),(2,'2026-05-14 01:46:09.887539',2,1),(3,'2026-05-14 01:46:17.270828',3,2);
+INSERT INTO `controlescolar_alumnogrupo` VALUES (1,'2026-05-13 18:04:27.906559',1,3),(2,'2026-05-14 01:46:09.887539',2,2),(3,'2026-05-14 01:46:17.270828',3,1);
 /*!40000 ALTER TABLE `controlescolar_alumnogrupo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -444,7 +444,7 @@ CREATE TABLE `controlescolar_aviso` (
   KEY `ControlEscolar_aviso_idgrupo_id_c2241330_fk_ControlEs` (`idgrupo_id`),
   CONSTRAINT `ControlEscolar_aviso_idalumno_id_c4ae6a40_fk_Alumno_idAlumno` FOREIGN KEY (`idalumno_id`) REFERENCES `alumno` (`idAlumno`),
   CONSTRAINT `ControlEscolar_aviso_idgrupo_id_c2241330_fk_ControlEs` FOREIGN KEY (`idgrupo_id`) REFERENCES `controlescolar_grupo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -453,7 +453,7 @@ CREATE TABLE `controlescolar_aviso` (
 
 LOCK TABLES `controlescolar_aviso` WRITE;
 /*!40000 ALTER TABLE `controlescolar_aviso` DISABLE KEYS */;
-INSERT INTO `controlescolar_aviso` VALUES (1,'? ¡Bienvenidos al Ciclo Escolar!','La UAEM les desea un excelente inicio de clases a toda la comunidad estudiantil.','2026-05-13 17:25:54.363201','global',NULL,NULL);
+INSERT INTO `controlescolar_aviso` VALUES (1,'? ¡Bienvenidos al Ciclo Escolar!','La UAEM les desea un excelente inicio de clases a toda la comunidad estudiantil.','2026-05-13 17:25:54.363201','global',NULL,NULL),(2,'siuu','HOLAAA','2026-05-16 05:51:11.554211','global',NULL,NULL);
 /*!40000 ALTER TABLE `controlescolar_aviso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -500,7 +500,7 @@ CREATE TABLE `controlescolar_grupo` (
   PRIMARY KEY (`id`),
   KEY `ControlEscolar_grupo_idciclo_id_577d51db_fk_ControlEs` (`idciclo_id`),
   CONSTRAINT `ControlEscolar_grupo_idciclo_id_577d51db_fk_ControlEs` FOREIGN KEY (`idciclo_id`) REFERENCES `controlescolar_cicloescolar` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -509,7 +509,7 @@ CREATE TABLE `controlescolar_grupo` (
 
 LOCK TABLES `controlescolar_grupo` WRITE;
 /*!40000 ALTER TABLE `controlescolar_grupo` DISABLE KEYS */;
-INSERT INTO `controlescolar_grupo` VALUES (1,'I4',4,1),(2,'4I',4,1);
+INSERT INTO `controlescolar_grupo` VALUES (1,'Licenciatura en Derecho',4,1),(2,'Licenciatura en Turismo',4,1),(3,'Ingenieria en Computacion',1,1);
 /*!40000 ALTER TABLE `controlescolar_grupo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -603,7 +603,7 @@ CREATE TABLE `django_admin_log` (
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
   CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -612,7 +612,7 @@ CREATE TABLE `django_admin_log` (
 
 LOCK TABLES `django_admin_log` WRITE;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-INSERT INTO `django_admin_log` VALUES (1,'2026-05-04 23:44:26.535128','2','Kinari_Admin',1,'[{\"added\": {}}]',4,1),(2,'2026-05-04 23:44:39.814112','2','Kinari_Admin',2,'[{\"changed\": {\"fields\": [\"First name\", \"Staff status\"]}}]',4,1),(3,'2026-05-04 23:45:02.027010','3','Emmanuel_Admin',1,'[{\"added\": {}}]',4,1),(4,'2026-05-04 23:45:10.236005','3','Emmanuel_Admin',2,'[{\"changed\": {\"fields\": [\"Staff status\"]}}]',4,1),(5,'2026-05-04 23:45:34.191757','4','Julio',1,'[{\"added\": {}}]',4,1),(6,'2026-05-04 23:47:14.585743','5','Josmar',1,'[{\"added\": {}}]',4,1),(7,'2026-05-04 23:47:37.672893','6','Vanessa',1,'[{\"added\": {}}]',4,1),(8,'2026-05-04 23:48:11.518158','7','Tania',1,'[{\"added\": {}}]',4,1),(9,'2026-05-04 23:48:34.543139','8','Vladimir',1,'[{\"added\": {}}]',4,1),(10,'2026-05-04 23:48:40.411552','8','Vladimir',2,'[]',4,1);
+INSERT INTO `django_admin_log` VALUES (1,'2026-05-04 23:44:26.535128','2','Kinari_Admin',1,'[{\"added\": {}}]',4,1),(2,'2026-05-04 23:44:39.814112','2','Kinari_Admin',2,'[{\"changed\": {\"fields\": [\"First name\", \"Staff status\"]}}]',4,1),(3,'2026-05-04 23:45:02.027010','3','Emmanuel_Admin',1,'[{\"added\": {}}]',4,1),(4,'2026-05-04 23:45:10.236005','3','Emmanuel_Admin',2,'[{\"changed\": {\"fields\": [\"Staff status\"]}}]',4,1),(5,'2026-05-04 23:45:34.191757','4','Julio',1,'[{\"added\": {}}]',4,1),(6,'2026-05-04 23:47:14.585743','5','Josmar',1,'[{\"added\": {}}]',4,1),(7,'2026-05-04 23:47:37.672893','6','Vanessa',1,'[{\"added\": {}}]',4,1),(8,'2026-05-04 23:48:11.518158','7','Tania',1,'[{\"added\": {}}]',4,1),(9,'2026-05-04 23:48:34.543139','8','Vladimir',1,'[{\"added\": {}}]',4,1),(10,'2026-05-04 23:48:40.411552','8','Vladimir',2,'[]',4,1),(11,'2026-05-16 05:53:14.061548','4','Julio',2,'[{\"changed\": {\"fields\": [\"password\"]}}]',4,1),(12,'2026-05-16 05:53:25.672590','4','Julio',2,'[]',4,1),(13,'2026-05-16 05:53:55.560794','5','Josmar',2,'[{\"changed\": {\"fields\": [\"password\"]}}]',4,1),(14,'2026-05-16 05:53:59.475707','5','Josmar',2,'[]',4,1),(15,'2026-05-16 05:54:24.809723','6','Vanessa',2,'[{\"changed\": {\"fields\": [\"password\"]}}]',4,1),(16,'2026-05-18 20:31:55.870162','3','Licenciatura Ingenieria en Computacion (2026-A)',2,'[{\"changed\": {\"fields\": [\"Nombre\"]}}]',16,1),(17,'2026-05-18 20:32:33.649425','2','Licenciatura Licenciatura en Turismo (2026-A)',2,'[{\"changed\": {\"fields\": [\"Nombre\"]}}]',16,1),(18,'2026-05-18 20:32:47.347433','1','Licenciatura Licenciatura en Derecho (2026-A)',2,'[{\"changed\": {\"fields\": [\"Nombre\"]}}]',16,1),(19,'2026-05-18 20:33:07.826780','3','UAEM-202603 en Licenciatura en Derecho',2,'[{\"changed\": {\"fields\": [\"Idgrupo\"]}}]',15,1),(20,'2026-05-18 20:33:39.064805','1','Licenciatura Ingenieria en Computacion (2026-A)',2,'[{\"changed\": {\"fields\": [\"Nombre\"]}}]',16,1),(21,'2026-05-18 20:33:58.889851','2','UAEM-202602 en Licenciatura en Turismo',2,'[{\"changed\": {\"fields\": [\"Idgrupo\"]}}]',15,1),(22,'2026-05-18 20:34:35.064605','1','Licenciatura Licenciatura en Derecho (2026-A)',2,'[{\"changed\": {\"fields\": [\"Nombre\"]}}]',16,1),(23,'2026-05-18 20:35:41.755889','1','UAEM-202601 en Ingenieria en Computacion',2,'[{\"changed\": {\"fields\": [\"Idgrupo\"]}}]',15,1);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -690,7 +690,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('krxf25igtntxze986m2y1sjmtrir0h70','.eJxVjDkOwjAQAP-yNbJ8xFdKet5grb1rHECJFCcV4u8oUgpoZ0bzhoT71tLeeU0TwQgKLr8sY3nyfAh64HxfRFnmbZ2yOBJx2i5uC_HrerZ_g4a9wQhYqtKeTYjE1iCxj46U9N47Y71zOUc51EAyR8OEWYbKcdDojC52UBE-X-fpN7c:1wMCpQ:d_oqPg2VqlFHu6C1UWon8zUD70sDREYFsfK4hgwUO3k','2026-05-24 22:40:52.451039');
+INSERT INTO `django_session` VALUES ('krxf25igtntxze986m2y1sjmtrir0h70','.eJxVjDkOwjAQAP-yNbJ8xFdKet5grb1rHECJFCcV4u8oUgpoZ0bzhoT71tLeeU0TwQgKLr8sY3nyfAh64HxfRFnmbZ2yOBJx2i5uC_HrerZ_g4a9wQhYqtKeTYjE1iCxj46U9N47Y71zOUc51EAyR8OEWYbKcdDojC52UBE-X-fpN7c:1wMCpQ:d_oqPg2VqlFHu6C1UWon8zUD70sDREYFsfK4hgwUO3k','2026-05-24 22:40:52.451039'),('xwhqtnrv7v5xyparj134pl6v9fchhld9','.eJxVjDkOwjAQAP-yNbJ8xFdKet5grb1rHECJFCcV4u8oUgpoZ0bzhoT71tLeeU0TwQgKLr8sY3nyfAh64HxfRFnmbZ2yOBJx2i5uC_HrerZ_g4a9wQhYqtKeTYjE1iCxj46U9N47Y71zOUc51EAyR8OEWYbKcdDojC52UBE-X-fpN7c:1wP4iY:bNKR6nUyym4QxdyZKkRB67NXIIz7Ux7hUL9lxVyX_wc','2026-06-01 20:37:38.350123');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -732,7 +732,7 @@ CREATE TABLE `libro` (
   `isbn` varchar(13) DEFAULT NULL,
   `editorial` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idLibro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -741,6 +741,7 @@ CREATE TABLE `libro` (
 
 LOCK TABLES `libro` WRITE;
 /*!40000 ALTER TABLE `libro` DISABLE KEYS */;
+INSERT INTO `libro` VALUES (1,'SIU','SISISI','SISISISIS','NYAAA'),(2,'Clean Code','Robert C. Martin','9780132350884','Prentice Hall'),(3,'Introduction to Algorithms','Thomas H. Cormen','9780262033848','MIT Press'),(4,'Django for Beginners','William S. Vincent','9781735467702','WelcomeToCode'),(5,'The Pragmatic Programmer','Andrew Hunt','9780135957059','Addison-Wesley'),(6,'Learning Python','Mark Lutz','9781449355739','O\'Reilly Media');
 /*!40000 ALTER TABLE `libro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -759,7 +760,7 @@ CREATE TABLE `libro_fisico` (
   PRIMARY KEY (`idLibroFisico`),
   KEY `idLibro` (`idLibro`),
   CONSTRAINT `libro_fisico_ibfk_1` FOREIGN KEY (`idLibro`) REFERENCES `libro` (`idLibro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -768,6 +769,7 @@ CREATE TABLE `libro_fisico` (
 
 LOCK TABLES `libro_fisico` WRITE;
 /*!40000 ALTER TABLE `libro_fisico` DISABLE KEYS */;
+INSERT INTO `libro_fisico` VALUES (1,'00009999999999','disponible',1),(2,'BC-9780-01','disponible',2),(3,'BC-9780-02','disponible',2),(4,'BC-9780-01','disponible',3),(5,'BC-9780-02','disponible',3),(6,'BC-9781-01','disponible',4),(7,'BC-9781-02','disponible',4),(8,'BC-9780-01','disponible',5),(9,'BC-9780-02','disponible',5),(10,'BC-9781-01','disponible',6),(11,'BC-9781-02','disponible',6);
 /*!40000 ALTER TABLE `libro_fisico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -937,4 +939,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-14 16:49:29
+-- Dump completed on 2026-05-18 14:51:01

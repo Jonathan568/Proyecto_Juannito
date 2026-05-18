@@ -13,6 +13,10 @@ class CicloEscolar(models.Model):
     fecha_fin = models.DateField()
     estatus = models.CharField(max_length=20, choices=ESTATUS_CICLO, default='activo')
 
+    class Meta:
+        verbose_name = "Ciclo Escolar"
+        verbose_name_plural = "Ciclos Escolares"
+
     def __str__(self):
         return self.nombre
 
@@ -23,29 +27,41 @@ class Asignatura(models.Model):
     semestre_ideal = models.IntegerField(default=1, help_text="Semestre en el que se sugiere cursar")
     prerrequisito = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='materias_consecutivas')
 
+    class Meta:
+        verbose_name = "Asignatura"
+        verbose_name_plural = "Asignaturas"
+
     def __str__(self):
         return f"{self.clave} - {self.nombre}"
 
 class Grupo(models.Model):
     nombre = models.CharField(max_length=50) 
-    semestre = models.IntegerField(default=1) # Modificado para no pedir default
-    idciclo = models.ForeignKey(CicloEscolar, on_delete=models.CASCADE, null=True, blank=True) # Modificado
+    semestre = models.IntegerField(default=1)
+    idciclo = models.ForeignKey(CicloEscolar, on_delete=models.CASCADE, null=True, blank=True)
+
+    # AQUÍ ENMASCARAMOS EL MODELO "GRUPO" PARA QUE SE LLAME "LICENCIATURA"
+    class Meta:
+        verbose_name = "Licenciatura"
+        verbose_name_plural = "Licenciaturas"
 
     def __str__(self):
         if self.idciclo:
-            return f"Grupo {self.nombre} ({self.idciclo.nombre})"
-        return f"Grupo {self.nombre}"
+            return f"Licenciatura {self.nombre} ({self.idciclo.nombre})"
+        return f"Licenciatura {self.nombre}"
 
 class AlumnoGrupo(models.Model):
     idalumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
-    idgrupo = models.ForeignKey(Grupo, on_delete=models.CASCADE, null=True, blank=True) # Modificado
-    fecha_asignacion = models.DateTimeField(auto_now_add=True, null=True) # Modificado
+    idgrupo = models.ForeignKey(Grupo, on_delete=models.CASCADE, null=True, blank=True)
+    fecha_asignacion = models.DateTimeField(auto_now_add=True, null=True)
 
+    # AQUÍ ENMASCARAMOS EL MODELO DE ASIGNACIÓN
     class Meta:
         unique_together = ('idalumno', 'idgrupo') 
+        verbose_name = "Alumno en Licenciatura"
+        verbose_name_plural = "Asignación de Alumnos a Licenciaturas"
 
     def __str__(self):
-        return f"{self.idalumno.matricula} en {self.idgrupo.nombre if self.idgrupo else 'Sin grupo'}"
+        return f"{self.idalumno.matricula} en {self.idgrupo.nombre if self.idgrupo else 'Sin licenciatura'}"
 
 class Horario(models.Model):
     DIAS_SEMANA = [
@@ -59,6 +75,10 @@ class Horario(models.Model):
     dia = models.CharField(max_length=20, choices=DIAS_SEMANA)
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
+
+    class Meta:
+        verbose_name = "Horario de Clase"
+        verbose_name_plural = "Carga Académica (Horarios)"
 
     def __str__(self):
         return f"{self.idasignatura.nombre} - {self.dia} {self.hora_inicio}"
@@ -82,6 +102,8 @@ class Inscripcion(models.Model):
 
     class Meta:
         unique_together = ('idalumno', 'idasignatura', 'idciclo') 
+        verbose_name = "Inscripción / Calificación"
+        verbose_name_plural = "Inscripciones y Calificaciones"
 
     def __str__(self):
         return f"{self.idalumno.matricula} - {self.idasignatura.clave}"
@@ -89,7 +111,7 @@ class Inscripcion(models.Model):
 class Aviso(models.Model):
     TIPO_AVISO = [
         ('global', 'Todos los alumnos'),
-        ('grupal', 'Un grupo en específico'),
+        ('grupal', 'Una licenciatura en específico'),
         ('individual', 'Un alumno en específico')
     ]
     titulo = models.CharField(max_length=200)
@@ -98,6 +120,10 @@ class Aviso(models.Model):
     tipo = models.CharField(max_length=20, choices=TIPO_AVISO, default='global')
     idgrupo = models.ForeignKey(Grupo, on_delete=models.CASCADE, null=True, blank=True)
     idalumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Aviso"
+        verbose_name_plural = "Centro de Avisos"
 
     def __str__(self):
         return self.titulo

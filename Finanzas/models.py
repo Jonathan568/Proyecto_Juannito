@@ -8,9 +8,13 @@ class Concepto(models.Model):
     class Meta:
         managed = False
         db_table = 'Concepto'
+        verbose_name = "Concepto de Pago"
+        verbose_name_plural = "Conceptos Arancelarios"
 
+    # Representación limpia que muestra el nombre y el precio base en los selectores
     def __str__(self):
-        return self.nombre
+        return f"{self.nombre} (${self.precio})"
+
 
 class Pago(models.Model):
     idpago = models.AutoField(db_column='idPago', primary_key=True)
@@ -22,9 +26,15 @@ class Pago(models.Model):
     class Meta:
         managed = False
         db_table = 'Pago'
+        verbose_name = "Transacción / Recibo"
+        verbose_name_plural = "Historial de Pagos Recibidos"
 
+    # Muestra un formato impecable con folio, cantidad y estado de la transacción
     def __str__(self):
-        return f"Folio: {self.folio} - {self.estatus}"
+        folio_str = self.folio if self.folio else f"ID-{self.idpago}"
+        estatus_str = self.estatus.upper() if self.estatus else "PENDIENTE"
+        return f"Folio: {folio_str} — ${self.monto} [{estatus_str}]"
+
 
 class CargoAlumno(models.Model):
     idcargo = models.AutoField(db_column='idCargo', primary_key=True)
@@ -38,6 +48,14 @@ class CargoAlumno(models.Model):
     class Meta:
         managed = False
         db_table = 'Cargo_Alumno'
+        verbose_name = "Cargo a Estudiante"
+        verbose_name_plural = "Estados de Cuenta (Cargos)"
 
+    # Desglosa visualmente a qué alumno pertenece, el concepto y la cantidad
     def __str__(self):
-        return f"Cargo {self.idcargo} - ${self.monto}"
+        try:
+            concepto_str = self.idconcepto.nombre
+            matricula_str = self.idalumno.matricula
+            return f"Ref: {self.idcargo:05d} — {concepto_str} (${self.monto}) — Alumno: {matricula_str}"
+        except AttributeError:
+            return f"Cargo #{self.idcargo} — ${self.monto}"

@@ -6,12 +6,18 @@ class Usuario(models.Model):
     password = models.CharField(max_length=255)
     rol = models.CharField(max_length=10)
 
+    # Conservamos la integración con tu base de datos externa intacta
     class Meta:
         managed = False
         db_table = 'Usuario'
+        verbose_name = "Usuario"
+        verbose_name_plural = "Credenciales de Usuarios"
 
+    # Muestra el nombre de usuario junto con su rol en mayúsculas para mejor control
     def __str__(self):
-        return self.username
+        rol_str = self.rol.upper() if self.rol else "SIN ROL"
+        return f"{self.username} [{rol_str}]"
+
 
 class Alumno(models.Model):
     idalumno = models.AutoField(db_column='idAlumno', primary_key=True)
@@ -24,6 +30,10 @@ class Alumno(models.Model):
     class Meta:
         managed = False
         db_table = 'Alumno'
+        verbose_name = "Estudiante"
+        verbose_name_plural = "Catálogo de Estudiantes"
 
+    # Desiega la matrícula con el nombre y apellido paterno completo del alumno
     def __str__(self):
-        return f"{self.matricula} - {self.nombre}"
+        apellido_str = f" {self.apellido_paterno}" if self.apellido_paterno else ""
+        return f"{self.matricula} — {self.nombre}{apellido_str}"

@@ -24,7 +24,7 @@
 
     <div class="mb-10 border-b border-gray-200 pb-6">
         <h1 class="text-3xl font-black text-slate-800 tracking-tight">Centro de Avisos</h1>
-        <p class="text-slate-500 font-medium text-sm mt-1">Envía comunicados globales, a grupos o a estudiantes
+        <p class="text-slate-500 font-medium text-sm mt-1">Envía comunicados globales, a licenciaturas o a estudiantes
             específicos.</p>
     </div>
 
@@ -52,7 +52,7 @@
                         <select name="tipo" id="tipo_aviso" onchange="toggleDestinatario()"
                             class="w-full mt-1 bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-500 text-sm font-bold text-slate-700 transition-shadow">
                             <option value="global">🔊 Todos los Alumnos (Global)</option>
-                            <option value="grupal">👥 Un Grupo en Específico</option>
+                            <option value="grupal">👥 Una Licenciatura en Específico</option>
                             <option value="individual">👤 Un Alumno en Específico</option>
                         </select>
                     </div>
@@ -60,10 +60,10 @@
                     <div id="div_grupo" class="hidden bg-amber-50 p-4 rounded-xl border border-amber-100">
                         <label
                             class="text-xs font-black text-amber-800 uppercase tracking-widest mb-2 block">Seleccionar
-                            Grupo</label>
+                            Licenciatura</label>
                         <select name="idgrupo"
                             class="w-full bg-white border border-amber-200 rounded-lg px-3 py-2 text-sm font-medium">
-                            <option value="">Elegir grupo...</option>
+                            <option value="">Elegir licenciatura...</option>
                             {% for g in grupos %}
                             <option value="{{ g.id }}">{{ g.nombre }} - Semestre {{ g.semestre }}</option>
                             {% endfor %}
@@ -174,6 +174,7 @@
 <script>
     function toggleDestinatario() {
         const tipo = document.getElementById('tipo_aviso').value;
+        // Los IDs y lógica en JavaScript se mantienen igual (grupos) para no romper el backend
         const divGrupo = document.getElementById('div_grupo');
         const divAlumno = document.getElementById('div_alumno');
 

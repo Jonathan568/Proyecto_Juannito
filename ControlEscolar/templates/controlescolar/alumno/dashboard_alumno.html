@@ -1,7 +1,6 @@
 {% extends 'inicio.html' %}
 
 {% block content %}
-
 <nav class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center w-full fixed top-0 z-50">
     <div class="text-2xl font-black text-amber-500 tracking-tight">
         UAEM
@@ -47,13 +46,13 @@
         <div class="relative z-10 mt-6 md:mt-0 text-right">
             {% if grupo_actual %}
             <div class="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-4 text-center min-w-[150px]">
-                <p class="text-blue-100 text-[10px] font-black uppercase tracking-widest mb-1">Tu Grupo</p>
+                <p class="text-blue-100 text-[10px] font-black uppercase tracking-widest mb-1">Tu Licenciatura</p>
                 <p class="text-3xl font-black">{{ grupo_actual.nombre }}</p>
             </div>
             {% else %}
             <div class="bg-red-500/80 backdrop-blur-md rounded-2xl p-4 text-center max-w-xs border border-red-400">
-                <p class="text-white font-bold text-sm"><i class="fas fa-exclamation-triangle mr-2"></i>Aún no tienes un
-                    grupo asignado.</p>
+                <p class="text-white font-bold text-sm"><i class="fas fa-exclamation-triangle mr-2"></i>Aún no tienes una
+                    licenciatura asignada.</p>
             </div>
             {% endif %}
         </div>
@@ -118,7 +117,7 @@
                 <div class="p-12 text-center">
                     <i class="fas fa-mug-hot text-5xl text-gray-200 mb-4"></i>
                     <p class="text-gray-500 font-bold text-lg">Tu horario está vacío.</p>
-                    <p class="text-gray-400 text-sm mt-1">Espera a que Control Escolar asigne las materias de tu grupo.
+                    <p class="text-gray-400 text-sm mt-1">Espera a que Control Escolar asigne las materias de tu licenciatura.
                     </p>
                 </div>
                 {% endif %}
@@ -147,7 +146,7 @@
                                 {% elif aviso.tipo == 'grupal' %}text-amber-600
                                 {% else %}text-blue-600{% endif %}">
                             {% if aviso.tipo == 'global' %}General
-                            {% elif aviso.tipo == 'grupal' %}Tu Grupo
+                            {% elif aviso.tipo == 'grupal' %}Tu Licenciatura
                             {% else %}Privado{% endif %}
                         </span>
                         <span class="text-xs text-gray-400 font-bold">{{ aviso.fecha_publicacion|date:"d M, H:i"
