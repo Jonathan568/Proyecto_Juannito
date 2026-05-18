@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
 @login_required
 def redireccion_rol(request):
@@ -17,3 +18,7 @@ def panel_admin(request):
 @login_required
 def panel_alumno(request):
     return render(request, 'Usuarios/panel_alumno.html')
+
+@user_passes_test(lambda u: u.is_superuser)
+def docker_panel(request):
+    return render(request, 'Usuarios/docker_panel.html')

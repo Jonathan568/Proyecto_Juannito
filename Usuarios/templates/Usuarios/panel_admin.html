@@ -21,62 +21,71 @@
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
                 <button type="submit"
-                    class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-bold transition">Cerrar
-                    Sesión</button>
+                    class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-bold transition">Cerrar Sesión</button>
             </form>
         </div>
     </nav>
 
-    <div class="max-w-7xl mx-auto mt-10 px-4">
+    <div class="max-w-7xl mx-auto mt-10 px-4 mb-16">
         <h1 class="text-3xl font-bold text-gray-800 text-center mb-8">Panel de Control General</h1>
 
-        <div class="flex flex-wrap justify-center gap-6 p-6">
+        <div class="flex flex-wrap justify-center items-stretch gap-6 p-6">
 
-            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-green-700 w-full max-w-sm">
+            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-green-700 w-full max-w-sm flex flex-col">
                 <i class="fas fa-university text-3xl text-green-700 mb-4"></i>
                 <h2 class="text-xl font-bold mb-2">Control Escolar</h2>
-                <p class="text-gray-600 text-sm mb-4">Gestión de alumnos, grupos y periodos.</p>
+                <p class="text-gray-600 text-sm mb-4 flex-grow">Gestión de alumnos, grupos y periodos.</p>
                 <a href="{% url 'ControlEscolar:dashboard_admin' %}"
-                    class="text-green-700 font-bold hover:text-green-800 transition-colors inline-flex items-center">
+                    class="text-green-700 font-bold hover:text-green-800 transition-colors inline-flex items-center mt-auto">
                     Ir a Control Escolar &rarr;
                 </a>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-green-700 w-full max-w-sm">
+            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-green-700 w-full max-w-sm flex flex-col">
                 <i class="fas fa-wallet text-3xl text-green-700 mb-4"></i>
                 <h2 class="text-xl font-bold mb-2">Finanzas</h2>
-                <p class="text-gray-600 text-sm mb-4">Cargos, pagos y conceptos arancelarios.</p>
+                <p class="text-gray-600 text-sm mb-4 flex-grow">Cargos, pagos y conceptos arancelarios.</p>
                 <a href="{% url 'Finanzas:dashboard_admin' %}"
-                    class="text-green-700 font-bold hover:text-green-800 transition-colors inline-flex items-center">
+                    class="text-green-700 font-bold hover:text-green-800 transition-colors inline-flex items-center mt-auto">
                     Ir a Finanzas &rarr;
                 </a>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-green-700 w-full max-w-sm">
+            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-green-700 w-full max-w-sm flex flex-col">
                 <i class="fas fa-book text-3xl text-green-700 mb-4"></i>
                 <h2 class="text-xl font-bold mb-2">Biblioteca</h2>
-                <p class="text-gray-600 text-sm mb-4">Gestiona el inventario de libros físicos, registra nuevos
+                <p class="text-gray-600 text-sm mb-4 flex-grow">Gestiona el inventario de libros físicos, registra nuevos
                     ejemplares y supervisa los préstamos.</p>
                 <a href="{% url 'Biblioteca:gestion_biblioteca' %}"
-                    class="text-green-700 font-bold hover:text-green-800 transition-colors inline-flex items-center">
+                    class="text-green-700 font-bold hover:text-green-800 transition-colors inline-flex items-center mt-auto">
                     Administrar Inventario &rarr;
                 </a>
             </div>
 
             {% if user.is_superuser %}
-            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-gray-700 w-full max-w-sm">
+            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-gray-700 w-full max-w-sm flex flex-col">
                 <i class="fas fa-cogs text-3xl text-gray-700 mb-4"></i>
                 <h2 class="text-xl font-bold mb-2">Ajustes</h2>
-                <p class="text-gray-600 text-sm mb-4">Administración interna de Django.</p>
+                <p class="text-gray-600 text-sm mb-4 flex-grow">Administración interna de Django.</p>
                 <a href="/admin-django/" target="_blank"
-                    class="text-green-700 font-bold hover:text-green-800 transition-colors inline-flex items-center">
+                    class="text-gray-700 font-bold hover:text-gray-900 transition-colors inline-flex items-center mt-auto">
                     Abrir Panel Root &rarr;
                 </a>
+            </div>
+
+            <div class="bg-[#0f172a] text-white p-6 rounded-lg shadow-md border-t-4 border-[#2496ed] w-full max-w-sm flex flex-col relative overflow-hidden">
+                <i class="fab fa-docker text-4xl text-[#2496ed] mb-4"></i>
+                <h2 class="text-xl font-bold mb-2">Docker Engine</h2>
+                <p class="text-gray-400 text-sm mb-4 flex-grow">Monitor de infraestructura, contenedores y estado del servidor.</p>
+                <a href="{% url 'Usuarios:docker_panel' %}"
+                    class="text-[#2496ed] font-bold hover:text-blue-400 transition-colors inline-flex items-center mt-auto">
+                    Abrir Monitor del Sistema &rarr;
+                </a>
+                <i class="fab fa-docker absolute -bottom-4 -right-4 text-8xl text-[#1e293b] opacity-50"></i>
             </div>
             {% endif %}
 
         </div>
     </div>
 </body>
-
 </html>

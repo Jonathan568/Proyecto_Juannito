@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor de Servidor | Docker Swarm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; color: white; font-family: monospace; }
+        .log-container::-webkit-scrollbar { width: 8px; }
+        .log-container::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <nav class="bg-[#1e293b] border-b border-gray-800 px-6 py-4 flex justify-between items-center shadow-lg">
+        <div class="flex items-center gap-6">
+            <a href="{% url 'Usuarios:panel_admin' %}" class="text-gray-400 hover:text-white transition flex items-center gap-2 bg-gray-800 px-3 py-1.5 rounded-lg text-sm">
+                <i class="fas fa-arrow-left"></i> Volver al Panel
+            </a>
+            <div class="flex items-center gap-3">
+                <i class="fab fa-docker text-3xl text-[#2496ed]"></i>
+                <div>
+                    <h1 class="font-bold tracking-widest uppercase text-lg">Docker Swarm Cluster</h1>
+                    <p class="text-xs text-gray-500">Nodo Principal: servidor-uaem-01</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-3 bg-gray-800 px-4 py-2 rounded-lg border border-gray-700">
+            <span class="relative flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </span>
+            <span class="text-green-400 font-bold text-sm tracking-widest uppercase">System Online</span>
+        </div>
+    </nav>
+
+    <div class="flex-grow p-8 flex flex-col gap-8 max-w-7xl mx-auto w-full">
+        
+        <div class="grid grid-cols-3 gap-6">
+            <div class="bg-[#1e293b] p-6 rounded-xl border border-gray-800">
+                <p class="text-gray-500 text-xs uppercase tracking-widest mb-1">CPU Total</p>
+                <p class="text-3xl font-black text-white cpu-total">18.7%</p>
+            </div>
+            <div class="bg-[#1e293b] p-6 rounded-xl border border-gray-800">
+                <p class="text-gray-500 text-xs uppercase tracking-widest mb-1">Memoria Total</p>
+                <p class="text-3xl font-black text-white mem-total">1.39 GB <span class="text-sm text-gray-500 font-normal">/ 16 GB</span></p>
+            </div>
+            <div class="bg-[#1e293b] p-6 rounded-xl border border-gray-800">
+                <p class="text-gray-500 text-xs uppercase tracking-widest mb-1">Contenedores Activos</p>
+                <p class="text-3xl font-black text-[#2496ed]">3 <span class="text-sm text-gray-500 font-normal">/ 3</span></p>
+            </div>
+        </div>
+
+        <div class="bg-[#1e293b] rounded-xl border border-gray-800 overflow-hidden flex-grow shadow-2xl">
+            <div class="bg-[#334155]/30 px-6 py-4 border-b border-gray-800">
+                <h2 class="text-sm font-bold text-gray-300 uppercase tracking-widest">Contenedores en Ejecución</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-gray-500 text-xs border-b border-gray-800 uppercase tracking-widest">
+                            <th class="px-6 py-4">Container ID</th>
+                            <th class="px-6 py-4">Image / Service</th>
+                            <th class="px-6 py-4 text-center">Status</th>
+                            <th class="px-6 py-4 text-center">CPU %</th>
+                            <th class="px-6 py-4 text-right">Mem Usage</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-300 text-sm">
+                        <tr class="border-b border-gray-800/50 hover:bg-gray-800/50 transition">
+                            <td class="px-6 py-5 text-blue-400 font-bold">c9f28a1b3x</td>
+                            <td class="px-6 py-5"><span class="font-bold text-white text-base">uaem_web_app</span> <span class="text-gray-500 text-xs ml-2">python:3.11-slim</span></td>
+                            <td class="px-6 py-5 text-center"><span class="bg-green-500/10 text-green-400 px-3 py-1 rounded text-xs border border-green-500/20">Up 5 days</span></td>
+                            <td class="px-6 py-5 text-center cpu-sim font-bold" data-base="12">12.4%</td>
+                            <td class="px-6 py-5 text-right mem-sim" data-base="450">450 MB / 2GB</td>
+                        </tr>
+                        <tr class="border-b border-gray-800/50 hover:bg-gray-800/50 transition">
+                            <td class="px-6 py-5 text-blue-400 font-bold">8d44c132ff</td>
+                            <td class="px-6 py-5"><span class="font-bold text-white text-base">uaem_postgres_db</span> <span class="text-gray-500 text-xs ml-2">postgres:15-alpine</span></td>
+                            <td class="px-6 py-5 text-center"><span class="bg-green-500/10 text-green-400 px-3 py-1 rounded text-xs border border-green-500/20">Up 5 days</span></td>
+                            <td class="px-6 py-5 text-center cpu-sim font-bold" data-base="5">5.1%</td>
+                            <td class="px-6 py-5 text-right mem-sim" data-base="820">820 MB / 4GB</td>
+                        </tr>
+                        <tr class="border-b border-gray-800/50 hover:bg-gray-800/50 transition">
+                            <td class="px-6 py-5 text-blue-400 font-bold">3a19b841cd</td>
+                            <td class="px-6 py-5"><span class="font-bold text-white text-base">uaem_redis_cache</span> <span class="text-gray-500 text-xs ml-2">redis:7.0</span></td>
+                            <td class="px-6 py-5 text-center"><span class="bg-green-500/10 text-green-400 px-3 py-1 rounded text-xs border border-green-500/20">Up 5 days</span></td>
+                            <td class="px-6 py-5 text-center cpu-sim font-bold" data-base="1">1.2%</td>
+                            <td class="px-6 py-5 text-right mem-sim" data-base="120">120 MB / 1GB</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="bg-black rounded-xl border border-gray-800 flex flex-col overflow-hidden h-64 shadow-2xl mt-auto">
+            <div class="bg-gray-900 px-4 py-2 flex gap-2 items-center border-b border-gray-800">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                <span class="text-xs text-gray-500 ml-2">root@servidor-uaem-01:~# docker logs -f uaem_cluster</span>
+            </div>
+            <div id="docker-logs" class="p-4 log-container overflow-y-auto flex-grow text-xs leading-relaxed space-y-1">
+                <p class="text-gray-400">> System initialized.</p>
+                <p class="text-gray-400">> Connecting to PostgreSQL instance on port 5432... SUCCESS</p>
+                <p class="text-gray-400">> Redis cache warmed up.</p>
+                <p class="text-green-500">> [uaem_web_app] HTTP/1.1 "GET /panel_admin/ HTTP/1.1" 200 OK</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        setInterval(() => {
+            let cpuTotal = 0;
+            let memTotal = 0;
+
+            document.querySelectorAll('.cpu-sim').forEach(el => {
+                let base = parseFloat(el.getAttribute('data-base'));
+                let random = (Math.random() * 3 - 1.5);
+                let actual = Math.max(0.1, (base + random));
+                el.innerText = actual.toFixed(1) + "%";
+                cpuTotal += actual;
+            });
+    
+            document.querySelectorAll('.mem-sim').forEach(el => {
+                let base = parseInt(el.getAttribute('data-base'));
+                let random = Math.floor(Math.random() * 14 - 7);
+                let actual = base + random;
+                let originalText = el.innerText.split('/')[1]; 
+                el.innerText = actual + " MB /" + originalText;
+                memTotal += actual;
+            });
+
+            document.querySelector('.cpu-total').innerText = cpuTotal.toFixed(1) + "%";
+            document.querySelector('.mem-total').innerHTML = (memTotal / 1024).toFixed(2) + ' GB <span class="text-sm text-gray-500 font-normal">/ 16 GB</span>';
+
+        }, 1500);
+
+        const logs = [
+            '[uaem_web_app] POST /api/v1/finanzas/pago 201 Created',
+            '[uaem_postgres_db] LOG: checkpoint starting: time',
+            '[uaem_redis_cache] 1 clients connected (1 connections in total)',
+            '[uaem_web_app] GET /static/css/tailwind.css 304 Not Modified',
+            '[uaem_web_app] Celery worker ready for background tasks',
+            '[uaem_postgres_db] LOG: duration: 4.023 ms  statement: SELECT * FROM alumnos',
+            '[uaem_web_app] DEBUG: User superadmin authenticated successfully',
+            '[uaem_redis_cache] Background saving terminated with success'
+        ];
+        
+        const logContainer = document.getElementById('docker-logs');
+        
+        setInterval(() => {
+            if (logContainer) {
+                const randomLog = logs[Math.floor(Math.random() * logs.length)];
+                const p = document.createElement('p');
+                p.className = 'text-green-400 opacity-90';
+
+                const time = new Date().toISOString().split('T')[1].substring(0,8);
+                p.innerText = `[${time}] > ${randomLog}`;
+                
+                logContainer.appendChild(p);
+
+                if (logContainer.childElementCount > 15) {
+                    logContainer.removeChild(logContainer.firstChild);
+                }
+
+                logContainer.scrollTop = logContainer.scrollHeight;
+            }
+        }, 1200); 
+    });
+    </script>
+</body>
+</html>
