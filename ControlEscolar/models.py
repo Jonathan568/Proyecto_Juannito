@@ -14,6 +14,7 @@ class CicloEscolar(models.Model):
     estatus = models.CharField(max_length=20, choices=ESTATUS_CICLO, default='activo')
 
     class Meta:
+        managed = True  # Estandarizado
         verbose_name = "Ciclo Escolar"
         verbose_name_plural = "Ciclos Escolares"
 
@@ -28,6 +29,7 @@ class Asignatura(models.Model):
     prerrequisito = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='materias_consecutivas')
 
     class Meta:
+        managed = True  # Estandarizado
         verbose_name = "Asignatura"
         verbose_name_plural = "Asignaturas"
 
@@ -41,6 +43,7 @@ class Grupo(models.Model):
 
     # AQUÍ ENMASCARAMOS EL MODELO "GRUPO" PARA QUE SE LLAME "LICENCIATURA"
     class Meta:
+        managed = True  # Estandarizado
         verbose_name = "Licenciatura"
         verbose_name_plural = "Licenciaturas"
 
@@ -56,6 +59,7 @@ class AlumnoGrupo(models.Model):
 
     # AQUÍ ENMASCARAMOS EL MODELO DE ASIGNACIÓN
     class Meta:
+        managed = True  # Estandarizado
         unique_together = ('idalumno', 'idgrupo') 
         verbose_name = "Alumno en Licenciatura"
         verbose_name_plural = "Asignación de Alumnos a Licenciaturas"
@@ -77,6 +81,7 @@ class Horario(models.Model):
     hora_fin = models.TimeField()
 
     class Meta:
+        managed = True  # Estandarizado
         verbose_name = "Horario de Clase"
         verbose_name_plural = "Carga Académica (Horarios)"
 
@@ -101,6 +106,7 @@ class Inscripcion(models.Model):
     )
 
     class Meta:
+        managed = True  # Estandarizado
         unique_together = ('idalumno', 'idasignatura', 'idciclo') 
         verbose_name = "Inscripción / Calificación"
         verbose_name_plural = "Inscripciones y Calificaciones"
@@ -122,6 +128,7 @@ class Aviso(models.Model):
     idalumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
+        managed = True  # Estandarizado
         verbose_name = "Aviso"
         verbose_name_plural = "Centro de Avisos"
 

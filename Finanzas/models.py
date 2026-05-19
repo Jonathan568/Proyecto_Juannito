@@ -6,7 +6,7 @@ class Concepto(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
-        managed = False
+        managed = True  # ¡Salto de control activo!
         db_table = 'Concepto'
         verbose_name = "Concepto de Pago"
         verbose_name_plural = "Conceptos Arancelarios"
@@ -20,11 +20,11 @@ class Pago(models.Model):
     idpago = models.AutoField(db_column='idPago', primary_key=True)
     fecha = models.DateTimeField(blank=True, null=True)
     monto = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    estatus = models.CharField(max_length=10, blank=True, null=True)
+    estatus = models.CharField(max_length=20, default='pendiente')  # Ampliado a 20 caracteres y con default
     folio = models.CharField(max_length=45, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True  # ¡Salto de control activo!
         db_table = 'Pago'
         verbose_name = "Transacción / Recibo"
         verbose_name_plural = "Historial de Pagos Recibidos"
@@ -38,15 +38,18 @@ class Pago(models.Model):
 
 class CargoAlumno(models.Model):
     idcargo = models.AutoField(db_column='idCargo', primary_key=True)
-    idalumno = models.ForeignKey('Usuarios.Alumno', models.DO_NOTHING, db_column='idAlumno')
-    idconcepto = models.ForeignKey('Concepto', models.DO_NOTHING, db_column='idConcepto')
-    idpago = models.ForeignKey('Pago', models.DO_NOTHING, db_column='idPago', blank=True, null=True)
+    
+    # Llaves foráneas aseguradas con reglas de integridad relacional
+    idalumno = models.ForeignKey('Usuarios.Alumno', models.CASCADE, db_column='idAlumno')
+    idconcepto = models.ForeignKey('Concepto', models.PROTECT, db_column='idConcepto')
+    idpago = models.ForeignKey('Pago', models.SET_NULL, db_column='idPago', blank=True, null=True)
+    
     monto = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     fecha = models.DateTimeField(blank=True, null=True)
-    estatus = models.CharField(max_length=10, blank=True, null=True)
+    estatus = models.CharField(max_length=20, default='pendiente')  # Ampliado a 20 caracteres y con default
 
     class Meta:
-        managed = False
+        managed = True  # ¡Salto de control activo!
         db_table = 'Cargo_Alumno'
         verbose_name = "Cargo a Estudiante"
         verbose_name_plural = "Estados de Cuenta (Cargos)"
